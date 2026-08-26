@@ -1,0 +1,11 @@
+﻿import { chromium } from "playwright";
+const browser = await chromium.launch();
+const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce" });
+const page = await ctx.newPage();
+await page.goto("http://localhost:4173", { waitUntil: "networkidle" });
+await page.waitForTimeout(800);
+const heroVisible = await page.getByRole("heading", { level: 1 }).isVisible();
+const overflow = await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
+console.log(heroVisible ? "OK reduced-motion: hero visível imediatamente" : "FAIL reduced-motion: hero não visível");
+console.log(overflow ? "OK reduced-motion: sem overflow" : "FAIL reduced-motion: overflow");
+await browser.close();

@@ -1,0 +1,123 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
+
+  /* Neutros quentes */
+  --color-cream: #faf7f1;
+  --color-paper: #f3eee5;
+  --color-sand: #e8e0d1;
+  --color-line: #e4dbcd;
+
+  /* Roxos e lilases */
+  --color-lavender: #ece5f5;
+  --color-lilac: #d9cceb;
+  --color-violet: #8a5cb8;
+  --color-grape: #5b2a86;
+  --color-plum: #3c1b5e;
+  --color-night: #241238;
+
+  /* Acentos */
+  --color-magenta: #c2255c;
+  --color-blush: #faeef4;
+
+  /* Texto */
+  --color-ink: #2a2033;
+  --color-muted: #6f6479;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --shadow-soft:
+    0 1px 2px rgba(60, 27, 94, 0.05),
+    0 16px 40px -20px rgba(60, 27, 94, 0.18);
+  --shadow-lift:
+    0 2px 6px rgba(60, 27, 94, 0.06),
+    0 32px 64px -24px rgba(60, 27, 94, 0.3);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite 1.2s;
+  --animate-pulse-soft: pulse-soft 3.2s ease-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes pulse-soft {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    80%,
+    100% {
+      transform: scale(1.9);
+      opacity: 0;
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-grape);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-magenta);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Acentos em serifa itálica para momentos editoriais */
+.accent-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Texto com respiro tipográfico */
+.tracking-headline {
+  letter-spacing: -0.035em;
+}
+
+/* Barra de progresso do autoplay (ProcessTimeline) */
+@keyframes process-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

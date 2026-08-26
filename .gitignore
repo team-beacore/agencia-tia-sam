@@ -1,0 +1,12 @@
+# Dependências e build
+node_modules/
+dist/
+.npm-cache/
+
+# Artefatos de verificação visual (dev only)
+scripts/shots/
+
+# Logs e sistema
+*.log
+.DS_Store
+Thumbs.db
