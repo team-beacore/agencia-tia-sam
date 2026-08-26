@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS admin_users (
   email TEXT NOT NULL UNIQUE,
   password_hash TEXT NOT NULL,
   role TEXT NOT NULL DEFAULT 'admin',
+  active INTEGER NOT NULL DEFAULT 1,
+  deleted_at TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -99,6 +101,17 @@ CREATE TABLE IF NOT EXISTS faqs (
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 `)
+
+/* ---------- migrações (bancos criados antes da coluna active) ---------- */
+function hasColumn(table, column) {
+  return db.prepare(`PRAGMA table_info(${table})`).all().some((c) => c.name === column)
+}
+if (!hasColumn('admin_users', 'active')) {
+  db.exec(`ALTER TABLE admin_users ADD COLUMN active INTEGER NOT NULL DEFAULT 1`)
+}
+if (!hasColumn('admin_users', 'deleted_at')) {
+  db.exec(`ALTER TABLE admin_users ADD COLUMN deleted_at TEXT`)
+}
 
 /* ---------- helpers ---------- */
 

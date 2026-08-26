@@ -6,6 +6,14 @@ dist/
 # Artefatos de verificação visual (dev only)
 scripts/shots/
 
+# Dados locais (banco SQLite e uploads)
+data/
+
+# Segredos / ambiente
+.env
+.env.*
+!.env.example
+
 # Logs e sistema
 *.log
 .DS_Store
