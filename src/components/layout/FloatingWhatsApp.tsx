@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ArrowUpRight, X } from 'lucide-react'
 import { cn } from '../../lib/cn'
-import { SITE, whatsappLink } from '../../config/site'
+import { whatsappLink } from '../../config/site'
+import { useSite } from '../../data/SiteContext'
 import { WhatsAppIcon } from '../ui/BrandIcons'
 import { useWizard } from '../wizard/WizardContext'
 
@@ -19,6 +20,7 @@ const OPTIONS = [
 export function FloatingWhatsApp() {
   const [open, setOpen] = useState(false)
   const { openWizard } = useWizard()
+  const site = useSite()
   const reduce = useReducedMotion()
 
   useEffect(() => {
@@ -84,7 +86,7 @@ export function FloatingWhatsApp() {
             </div>
 
             <a
-              href={whatsappLink('Olá, Agência Tia Sam! 💜 Gostaria de conversar.')}
+              href={whatsappLink('Olá, Agência Tia Sam! 💜 Gostaria de conversar.', site.whatsappNumber)}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 border-t border-line/70 px-5 py-3.5 text-[12px] font-semibold text-muted transition-colors hover:text-grape"
@@ -109,7 +111,7 @@ export function FloatingWhatsApp() {
         {open ? <X className="relative h-6 w-6" aria-hidden="true" /> : <WhatsAppIcon className="relative h-6 w-6" />}
       </motion.button>
 
-      <p className="sr-only">{SITE.whatsappDisplay}</p>
+      <p className="sr-only">{site.whatsappDisplay}</p>
     </div>
   )
 }

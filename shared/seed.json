@@ -1,0 +1,238 @@
+{
+  "settings": {
+    "site": {
+      "name": "Agência Tia Sam",
+      "tagline": "Cuidado que conecta.",
+      "claim": "Cuidado que acolhe. Confiança que fica.",
+      "description": "Conectamos famílias e profissionais com cuidado, confiança e um processo de seleção criterioso.",
+      "location": "Manaus - AM",
+      "city": "Manaus",
+      "region": "Manaus - AM",
+      "familiesServed": 3000,
+      "hours": "Atendimento humano pelo WhatsApp"
+    },
+    "hero": {
+      "eyebrow": "Agência Tia Sam · Manaus",
+      "title": "Cuidado para quem importa.",
+      "subtitle": "Conectamos famílias e profissionais com cuidado, confiança e um processo de seleção criterioso.",
+      "whatsappHint": "Atendimento humano pelo WhatsApp"
+    },
+    "about": {
+      "eyebrow": "Sobre a agência",
+      "title": "Uma agência que acolhe como alguém próximo e trabalha com rigor profissional.",
+      "text1": "A Agência Tia Sam nasceu em Manaus com uma missão clara: conectar famílias a profissionais de confiança. Não somos uma plataforma automática — somos um time de pessoas que acompanha cada escolha com atenção.",
+      "text2": "Acreditamos que cuidado de verdade começa com uma relação de confiança. Por isso, cada profissional que indicamos passou por um processo criterioso."
+    },
+    "companies": {
+      "eyebrow": "Para empresas",
+      "title": "Soluções profissionais para empresas.",
+      "text": "Sua empresa merece profissionais que entendam o ambiente corporativo. A Tia Sam oferece soluções sob medida para diferentes necessidades.",
+      "cta": "Falar com a equipe",
+      "benefits": [
+        "Profissionais selecionadas e verificadas",
+        "Processo criterioso de triagem",
+        "Atendimento personalizado por demanda",
+        "Mais praticidade para o seu negócio"
+      ]
+    },
+    "professionals": {
+      "eyebrow": "Para profissionais",
+      "title": "Faça parte das oportunidades da Tia Sam.",
+      "text": "Se você é uma profissional que busca oportunidades com seriedade e respeito, a Tia Sam é o seu lugar. Todo o processo é transparente e acolhedor.",
+      "cta": "Quero fazer parte",
+      "steps": ["Cadastro", "Análise", "Entrevista", "Aprovação", "Oportunidades"]
+    },
+    "editorial": {
+      "quote": "\u201CCuidar também é escolher com atenção.\u201D",
+      "attribution": "Agência Tia Sam · Manaus"
+    },
+    "social": {
+      "instagramHandle": "@agenciatiasam.manaus",
+      "instagramUrl": "https://www.instagram.com/agenciatiasam.manaus"
+    },
+    "images": {
+      "logo": null,
+      "favicon": null,
+      "heroMain": "/images/hero/hero-main.jpg",
+      "heroAlt": "/images/hero/hero-alt.jpg",
+      "about": "/images/about/about-main.jpg",
+      "companies": "/images/companies/company-main.jpg",
+      "professionals": "/images/professionals/professional-main.jpg",
+      "cta": "/images/cta/cta-main.jpg",
+      "editorial": "/images/editorial/editorial-wide.jpg",
+      "hubFamily": "/images/hub/hub-family.jpg",
+      "hubProfessional": "/images/hub/hub-professional.jpg",
+      "hubCompany": "/images/hub/hub-company.jpg"
+    }
+  },
+  "contacts": [
+    {
+      "label": "WhatsApp",
+      "type": "whatsapp",
+      "value": "5592984146066",
+      "display": "+55 92 98414-6066",
+      "sortOrder": 1,
+      "active": true
+    },
+    {
+      "label": "Instagram",
+      "type": "instagram",
+      "value": "https://www.instagram.com/agenciatiasam.manaus",
+      "display": "@agenciatiasam.manaus",
+      "sortOrder": 2,
+      "active": true
+    },
+    {
+      "label": "Cidade",
+      "type": "address",
+      "value": "Manaus",
+      "display": "Manaus - AM",
+      "sortOrder": 3,
+      "active": true
+    }
+  ],
+  "services": [
+    {
+      "id": "baba",
+      "name": "Babá",
+      "tagline": "Cuidado que acompanha o crescimento.",
+      "description": "Profissionais selecionadas para cuidar do que mais importa: o seu filho. Cada babá passa por um processo criterioso para que você tenha confiança no dia a dia.",
+      "benefits": [
+        "Rotina e afeto no cuidado diário",
+        "Segurança e atenção em primeiro lugar",
+        "Referências profissionais verificadas"
+      ],
+      "image": "/images/services/baba.jpg",
+      "alt": "Criança sendo cuidada com carinho",
+      "cta": "Encontrar uma babá",
+      "sortOrder": 1,
+      "active": true
+    },
+    {
+      "id": "secretaria",
+      "name": "Secretária do lar",
+      "tagline": "Organização que transforma o dia.",
+      "description": "Discrição, organização e capricho para manter a sua casa funcionando com harmonia. Uma profissional confiável para o dia a dia da sua família.",
+      "benefits": [
+        "Organização completa da rotina familiar",
+        "Discrição e confiança absoluta",
+        "Experiência em gestão doméstica"
+      ],
+      "image": "/images/services/secretaria.jpg",
+      "alt": "Cozinha organizada e acolhedora",
+      "cta": "Encontrar uma secretária do lar",
+      "sortOrder": 2,
+      "active": true
+    },
+    {
+      "id": "diarista",
+      "name": "Diarista",
+      "tagline": "Praticidade que faz diferença.",
+      "description": "Para quem precisa de uma mão amiga na rotina. Nossas diaristas são profissionais treinadas e recomendadas para deixar sua casa impecável.",
+      "benefits": [
+        "Flexibilidade de dias e horários",
+        "Profissionais treinadas e recomendadas",
+        "Produtos e técnicas adequadas"
+      ],
+      "image": "/images/services/diarista.jpg",
+      "alt": "Profissional limpando e organizando uma casa",
+      "cta": "Encontrar uma diarista",
+      "sortOrder": 3,
+      "active": true
+    },
+    {
+      "id": "posParto",
+      "name": "Assistência pós-parto",
+      "tagline": "Apoio humano nos primeiros meses.",
+      "description": "Os primeiros meses exigem cuidado redobrado. Nossas profissionais oferecem suporte para mãe e bebê com experiência, paciência e muito carinho.",
+      "benefits": [
+        "Apoio para mãe e recém-nascido",
+        "Experiência em cuidados neonatais",
+        "Tranquilidade para a família"
+      ],
+      "image": "/images/services/pos-parto.jpg",
+      "alt": "Mãe e recém-nascido em momento de calma",
+      "cta": "Encontrar assistência pós-parto",
+      "sortOrder": 4,
+      "active": true
+    },
+    {
+      "id": "passadeira",
+      "name": "Passadeira",
+      "tagline": "Roupas impecáveis, sem preocupação.",
+      "description": "Para quem valoriza a aparência e a organização do guarda-roupa. Profissionais dedicadas a manter suas roupas no ponto certo.",
+      "benefits": [
+        "Cuidado especial com cada peça",
+        "Organização do guarda-roupa",
+        "Agilidade e pontualidade"
+      ],
+      "image": "/images/services/passadeira.jpg",
+      "alt": "Roupas limpas penduradas para secar",
+      "cta": "Encontrar uma passadeira",
+      "sortOrder": 5,
+      "active": true
+    },
+    {
+      "id": "cuidadora",
+      "name": "Cuidadora de idosos",
+      "tagline": "Presença que honra uma vida.",
+      "description": "Paciência, respeito e atenção para quem você ama. Nossas cuidadoras são preparadas para oferecer qualidade de vida e companhia verdadeira.",
+      "benefits": [
+        "Acompanhamento humanizado e respeitoso",
+        "Profissionais com treinamento específico",
+        "Comunicação constante com a família"
+      ],
+      "image": "/images/services/cuidadora.jpg",
+      "alt": "Idosa serena, cuidada com respeito",
+      "cta": "Encontrar uma cuidadora",
+      "sortOrder": 6,
+      "active": true
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Como funciona a contratação?",
+      "answer": "Você nos conta o que precisa pelo WhatsApp, com a ajuda do nosso assistente. A partir daí, apresentamos profissionais selecionadas para o seu perfil e acompanhamos você em cada etapa da escolha.",
+      "sortOrder": 1,
+      "active": true
+    },
+    {
+      "question": "Como a agência seleciona as profissionais?",
+      "answer": "Toda profissional passa por um processo criterioso: cadastro, triagem, conferência de documentação, verificação de antecedentes, referências profissionais, entrevista e aprovação. Somente depois disso ela é encaminhada para oportunidades.",
+      "sortOrder": 2,
+      "active": true
+    },
+    {
+      "question": "Como faço meu cadastro?",
+      "answer": "Basta escolher o caminho \"Quero fazer parte\" no site. Você preenche um pequeno formulário e, em seguida, é direcionada ao nosso WhatsApp para continuar a conversa com a nossa equipe.",
+      "sortOrder": 3,
+      "active": true
+    },
+    {
+      "question": "A agência atende Manaus?",
+      "answer": "Sim. A Agência Tia Sam está em Manaus - AM e atende famílias e empresas da região, com atendimento humano e próximo.",
+      "sortOrder": 4,
+      "active": true
+    },
+    {
+      "question": "Como funciona para empresas?",
+      "answer": "Oferecemos soluções profissionais sob medida: profissionais recorrentes, apoio para eventos ou serviços específicos. Conte a sua necessidade pelo caminho \"Sou uma empresa\" e nossa equipe monta a solução com você.",
+      "sortOrder": 5,
+      "active": true
+    },
+    {
+      "question": "Como entrar para a agência?",
+      "answer": "Se você é profissional e busca oportunidades com seriedade, escolha \"Quero fazer parte\". Faremos uma análise do seu perfil e, se aprovada, você passa a ser encaminhada para as oportunidades que combinam com você.",
+      "sortOrder": 6,
+      "active": true
+    },
+    {
+      "question": "Como entro em contato?",
+      "answer": "Pelo WhatsApp, no número +55 92 98414-6066, ou pelo Instagram @agenciatiasam.manaus. Atendemos com atenção e respondemos a cada mensagem.",
+      "sortOrder": 7,
+      "active": true
+    }
+  ],
+  "professionals": [],
+  "opportunities": []
+}

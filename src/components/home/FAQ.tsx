@@ -2,43 +2,15 @@ import { useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { Plus } from 'lucide-react'
 import { cn } from '../../lib/cn'
+import { useSite } from '../../data/SiteContext'
 import { Container } from '../ui/Container'
 import { SectionHeading } from '../ui/SectionHeading'
-
-const FAQS = [
-  {
-    q: 'Como funciona a contratação?',
-    a: 'Você nos conta o que precisa pelo WhatsApp, com a ajuda do nosso assistente. A partir daí, apresentamos profissionais selecionadas para o seu perfil e acompanhamos você em cada etapa da escolha.',
-  },
-  {
-    q: 'Como a agência seleciona as profissionais?',
-    a: 'Toda profissional passa por um processo criterioso: cadastro, triagem, conferência de documentação, verificação de antecedentes, referências profissionais, entrevista e aprovação. Somente depois disso ela é encaminhada para oportunidades.',
-  },
-  {
-    q: 'Como faço meu cadastro?',
-    a: 'Basta escolher o caminho "Quero fazer parte" no site. Você preenche um pequeno formulário e, em seguida, é direcionada ao nosso WhatsApp para continuar a conversa com a nossa equipe.',
-  },
-  {
-    q: 'A agência atende Manaus?',
-    a: 'Sim. A Agência Tia Sam está em Manaus - AM e atende famílias e empresas da região, com atendimento humano e próximo.',
-  },
-  {
-    q: 'Como funciona para empresas?',
-    a: 'Oferecemos soluções profissionais sob medida: profissionais recorrentes, apoio para eventos ou serviços específicos. Conte a sua necessidade pelo caminho "Sou uma empresa" e nossa equipe monta a solução com você.',
-  },
-  {
-    q: 'Como entrar para a agência?',
-    a: 'Se você é profissional e busca oportunidades com seriedade, escolha "Quero fazer parte". Faremos uma análise do seu perfil e, se aprovada, você passa a ser encaminhada para as oportunidades que combinam com você.',
-  },
-  {
-    q: 'Como entro em contato?',
-    a: 'Pelo WhatsApp, no número +55 92 98414-6066, ou pelo Instagram @agenciatiasam.manaus. Atendemos com atenção e respondemos a cada mensagem.',
-  },
-] as const
 
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0)
   const reduce = useReducedMotion()
+  const site = useSite()
+  const FAQS = site.faqs
 
   return (
     <section id="faq" aria-labelledby="faq-title" className="border-t border-line/60 py-20 sm:py-28">
@@ -54,7 +26,7 @@ export function FAQ() {
             const isOpen = open === i
             return (
               <div
-                key={faq.q}
+                key={faq.question}
                 className={cn(
                   'border-b border-line/80 transition-colors duration-300',
                   isOpen && 'border-grape/25',
@@ -84,7 +56,7 @@ export function FAQ() {
                         isOpen ? 'text-grape' : 'text-ink group-hover:text-grape',
                       )}
                     >
-                      {faq.q}
+                      {faq.question}
                     </span>
                   </span>
                   <span
@@ -114,7 +86,7 @@ export function FAQ() {
                       className="overflow-hidden"
                     >
                       <p className="pb-6 pl-[3.25rem] pr-2 text-[15px] leading-relaxed text-muted">
-                        {faq.a}
+                        {faq.answer}
                       </p>
                     </motion.div>
                   )}

@@ -1,9 +1,9 @@
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react'
+﻿import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react'
 import type { MouseEvent as ReactMouseEvent } from 'react'
 import { ArrowRight, Check } from 'lucide-react'
 import { IMAGES } from '../../config/images'
-import { SITE } from '../../config/site'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { useSite } from '../../data/SiteContext'
 import { CTAButton } from '../ui/CTAButton'
 import { Container } from '../ui/Container'
 import { WhatsAppIcon } from '../ui/BrandIcons'
@@ -34,8 +34,20 @@ const imageItem = {
 
 export function Hero() {
   const { openWizard } = useWizard()
+  const site = useSite()
   const reduce = useReducedMotion()
   const isDesktop = useMediaQuery('(min-width: 1024px)')
+
+  const heroCfg = site.data.settings?.hero ?? {}
+  const imgs = site.data.settings?.images ?? {}
+
+  // Título dinâmico com a última palavra em destaque serifado (mantém a identidade)
+  const fullTitle = heroCfg.title || 'Cuidado para quem importa.'
+  const titleParts = fullTitle.trim().split(/\s+/)
+  const lastRaw = titleParts[titleParts.length - 1] ?? ''
+  const punct = lastRaw.match(/[.!?]+$/)?.[0] ?? ''
+  const lastWord = lastRaw.replace(/[.!?]+$/, '')
+  const titleBefore = titleParts.slice(0, -1).join(' ')
 
   // Parallax sutil com o mouse (apenas desktop, respeita reduced motion)
   const mx = useMotionValue(0)
@@ -88,16 +100,16 @@ export function Hero() {
               className="flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.26em] text-grape md:justify-start"
             >
               <span aria-hidden="true" className="hidden h-px w-9 bg-grape opacity-60 md:block" />
-              Agência Tia Sam · Manaus
+              {heroCfg.eyebrow || 'Agência Tia Sam · Manaus'}
             </motion.p>
 
             <motion.h1
               variants={item}
               className="tracking-headline mx-auto mt-7 max-w-[22rem] text-balance text-center text-[clamp(2.6rem,7.2vw,4.9rem)] font-extrabold leading-[1.02] text-ink md:mx-0 md:max-w-none md:text-left"
             >
-              Cuidado para quem{' '}
-              <span className="accent-serif relative whitespace-nowrap text-grape">
-                importa
+              {titleBefore ? <>{titleBefore}{' '}</> : null}
+              <span className="accent-serif relative text-grape">
+                {lastWord}
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 220 14"
@@ -113,15 +125,15 @@ export function Hero() {
                   />
                 </svg>
               </span>
-              .
+              {punct}
             </motion.h1>
 
             <motion.p
               variants={item}
               className="mx-auto mt-7 max-w-xl text-center text-lg leading-relaxed text-muted sm:text-[19px] md:mx-0 md:text-left"
             >
-              Conectamos famílias e profissionais com cuidado, confiança e um
-              processo de seleção criterioso.
+              {heroCfg.subtitle ||
+                'Conectamos famílias e profissionais com cuidado, confiança e um processo de seleção criterioso.'}
             </motion.p>
 
             <motion.div variants={item} className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -139,7 +151,7 @@ export function Hero() {
               className="mt-6 flex items-center justify-center gap-2 text-sm font-medium text-muted md:inline-flex md:justify-start"
             >
               <WhatsAppIcon className="h-4 w-4 text-grape" />
-              Atendimento humano pelo WhatsApp
+              {heroCfg.whatsappHint || 'Atendimento humano pelo WhatsApp'}
             </motion.p>
           </motion.div>
 
@@ -156,7 +168,7 @@ export function Hero() {
                 className="overflow-hidden rounded-[28px] shadow-lift sm:rounded-[34px]"
               >
                 <img
-                  src={IMAGES.hero.main}
+                  src={imgs.heroMain || IMAGES.hero.main}
                   alt={IMAGES.hero.mainAlt}
                   className="aspect-[4/4.6] w-full object-cover sm:aspect-[4/4.2] lg:aspect-[4/4.6]"
                   fetchPriority="high"
@@ -172,7 +184,7 @@ export function Hero() {
               >
                 <div className="animate-float rounded-2xl border border-line bg-white/95 px-4 py-3 shadow-soft backdrop-blur-sm">
                   <p className="text-[13px] font-extrabold tracking-tight text-grape">
-                    +{SITE.familiesServed.toLocaleString('pt-BR')} famílias
+                    +{site.familiesServed.toLocaleString('pt-BR')} famílias
                   </p>
                   <p className="text-[11px] font-medium text-muted">atendidas com cuidado</p>
                 </div>
@@ -217,7 +229,7 @@ export function Hero() {
               />
               <motion.figure className="overflow-hidden rounded-[24px] shadow-lift">
                 <img
-                  src={IMAGES.hero.main}
+                  src={imgs.heroMain || IMAGES.hero.main}
                   alt={IMAGES.hero.mainAlt}
                   className="aspect-[4/3.1] w-full object-cover"
                   fetchPriority="high"

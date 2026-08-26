@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react'
-import { IMAGES } from '../../config/images'
+import { useSite } from '../../data/SiteContext'
 import { Container } from '../ui/Container'
 import { Reveal } from '../ui/Reveal'
 import { CTAButton } from '../ui/CTAButton'
@@ -7,6 +7,8 @@ import { useWizard } from '../wizard/WizardContext'
 
 export function FinalCTA() {
   const { openWizard } = useWizard()
+  const site = useSite()
+  const imgs = site.data.settings?.images ?? {}
 
   return (
     <section
@@ -60,8 +62,8 @@ export function FinalCTA() {
           <Reveal delay={0.12}>
             <figure className="relative overflow-hidden rounded-[28px] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]">
               <img
-                src={IMAGES.cta.main}
-                alt={IMAGES.cta.mainAlt}
+                src={imgs.cta || '/images/cta/cta-main.jpg'}
+                alt="Mãe segurando o bebê com ternura"
                 loading="lazy"
                 decoding="async"
                 className="aspect-[4/3.1] w-full object-cover"

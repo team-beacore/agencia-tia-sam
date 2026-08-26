@@ -1,21 +1,8 @@
 /**
- * Configuração central da marca.
- * Todas as informações reais da Agência Tia Sam ficam aqui.
- * Nada de dados inventados: apenas o que foi fornecido.
+ * Configuração estática de navegação.
+ * Os dados da marca (nome, contatos, redes) agora são administráveis
+ * e carregados dinamicamente via SiteContext (com fallback em shared/seed.json).
  */
-export const SITE = {
-  name: 'Agência Tia Sam',
-  tagline: 'Cuidado que conecta.',
-  claim: 'Cuidado que acolhe. Confiança que fica.',
-  location: 'Manaus - AM',
-  city: 'Manaus',
-  instagramHandle: '@agenciatiasam.manaus',
-  instagramUrl: 'https://www.instagram.com/agenciatiasam.manaus',
-  whatsappNumber: '5592984146066',
-  whatsappDisplay: '+55 92 98414-6066',
-  familiesServed: 3000,
-} as const
-
 export const NAV_LINKS = [
   { label: 'Início', href: '#inicio' },
   { label: 'Serviços', href: '#servicos' },
@@ -36,7 +23,10 @@ export const FOOTER_LINKS = [
   { label: 'FAQ', href: '#faq' },
 ] as const
 
+/** Número padrão (fallback) usado enquanto os dados dinâmicos não carregam. */
+export const FALLBACK_WHATSAPP = '5592984146066'
+
 /** Gera link do WhatsApp com mensagem pré-preenchida. */
-export function whatsappLink(message: string): string {
-  return `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(message)}`
+export function whatsappLink(message: string, number: string = FALLBACK_WHATSAPP): string {
+  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`
 }

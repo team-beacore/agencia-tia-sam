@@ -1,10 +1,14 @@
-import { FOOTER_LINKS, SITE, whatsappLink } from '../../config/site'
+import { FOOTER_LINKS, whatsappLink } from '../../config/site'
+import { useSite } from '../../data/SiteContext'
 import { Container } from '../ui/Container'
 import { Logo } from '../ui/Logo'
 import { InstagramIcon, WhatsAppIcon } from '../ui/BrandIcons'
 
 export function Footer() {
   const year = new Date().getFullYear()
+  const site = useSite()
+  const settings = site.data.settings ?? {}
+  const siteSettings = settings.site ?? {}
 
   return (
     <footer className="border-t border-line/60 bg-paper/70">
@@ -15,9 +19,9 @@ export function Footer() {
             <Logo />
             <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-muted">
               Conectamos famílias e profissionais com cuidado, confiança e um processo de
-              seleção criterioso. {SITE.claim}
+              seleção criterioso. {siteSettings.claim || site.data.settings?.site?.claim}
             </p>
-            <p className="mt-5 text-sm font-medium text-grape">{SITE.location}</p>
+            <p className="mt-5 text-sm font-medium text-grape">{site.siteLocation}</p>
           </div>
 
           {/* Links */}
@@ -47,24 +51,24 @@ export function Footer() {
             <ul className="mt-5 space-y-3">
               <li>
                 <a
-                  href={whatsappLink('Olá, Agência Tia Sam! 💜 Gostaria de conversar.')}
+                  href={whatsappLink('Olá, Agência Tia Sam! 💜 Gostaria de conversar.', site.whatsappNumber)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 text-[15px] font-medium text-ink/80 transition-colors hover:text-grape"
                 >
                   <WhatsAppIcon className="h-4 w-4 text-grape" />
-                  {SITE.whatsappDisplay}
+                  {site.whatsappDisplay}
                 </a>
               </li>
               <li>
                 <a
-                  href={SITE.instagramUrl}
+                  href={site.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 text-[15px] font-medium text-ink/80 transition-colors hover:text-grape"
                 >
                   <InstagramIcon className="h-4 w-4 text-grape" />
-                  {SITE.instagramHandle}
+                  {site.instagramHandle}
                 </a>
               </li>
             </ul>
@@ -78,10 +82,10 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-line/70 pt-7 sm:flex-row">
           <p className="text-[13px] font-medium text-muted">
-            © {year} {SITE.name}. Todos os direitos reservados.
+            © {year} {site.siteName}. Todos os direitos reservados.
           </p>
           <p className="accent-serif text-[13px] italic text-muted">
-            Cuidado que acolhe. Confiança que fica.
+            {siteSettings.claim || 'Cuidado que acolhe. Confiança que fica.'}
           </p>
         </div>
       </Container>

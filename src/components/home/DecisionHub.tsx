@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ArrowUpRight } from 'lucide-react'
 import { cn } from '../../lib/cn'
 import { IMAGES } from '../../config/images'
+import { useSite } from '../../data/SiteContext'
 import { SectionHeading } from '../ui/SectionHeading'
 import { Container } from '../ui/Container'
 import { useWizard } from '../wizard/WizardContext'
@@ -47,7 +48,16 @@ const PATHS: HubPath[] = [
 export function DecisionHub() {
   const [active, setActive] = useState(0)
   const { openWizard } = useWizard()
+  const site = useSite()
   const reduce = useReducedMotion()
+  const imgs = site.data.settings?.images ?? {}
+
+  // Resolve imagens dinâmicas com fallback para as originais
+  const imageFor = (idx: number, fallback: string) => {
+    if (idx === 0) return imgs.hubFamily || fallback
+    if (idx === 1) return imgs.hubProfessional || fallback
+    return imgs.hubCompany || fallback
+  }
 
   const handleActivate = useCallback(
     (index: number) => {
@@ -89,7 +99,7 @@ export function DecisionHub() {
               >
                 {/* Fotografia */}
                 <img
-                  src={path.image}
+                  src={imageFor(i, path.image)}
                   alt={path.alt}
                   loading="lazy"
                   decoding="async"

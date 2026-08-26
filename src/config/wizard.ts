@@ -1,8 +1,8 @@
-import { IMAGES } from './images'
-
 /**
  * Configuração dos três fluxos do "Assistente Tia Sam".
  * Data-driven: cada fluxo é uma lista de etapas reutilizáveis.
+ * As opções do passo "serviço" (contratação) são injetadas dinamicamente
+ * a partir dos serviços ativos cadastrados no painel administrativo.
  */
 
 export type WizardFlowId = 'hire' | 'professional' | 'company'
@@ -61,10 +61,9 @@ export const WIZARD_FLOWS: Record<WizardFlowId, FlowConfig> = {
     finalCta: 'Conversar com a Tia Sam',
     summaryTitle: 'Seu pedido está pronto.',
     summaryNote: 'Revise as informações e continue pelo WhatsApp. Uma pessoa de verdade vai te responder.',
-    stepLabels: ['Serviço', 'Necessidade', 'Quando', 'Detalhes', 'Resumo'],
+    stepLabels: ['Serviço', 'Quando', 'Detalhes', 'Resumo'],
     summaryFields: [
       { stepId: 'service', label: 'Serviço' },
-      { stepId: 'audience', label: 'Necessidade' },
       { stepId: 'timeline', label: 'Quando' },
       { stepId: 'notes', label: 'Observação' },
     ],
@@ -74,63 +73,9 @@ export const WIZARD_FLOWS: Record<WizardFlowId, FlowConfig> = {
         kind: 'choice',
         question: 'Qual serviço você procura?',
         helper: 'Selecione um serviço para continuar.',
-        options: [
-          {
-            id: 'baba',
-            label: 'Babá',
-            description: 'Cuidado dedicado para as crianças.',
-            image: IMAGES.services.baba,
-            alt: IMAGES.services.babaAlt,
-          },
-          {
-            id: 'secretaria',
-            label: 'Secretária do lar',
-            description: 'Organização e rotina da casa em dia.',
-            image: IMAGES.services.secretaria,
-            alt: IMAGES.services.secretariaAlt,
-          },
-          {
-            id: 'diarista',
-            label: 'Diarista',
-            description: 'Praticidade para a sua rotina.',
-            image: IMAGES.services.diarista,
-            alt: IMAGES.services.diaristaAlt,
-          },
-          {
-            id: 'posParto',
-            label: 'Assistência pós-parto',
-            description: 'Apoio humano para mãe e bebê.',
-            image: IMAGES.services.posParto,
-            alt: IMAGES.services.posPartoAlt,
-          },
-          {
-            id: 'passadeira',
-            label: 'Passadeira',
-            description: 'Roupas impecáveis, sem preocupação.',
-            image: IMAGES.services.passadeira,
-            alt: IMAGES.services.passadeiraAlt,
-          },
-          {
-            id: 'cuidadora',
-            label: 'Cuidadora de idosos',
-            description: 'Presença, paciência e respeito.',
-            image: IMAGES.services.cuidadora,
-            alt: IMAGES.services.cuidadoraAlt,
-          },
-        ],
-      },
-      {
-        id: 'audience',
-        kind: 'choice',
-        question: 'Para quem é esse cuidado?',
-        options: [
-          { id: 'family', label: 'Minha família' },
-          { id: 'child', label: 'Meu filho' },
-          { id: 'baby', label: 'Meu bebê' },
-          { id: 'elder', label: 'Uma pessoa idosa' },
-          { id: 'home', label: 'Minha casa' },
-          { id: 'other', label: 'Outro' },
-        ],
+        // As opções de serviço são injetadas dinamicamente a partir dos serviços
+        // ativos cadastrados no painel (ContactWizard resolve em tempo de execução).
+        options: [],
       },
       {
         id: 'timeline',
@@ -167,11 +112,10 @@ export const WIZARD_FLOWS: Record<WizardFlowId, FlowConfig> = {
     finalCta: 'Quero conversar com a Tia Sam',
     summaryTitle: 'Seu cadastro está pronto.',
     summaryNote: 'Revise as informações e continue pelo WhatsApp para dar o próximo passo.',
-    stepLabels: ['Oportunidade', 'Experiência', 'Trabalho', 'Sobre você', 'Resumo'],
+    stepLabels: ['Oportunidade', 'Experiência', 'Sobre você', 'Resumo'],
     summaryFields: [
       { stepId: 'opportunity', label: 'Oportunidade' },
       { stepId: 'experience', label: 'Experiência' },
-      { stepId: 'workMode', label: 'Como prefere trabalhar' },
       { stepId: 'about', label: 'Sobre você' },
     ],
     steps: [
@@ -180,15 +124,9 @@ export const WIZARD_FLOWS: Record<WizardFlowId, FlowConfig> = {
         kind: 'choice',
         question: 'Qual oportunidade você procura?',
         helper: 'Selecione uma opção para continuar.',
-        options: [
-          { id: 'baba', label: 'Babá' },
-          { id: 'diarista', label: 'Diarista' },
-          { id: 'secretaria', label: 'Secretária do lar' },
-          { id: 'cuidadora', label: 'Cuidadora de idosos' },
-          { id: 'passadeira', label: 'Passadeira' },
-          { id: 'posParto', label: 'Assistência pós-parto' },
-          { id: 'other', label: 'Outra' },
-        ],
+        // As opções são injetadas dinamicamente a partir das oportunidades
+        // publicadas no painel (fallback: serviços ativos). ContactWizard resolve.
+        options: [],
       },
       {
         id: 'experience',
@@ -198,18 +136,6 @@ export const WIZARD_FLOWS: Record<WizardFlowId, FlowConfig> = {
           { id: 'yes', label: 'Sim' },
           { id: 'no', label: 'Não' },
           { id: 'informal', label: 'Experiência informal' },
-        ],
-      },
-      {
-        id: 'workMode',
-        kind: 'choice',
-        question: 'Como prefere trabalhar?',
-        options: [
-          { id: 'fixo', label: 'Fixo' },
-          { id: 'mensalista', label: 'Mensalista' },
-          { id: 'diarista', label: 'Diarista' },
-          { id: 'oportunidade', label: 'Por oportunidade' },
-          { id: 'naoSei', label: 'Ainda não sei' },
         ],
       },
       {
@@ -294,12 +220,19 @@ export function answerLabel(flowId: WizardFlowId, stepId: string, value: string)
   return value
 }
 
-/** Monta a mensagem personalizada do WhatsApp a partir das respostas. */
+/** Monta a mensagem personalizada do WhatsApp a partir das respostas.
+ *  `resolve` é opcional e permite que o chamador forneça rótulos dinâmicos
+ *  (ex.: nomes de serviços cadastrados no painel). */
 export function generateWhatsAppMessage(
   flowId: WizardFlowId,
   answers: Record<string, string>,
+  resolve?: (stepId: string, value: string) => string | undefined,
 ): string {
-  const label = (stepId: string) => answerLabel(flowId, stepId, answers[stepId] ?? '')
+  const label = (stepId: string) => {
+    const custom = resolve?.(stepId, answers[stepId] ?? '')
+    if (custom !== undefined) return custom
+    return answerLabel(flowId, stepId, answers[stepId] ?? '')
+  }
 
   if (flowId === 'hire') {
     const note = answers.notes?.trim()
@@ -309,7 +242,6 @@ export function generateWhatsAppMessage(
       'Gostaria de contratar uma profissional.',
       '',
       `Serviço: ${label('service')}`,
-      `Necessidade: ${label('audience')}`,
       `Quando: ${label('timeline')}`,
       ...(note ? ['', `Observação: ${note}`] : []),
       '',
@@ -321,13 +253,12 @@ export function generateWhatsAppMessage(
   if (flowId === 'professional') {
     const about = answers.about?.trim()
     const lines = [
-      'Olá, Agência Tia Sam! 💜',
+      'Olá, Agência Tia Sam!',
       '',
       'Quero fazer parte da agência.',
       '',
       `Oportunidade: ${label('opportunity')}`,
       `Experiência: ${label('experience')}`,
-      `Como prefere trabalhar: ${label('workMode')}`,
       ...(about ? ['', `Sobre mim: ${about}`] : []),
       '',
       'Gostaria de conversar sobre as oportunidades disponíveis.',
@@ -337,7 +268,7 @@ export function generateWhatsAppMessage(
 
   const need = answers.need?.trim()
   const lines = [
-    'Olá, Agência Tia Sam! 💜',
+    'Olá, Agência Tia Sam!',
     '',
     'Sou uma empresa e gostaria de conhecer as soluções da agência.',
     '',

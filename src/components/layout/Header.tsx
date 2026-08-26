@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ArrowRight, Menu, X } from 'lucide-react'
 import { cn } from '../../lib/cn'
-import { NAV_LINKS, SITE } from '../../config/site'
+import { NAV_LINKS, whatsappLink } from '../../config/site'
 import { useScrolled } from '../../hooks/useScrolled'
+import { useSite } from '../../data/SiteContext'
 import { Logo } from '../ui/Logo'
 import { Container } from '../ui/Container'
 import { InstagramIcon, WhatsAppIcon } from '../ui/BrandIcons'
@@ -13,6 +14,7 @@ export function Header() {
   const scrolled = useScrolled(24)
   const [menuOpen, setMenuOpen] = useState(false)
   const { openWizard } = useWizard()
+  const site = useSite()
   const reduce = useReducedMotion()
   const closeBtnRef = useRef<HTMLButtonElement>(null)
 
@@ -56,26 +58,26 @@ export function Header() {
           <div className="border-b border-grape/10 bg-lavender/30">
             <Container className="flex h-9 items-center justify-between text-xs text-muted">
               <p className="font-medium tracking-wide">
-                {SITE.location} · Atendimento humano pelo WhatsApp
+                {site.siteLocation} · {site.data.settings?.site?.hours || 'Atendimento humano pelo WhatsApp'}
               </p>
               <div className="flex items-center gap-5">
                 <a
-                  href={SITE.instagramUrl}
+                  href={site.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 font-medium text-grape transition-colors hover:text-plum"
                 >
                   <InstagramIcon className="h-3.5 w-3.5" />
-                  {SITE.instagramHandle}
+                  {site.instagramHandle}
                 </a>
                 <a
-                  href={`https://wa.me/${SITE.whatsappNumber}`}
+                  href={whatsappLink('Olá, Agência Tia Sam! 💜 Gostaria de conversar.', site.whatsappNumber)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 font-medium text-grape transition-colors hover:text-plum"
                 >
                   <WhatsAppIcon className="h-3.5 w-3.5" />
-                  {SITE.whatsappDisplay}
+                  {site.whatsappDisplay}
                 </a>
               </div>
             </Container>
@@ -200,7 +202,7 @@ export function Header() {
               </button>
               <div className="mt-6 flex items-center justify-center gap-6 text-sm font-medium text-muted">
                 <a
-                  href={SITE.instagramUrl}
+                  href={site.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-grape"
@@ -209,7 +211,7 @@ export function Header() {
                   Instagram
                 </a>
                 <a
-                  href={`https://wa.me/${SITE.whatsappNumber}`}
+                  href={whatsappLink('Olá, Agência Tia Sam! 💜 Gostaria de conversar.', site.whatsappNumber)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-grape"
@@ -218,7 +220,7 @@ export function Header() {
                   WhatsApp
                 </a>
               </div>
-              <p className="mt-4 text-center text-xs text-muted">{SITE.location}</p>
+              <p className="mt-4 text-center text-xs text-muted">{site.siteLocation}</p>
             </motion.div>
           </motion.div>
         ) : null}

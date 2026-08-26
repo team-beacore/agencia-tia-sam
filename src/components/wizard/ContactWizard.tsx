@@ -7,7 +7,8 @@ import {
   generateWhatsAppMessage,
   WIZARD_FLOWS,
 } from '../../config/wizard'
-import type { WizardFlowId } from '../../config/wizard'
+import type { ChoiceOption, StepConfig, WizardFlowId } from '../../config/wizard'
+import { useSite } from '../../data/SiteContext'
 import { WhatsAppIcon } from '../ui/BrandIcons'
 import { useWizard } from './WizardContext'
 
@@ -39,6 +40,33 @@ function WizardPanel({
 }) {
   const flow = WIZARD_FLOWS[flowId]
   const { prefill } = useWizard()
+  const site = useSite()
+
+  // Opções de serviço dinâmicas (serviços ativos cadastrados no painel)
+  const serviceOptions = useMemo<ChoiceOption[]>(
+    () =>
+      site.services.map((s) => ({
+        id: s.slug,
+        label: s.name,
+        description: s.tagline,
+        ...(s.image ? { image: s.image } : {}),
+        ...(s.alt ? { alt: s.alt } : {}),
+      })),
+    [site.services],
+  )
+
+  // Opções de oportunidade dinâmicas (oportunidades publicadas no painel)
+  const opportunityOptions = useMemo<ChoiceOption[]>(() => {
+    const opps = (site.data.opportunities ?? [])
+      .filter((o) => o.active && o.status === 'published')
+      .map((o) => ({ id: String(o.id), label: o.title, ...(o.type ? { description: o.type } : {}) }))
+    if (opps.length > 0) return [...opps, { id: 'other', label: 'Outra' }]
+    // fallback: serviços como tipos de oportunidade
+    return [
+      ...site.services.map((s) => ({ id: s.slug, label: s.name })),
+      { id: 'other', label: 'Outra' },
+    ]
+  }, [site.data.opportunities, site.services])
 
   // Stepper contextual: se a primeira etapa (serviço) já veio respondida antes de abrir,
   // começa direto na próxima etapa — nunca pergunta duas vezes o mesmo serviço.
@@ -62,7 +90,14 @@ function WizardPanel({
   }, [])
 
   const step = flow.steps[stepIndex]
-  const isSummary = step.kind === 'summary'
+  // Passo "serviço" (contratação) e "oportunidade" (profissional) recebem opções dinâmicas
+  const resolvedStep: StepConfig =
+    flowId === 'hire' && step.kind === 'choice' && step.id === 'service'
+      ? { ...step, options: serviceOptions }
+      : flowId === 'professional' && step.kind === 'choice' && step.id === 'opportunity'
+        ? { ...step, options: opportunityOptions }
+        : step
+  const isSummary = resolvedStep.kind === 'summary'
   const total = flow.steps.length
   const progress = Math.round(((stepIndex + 1) / total) * 100)
 
@@ -122,9 +157,9 @@ function WizardPanel({
     setAnswers((prev) => ({ ...prev, [id]: value }))
 
   const canContinue = useMemo(() => {
-    if (step.kind === 'choice') return Boolean(answers[step.id])
+    if (resolvedStep.kind === 'choice') return Boolean(answers[resolvedStep.id])
     return true
-  }, [step, answers])
+  }, [resolvedStep, answers])
 
   // Avança com validação: se obrigatório não preenchido, mostra mensagem amigável
   const goNext = useCallback(() => {
@@ -148,9 +183,9 @@ function WizardPanel({
 
   // Seleção de opção: salva + limpa erro + auto-avança no passo de serviço
   const selectOption = (value: string) => {
-    answer(step.id, value)
+    answer(resolvedStep.id, value)
     setShowError(false)
-    if (step.id === 'service' && flowId === 'hire') {
+    if (resolvedStep.id === 'service' && flowId === 'hire') {
       if (advanceTimer.current !== null) window.clearTimeout(advanceTimer.current)
       advanceTimer.current = window.setTimeout(() => {
         advanceTimer.current = null
@@ -159,17 +194,27 @@ function WizardPanel({
     }
   }
 
-  // Opção do serviço selecionado para o banner do passo 2 (contratação)
-  const serviceOption =
-    flowId === 'hire' && stepIndex === 1 && answers.service
-      ? firstStep?.kind === 'choice'
-        ? firstStep.options.find((o) => o.id === answers.service)
+  // Opção selecionada exibida no banner (serviço na contratação; oportunidade no fluxo
+  // profissional) — mostrado nas etapas seguintes, exceto no resumo.
+  const choiceBanner =
+    flowId === 'hire' && stepIndex >= 1 && !isSummary && answers.service
+      ? { option: serviceOptions.find((o) => o.id === answers.service), changeLabel: 'Alterar serviço' }
+      : flowId === 'professional' && stepIndex >= 1 && !isSummary && answers.opportunity
+        ? { option: opportunityOptions.find((o) => o.id === answers.opportunity), changeLabel: 'Alterar' }
         : undefined
-      : undefined
+
+  const resolveLabel = useCallback(
+    (stepId: string, value: string) => {
+      if (stepId === 'service') return serviceOptions.find((o) => o.id === value)?.label
+      if (stepId === 'opportunity') return opportunityOptions.find((o) => o.id === value)?.label
+      return undefined
+    },
+    [serviceOptions, opportunityOptions],
+  )
 
   const message = useMemo(
-    () => generateWhatsAppMessage(flowId, answers),
-    [flowId, answers],
+    () => generateWhatsAppMessage(flowId, answers, resolveLabel),
+    [flowId, answers, resolveLabel],
   )
 
   return (
@@ -260,28 +305,28 @@ function WizardPanel({
                 tabIndex={-1}
                 className="tracking-headline mt-4 text-[clamp(1.4rem,3vw,1.9rem)] font-extrabold leading-snug text-ink outline-none"
               >
-                {step.question}
+                {resolvedStep.question}
               </h3>
-              {step.kind !== 'summary' && step.helper ? (
-                <p className="mt-2 text-sm text-muted">{step.helper}</p>
+              {resolvedStep.kind !== 'summary' && resolvedStep.helper ? (
+                <p className="mt-2 text-sm text-muted">{resolvedStep.helper}</p>
               ) : null}
 
               <div className="mt-6">
-                {step.kind === 'choice' && (
+                {resolvedStep.kind === 'choice' && (
                   <ChoiceStep
-                    step={step}
-                    value={answers[step.id] ?? ''}
+                    step={resolvedStep}
+                    value={answers[resolvedStep.id] ?? ''}
                     onSelect={selectOption}
                   />
                 )}
 
-                {step.kind === 'textarea' && (
+                {resolvedStep.kind === 'textarea' && (
                   <label className="block">
-                    <span className="sr-only">{step.label}</span>
+                    <span className="sr-only">{resolvedStep.label}</span>
                     <textarea
-                      value={answers[step.id] ?? ''}
-                      onChange={(e) => answer(step.id, e.target.value)}
-                      placeholder={step.placeholder}
+                      value={answers[resolvedStep.id] ?? ''}
+                      onChange={(e) => answer(resolvedStep.id, e.target.value)}
+                      placeholder={resolvedStep.placeholder}
                       rows={5}
                       autoFocus={!reduce}
                       className="w-full resize-none rounded-2xl border border-line bg-white/70 px-5 py-4 text-[15px] leading-relaxed text-ink placeholder:text-muted/60 focus:border-grape focus:outline-none focus:ring-2 focus:ring-grape/20"
@@ -289,7 +334,7 @@ function WizardPanel({
                   </label>
                 )}
 
-                {step.kind === 'summary' && (
+                {resolvedStep.kind === 'summary' && (
                   <SummaryStep
                     flowId={flowId}
                     answers={answers}
@@ -298,21 +343,23 @@ function WizardPanel({
                 )}
               </div>
 
-              {/* Banner de serviço selecionado (passo 2 da contratação) */}
-              {serviceOption ? (
+              {/* Banner da escolha selecionada (serviço na contratação; oportunidade no profissional) */}
+              {choiceBanner?.option ? (
                 <div className="mt-6 flex items-center justify-between gap-3 rounded-2xl border border-grape/15 bg-lavender/50 px-4 py-3.5 sm:px-5">
                   <div className="flex min-w-0 items-center gap-3">
-                    <img
-                      src={serviceOption.image ?? ''}
-                      alt=""
-                      loading="lazy"
-                      className="h-10 w-10 shrink-0 rounded-xl object-cover"
-                    />
+                    {choiceBanner.option.image ? (
+                      <img
+                        src={choiceBanner.option.image}
+                        alt=""
+                        loading="lazy"
+                        className="h-10 w-10 shrink-0 rounded-xl object-cover"
+                      />
+                    ) : null}
                     <div className="min-w-0">
                       <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">
                         Você escolheu
                       </p>
-                      <p className="truncate text-[15px] font-bold text-grape">{serviceOption.label}</p>
+                      <p className="truncate text-[15px] font-bold text-grape">{choiceBanner.option.label}</p>
                     </div>
                   </div>
                   <button
@@ -320,7 +367,7 @@ function WizardPanel({
                     onClick={() => jumpTo(0)}
                     className="shrink-0 rounded-full px-3 py-1.5 text-[13px] font-bold text-grape underline-offset-4 transition-colors hover:bg-lavender/70 hover:underline"
                   >
-                    Alterar serviço
+                    {choiceBanner.changeLabel}
                   </button>
                 </div>
               ) : null}
@@ -336,10 +383,10 @@ function WizardPanel({
                     className="mt-4 flex items-center gap-2.5 rounded-xl border border-magenta/20 bg-magenta/5 px-4 py-3 text-sm font-semibold text-magenta"
                   >
                     <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-magenta" />
-                    {step.kind === 'choice' && step.id === 'service'
+                    {resolvedStep.kind === 'choice' && resolvedStep.id === 'service'
                       ? 'Selecione um serviço para continuar.'
-                      : step.kind === 'choice' && step.helper
-                        ? step.helper
+                      : resolvedStep.kind === 'choice' && resolvedStep.helper
+                        ? resolvedStep.helper
                         : 'Selecione uma opção para continuar.'}
                   </motion.p>
                 ) : null}
@@ -352,7 +399,7 @@ function WizardPanel({
         <footer className="border-t border-line/70 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 sm:px-8">
           {isSummary ? (
             <a
-              href={whatsappLink(message)}
+              href={whatsappLink(message, site.whatsappNumber)}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-grape px-7 py-4 text-[15px] font-semibold text-white shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-plum"

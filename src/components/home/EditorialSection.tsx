@@ -1,13 +1,16 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { IMAGES } from '../../config/images'
+import { useSite } from '../../data/SiteContext'
 
 /**
  * Pausa visual: fotografia de largura total com movimento sutil no scroll.
  */
 export function EditorialSection() {
   const ref = useRef<HTMLElement>(null)
+  const site = useSite()
   const reduce = useReducedMotion()
+  const editorial = site.data.settings?.editorial ?? {}
+  const imgs = site.data.settings?.images ?? {}
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], ['-12%', '12%'])
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.12, 1, 1.12])
@@ -24,7 +27,7 @@ export function EditorialSection() {
         className="absolute inset-0"
       >
         <img
-          src={IMAGES.editorial.wide}
+          src={imgs.editorial || '/images/editorial/editorial-wide.jpg'}
           alt=""
           loading="lazy"
           decoding="async"
@@ -41,7 +44,7 @@ export function EditorialSection() {
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="accent-serif text-[clamp(1.9rem,5.4vw,3.4rem)] italic leading-[1.18] text-white"
         >
-          “Cuidar também é escolher com atenção.”
+          {editorial.quote || '“Cuidar também é escolher com atenção.”'}
         </motion.blockquote>
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 16 }}
@@ -50,7 +53,7 @@ export function EditorialSection() {
           transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
           className="mt-7 text-[11px] font-semibold uppercase tracking-[0.3em] text-lilac"
         >
-          Agência Tia Sam · Manaus
+          {editorial.attribution || 'Agência Tia Sam · Manaus'}
         </motion.p>
       </div>
     </section>

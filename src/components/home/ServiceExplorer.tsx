@@ -2,91 +2,20 @@ import { useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { ArrowRight, Check, ChevronDown } from 'lucide-react'
 import { cn } from '../../lib/cn'
-import { IMAGES } from '../../config/images'
+import { useSite } from '../../data/SiteContext'
 import { SectionHeading } from '../ui/SectionHeading'
 import { Container } from '../ui/Container'
 import { useWizard } from '../wizard/WizardContext'
 
-const SERVICES = [
-  {
-    id: 'baba',
-    number: '01',
-    title: 'Babá',
-    tagline: 'Cuidado que acompanha o crescimento.',
-    description:
-      'Profissionais selecionadas para cuidar do que mais importa: o seu filho. Cada babá passa por um processo criterioso para que você tenha confiança no dia a dia.',
-    benefits: ['Rotina e afeto no cuidado diário', 'Segurança e atenção em primeiro lugar', 'Referências profissionais verificadas'],
-    image: IMAGES.services.baba,
-    alt: IMAGES.services.babaAlt,
-    cta: 'Encontrar uma babá',
-  },
-  {
-    id: 'secretaria',
-    number: '02',
-    title: 'Secretária do lar',
-    tagline: 'Organização que transforma o dia.',
-    description:
-      'Discrição, organização e capricho para manter a sua casa funcionando com harmonia. Uma profissional confiável para o dia a dia da sua família.',
-    benefits: ['Organização completa da rotina familiar', 'Discrição e confiança absoluta', 'Experiência em gestão doméstica'],
-    image: IMAGES.services.secretaria,
-    alt: IMAGES.services.secretariaAlt,
-    cta: 'Encontrar uma secretária do lar',
-  },
-  {
-    id: 'diarista',
-    number: '03',
-    title: 'Diarista',
-    tagline: 'Praticidade que faz diferença.',
-    description:
-      'Para quem precisa de uma mão amiga na rotina. Nossas diaristas são profissionais treinadas e recomendadas para deixar sua casa impecável.',
-    benefits: ['Flexibilidade de dias e horários', 'Profissionais treinadas e recomendadas', 'Produtos e técnicas adequadas'],
-    image: IMAGES.services.diarista,
-    alt: IMAGES.services.diaristaAlt,
-    cta: 'Encontrar uma diarista',
-  },
-  {
-    id: 'posParto',
-    number: '04',
-    title: 'Assistência pós-parto',
-    tagline: 'Apoio humano nos primeiros meses.',
-    description:
-      'Os primeiros meses exigem cuidado redobrado. Nossas profissionais oferecem suporte para mãe e bebê com experiência, paciência e muito carinho.',
-    benefits: ['Apoio para mãe e recém-nascido', 'Experiência em cuidados neonatais', 'Tranquilidade para a família'],
-    image: IMAGES.services.posParto,
-    alt: IMAGES.services.posPartoAlt,
-    cta: 'Encontrar assistência pós-parto',
-  },
-  {
-    id: 'passadeira',
-    number: '05',
-    title: 'Passadeira',
-    tagline: 'Roupas impecáveis, sem preocupação.',
-    description:
-      'Para quem valoriza a aparência e a organização do guarda-roupa. Profissionais dedicadas a manter suas roupas no ponto certo.',
-    benefits: ['Cuidado especial com cada peça', 'Organização do guarda-roupa', 'Agilidade e pontualidade'],
-    image: IMAGES.services.passadeira,
-    alt: IMAGES.services.passadeiraAlt,
-    cta: 'Encontrar uma passadeira',
-  },
-  {
-    id: 'cuidadora',
-    number: '06',
-    title: 'Cuidadora de idosos',
-    tagline: 'Presença que honra uma vida.',
-    description:
-      'Paciência, respeito e atenção para quem você ama. Nossas cuidadoras são preparadas para oferecer qualidade de vida e companhia verdadeira.',
-    benefits: ['Acompanhamento humanizado e respeitoso', 'Profissionais com treinamento específico', 'Comunicação constante com a família'],
-    image: IMAGES.services.cuidadora,
-    alt: IMAGES.services.cuidadoraAlt,
-    cta: 'Encontrar uma cuidadora',
-  },
-] as const
-
 export function ServiceExplorer() {
   const [active, setActive] = useState(0)
   const { openWizard } = useWizard()
+  const site = useSite()
   const reduce = useReducedMotion()
+  const SERVICES = site.services
   const service = SERVICES[active]
+
+  const pad = (n: number) => String(n + 1).padStart(2, '0')
 
   return (
     <section id="servicos" aria-labelledby="services-title" className="relative py-20 sm:py-28">
@@ -107,7 +36,7 @@ export function ServiceExplorer() {
           {/* Lista vertical */}
           <ul role="tablist" aria-label="Lista de serviços" className="space-y-1.5">
             {SERVICES.map((s, i) => (
-              <li key={s.id}>
+              <li key={s.slug}>
                 <button
                   type="button"
                   role="tab"
@@ -127,7 +56,7 @@ export function ServiceExplorer() {
                       active === i ? 'text-grape' : 'text-muted/50',
                     )}
                   >
-                    {s.number}
+                    {pad(i)}
                   </span>
                   <span className="flex-1">
                     <span
@@ -136,7 +65,7 @@ export function ServiceExplorer() {
                         active === i ? 'text-grape' : 'text-ink',
                       )}
                     >
-                      {s.title}
+                      {s.name}
                     </span>
                     <span
                       className={cn(
@@ -179,7 +108,7 @@ export function ServiceExplorer() {
           <div className="relative min-h-[460px]">
             <AnimatePresence mode="wait">
               <motion.div
-                key={service.id}
+                key={service.slug}
                 initial={reduce ? false : { opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={reduce ? undefined : { opacity: 0, x: -16 }}
@@ -199,7 +128,7 @@ export function ServiceExplorer() {
 
                 <div className="mt-6">
                   <h3 className="tracking-headline text-[clamp(1.35rem,2.5vw,1.7rem)] font-extrabold text-ink">
-                    {service.title}
+                    {service.name}
                   </h3>
                   <p className="mt-3 text-base leading-relaxed text-muted">
                     {service.description}
@@ -216,7 +145,7 @@ export function ServiceExplorer() {
 
                   <button
                     type="button"
-                    onClick={() => openWizard('hire', { service: service.id })}
+                    onClick={() => openWizard('hire', { service: service.slug })}
                     className="group mt-7 inline-flex items-center gap-2.5 rounded-full bg-grape px-7 py-3.5 text-[14px] font-semibold text-white shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-plum"
                   >
                     {service.cta}
@@ -234,7 +163,7 @@ export function ServiceExplorer() {
             const open = active === i
             return (
               <div
-                key={s.id}
+                key={s.slug}
                 className={cn(
                   'overflow-hidden rounded-2xl border transition-all duration-400',
                   open ? 'border-grape/30 bg-white shadow-soft' : 'border-line bg-white/70',
@@ -243,9 +172,9 @@ export function ServiceExplorer() {
                 <button
                   type="button"
                   onClick={() => setActive(open ? -1 : i)}
-                  id={`service-btn-${s.id}`}
+                  id={`service-btn-${s.slug}`}
                   aria-expanded={open}
-                  aria-controls={`service-panel-${s.id}`}
+                  aria-controls={`service-panel-${s.slug}`}
                   className="flex w-full items-center gap-4 px-5 py-5 text-left"
                 >
                   <span
@@ -255,7 +184,7 @@ export function ServiceExplorer() {
                       open ? 'text-grape' : 'text-muted/50',
                     )}
                   >
-                    {s.number}
+                    {pad(i)}
                   </span>
                   <span className="flex-1">
                     <span
@@ -264,7 +193,7 @@ export function ServiceExplorer() {
                         open ? 'text-grape' : 'text-ink',
                       )}
                     >
-                      {s.title}
+                      {s.name}
                     </span>
                     <span className="mt-0.5 block text-xs text-muted">{s.tagline}</span>
                   </span>
@@ -287,9 +216,9 @@ export function ServiceExplorer() {
                   {open && (
                     <motion.div
                       key="content"
-                      id={`service-panel-${s.id}`}
+                      id={`service-panel-${s.slug}`}
                       role="region"
-                      aria-labelledby={`service-btn-${s.id}`}
+                      aria-labelledby={`service-btn-${s.slug}`}
                       initial={reduce ? false : { height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={reduce ? undefined : { height: 0, opacity: 0 }}
@@ -319,7 +248,7 @@ export function ServiceExplorer() {
                         </ul>
                         <button
                           type="button"
-                          onClick={() => openWizard('hire', { service: s.id })}
+                          onClick={() => openWizard('hire', { service: s.slug })}
                           className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-grape px-6 py-3.5 text-[13px] font-semibold text-white shadow-soft transition-colors hover:bg-plum"
                         >
                           {s.cta}
