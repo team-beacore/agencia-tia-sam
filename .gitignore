@@ -9,6 +9,9 @@ scripts/shots/
 # Dados locais (banco SQLite e uploads)
 data/
 
+# Backups gerados pelo scripts/backup.sh
+backups/
+
 # Segredos / ambiente
 .env
 .env.*
