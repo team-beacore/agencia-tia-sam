@@ -24,13 +24,26 @@ const NAV = [
 ]
 
 function AdminLayout() {
-  const { user, logout } = useAuth()
+  const { user, loading, logout } = useAuth()
   const location = useLocation()
   const navigate = useNavigate()
   const [sidebar, setSidebar] = useState(false)
 
   const isActive = (path: string, exact?: boolean) =>
     exact ? location.pathname === path : location.pathname.startsWith(path)
+
+  // Aguarda a verificação de sessão antes de redirecionar — evita mandar
+  // para o login quem já está autenticado ao recarregar a página.
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-cream">
+        <div className="flex items-center gap-2 text-sm text-muted">
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-grape/30 border-t-grape" aria-hidden="true" />
+          Verificando sessão...
+        </div>
+      </div>
+    )
+  }
 
   if (!user) return <Navigate to="/admin/login" replace />
 
