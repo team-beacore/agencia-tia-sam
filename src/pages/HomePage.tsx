@@ -7,7 +7,6 @@ import { ServiceExplorer } from '../components/home/ServiceExplorer'
 import { ProcessTimeline } from '../components/home/ProcessTimeline'
 import { TrustSection } from '../components/home/TrustSection'
 import { CounterSection } from '../components/home/CounterSection'
-import { CompaniesSection } from '../components/home/CompaniesSection'
 import { ProfessionalsSection } from '../components/home/ProfessionalsSection'
 import { ProfessionalsGrid } from '../components/home/ProfessionalsGrid'
 import { OpportunitiesSection } from '../components/home/OpportunitiesSection'
@@ -42,7 +41,6 @@ export default function HomePage() {
           <ProcessTimeline />
           <TrustSection />
           <CounterSection />
-          <CompaniesSection />
           <ProfessionalsSection />
           <ProfessionalsGrid />
           <OpportunitiesSection />

@@ -35,14 +35,6 @@ const PATHS: HubPath[] = [
     image: IMAGES.hub.professional,
     alt: IMAGES.hub.professionalAlt,
   },
-  {
-    id: 'company',
-    number: '03',
-    title: 'Sou uma empresa',
-    description: 'Profissionais para a minha empresa.',
-    image: IMAGES.hub.company,
-    alt: IMAGES.hub.companyAlt,
-  },
 ]
 
 export function DecisionHub() {
@@ -55,8 +47,7 @@ export function DecisionHub() {
   // Resolve imagens dinâmicas com fallback para as originais
   const imageFor = (idx: number, fallback: string) => {
     if (idx === 0) return imgs.hubFamily || fallback
-    if (idx === 1) return imgs.hubProfessional || fallback
-    return imgs.hubCompany || fallback
+    return imgs.hubProfessional || fallback
   }
 
   const handleActivate = useCallback(
@@ -74,10 +65,10 @@ export function DecisionHub() {
           eyebrow="Como podemos ajudar?"
           title={
             <span id="hub-title">
-              Três caminhos. <span className="accent-serif text-grape">O mesmo cuidado.</span>
+              Dois caminhos. <span className="accent-serif text-grape">O mesmo cuidado.</span>
             </span>
           }
-          intro="Seja para a sua casa, para a sua família ou para a sua empresa — a Tia Sam começa do mesmo jeito: ouvindo você."
+          intro="Seja para a sua casa ou para a sua família — a Tia Sam começa do mesmo jeito: ouvindo você."
         />
 
         <div className="mt-12 flex flex-col gap-4 lg:mt-16 lg:h-[540px] lg:flex-row">
@@ -92,7 +83,7 @@ export function DecisionHub() {
                 onFocus={() => setActive(i)}
                 aria-label={`${path.title} — ${path.description}`}
                 className={cn(
-                  'group relative min-h-[300px] flex-1 overflow-hidden rounded-[26px] text-left transition-all duration-700 ease-soft focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 sm:min-h-[360px] lg:min-h-0',
+                  'group relative min-h-[260px] flex-1 overflow-hidden rounded-[26px] text-left transition-all duration-700 ease-soft focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 sm:min-h-[360px] lg:min-h-0',
                   'lg:transition-[flex-grow]',
                   isActive ? 'lg:flex-[2.4]' : 'lg:flex-[1]',
                 )}
@@ -133,7 +124,7 @@ export function DecisionHub() {
                       isActive && 'text-lilac',
                     )}
                   >
-                    {path.id === 'hire' ? 'Para famílias' : path.id === 'professional' ? 'Para profissionais' : 'Para empresas'}
+                    {path.id === 'hire' ? 'Para famílias' : 'Para profissionais'}
                   </span>
                   <span className="mt-2 block text-[clamp(1.4rem,2.6vw,1.9rem)] font-extrabold leading-tight tracking-tight text-white">
                     {path.title}

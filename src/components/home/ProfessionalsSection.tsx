@@ -35,6 +35,20 @@ export function ProfessionalsSection() {
                 <AccentTitle text={prof.title || 'Faça parte das oportunidades da Tia Sam.'} />
               </h2>
             </Reveal>
+
+            {/* Fotografia (mobile: após o título; desktop: coluna separada) */}
+            <Reveal delay={0.12} className="lg:hidden">
+              <figure className="overflow-hidden rounded-[28px] shadow-lift">
+                <img
+                  src={imgs.professionals || '/images/professionals/professional-main.jpg'}
+                  alt="Profissional sorrindo com confiança"
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/3.2] w-full object-cover"
+                />
+              </figure>
+            </Reveal>
+
             <Reveal delay={0.16}>
               <p className="mt-5 text-base leading-relaxed text-muted">
                 {prof.text ||
@@ -44,9 +58,9 @@ export function ProfessionalsSection() {
 
             {/* Mini-timeline horizontal */}
             <Reveal delay={0.24}>
-              <div className="mt-8 flex flex-wrap items-start gap-1.5 sm:gap-3">
+              <div className="mt-8 flex flex-wrap items-start gap-1 sm:gap-3">
                 {steps.map((step, i) => (
-                  <div key={step} className="flex items-center gap-1.5 sm:gap-3">
+                  <div key={step} className="flex items-center gap-1 sm:gap-3">
                     <div className="flex flex-col items-center">
                       <span
                         className="flex h-8 w-8 items-center justify-center rounded-full bg-lavender text-[11px] font-bold text-grape"
@@ -59,7 +73,7 @@ export function ProfessionalsSection() {
                       </span>
                     </div>
                     {i < steps.length - 1 && (
-                      <div aria-hidden="true" className="mb-5 h-px w-4 bg-line sm:w-6" />
+                      <div aria-hidden="true" className="mb-5 h-px w-2 bg-line sm:w-6" />
                     )}
                   </div>
                 ))}
@@ -78,8 +92,8 @@ export function ProfessionalsSection() {
             </Reveal>
           </div>
 
-          {/* Fotografia */}
-          <Reveal className="min-w-0 lg:order-2">
+          {/* Fotografia (desktop) */}
+          <Reveal className="min-w-0 lg:order-2 max-lg:hidden">
             <figure className="overflow-hidden rounded-[28px] shadow-lift">
               <img
                 src={imgs.professionals || '/images/professionals/professional-main.jpg'}

@@ -12,8 +12,8 @@ export function AboutSection() {
     <section id="sobre" aria-labelledby="about-title" className="relative py-20 sm:py-28">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-          {/* Fotografia assimétrica */}
-          <Reveal className="order-2 min-w-0 lg:order-1">
+          {/* Fotografia assimétrica (desktop) */}
+          <Reveal className="order-2 min-w-0 lg:order-1 max-lg:hidden">
             <div className="relative">
               <div
                 aria-hidden="true"
@@ -47,6 +47,20 @@ export function AboutSection() {
                 {about.title || 'Uma agência que acolhe como alguém próximo e trabalha com rigor profissional.'}
               </h2>
             </Reveal>
+
+            {/* Fotografia (mobile: após o título; desktop: coluna separada) */}
+            <Reveal delay={0.12} className="lg:hidden">
+              <figure className="overflow-hidden rounded-[28px] shadow-lift">
+                <img
+                  src={imgs.about || '/images/about/about-main.jpg'}
+                  alt="Momento afetuoso entre avó e criança"
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/3.4] w-full object-cover"
+                />
+              </figure>
+            </Reveal>
+
             <Reveal delay={0.16}>
               <p className="mt-5 text-base leading-relaxed text-muted">
                 {about.text1 ||

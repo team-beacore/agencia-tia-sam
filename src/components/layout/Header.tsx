@@ -4,6 +4,7 @@ import { ArrowRight, Menu, X } from 'lucide-react'
 import { cn } from '../../lib/cn'
 import { NAV_LINKS, whatsappLink } from '../../config/site'
 import { useScrolled } from '../../hooks/useScrolled'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { useSite } from '../../data/SiteContext'
 import { Logo } from '../ui/Logo'
 import { Container } from '../ui/Container'
@@ -12,6 +13,7 @@ import { useWizard } from '../wizard/WizardContext'
 
 export function Header() {
   const scrolled = useScrolled(24)
+  const isDesktop = useMediaQuery('(min-width: 768px)')
   const [menuOpen, setMenuOpen] = useState(false)
   const { openWizard } = useWizard()
   const site = useSite()
@@ -92,7 +94,7 @@ export function Header() {
           )}
         >
           <Container className="flex items-center justify-between gap-4">
-            <Logo compact={scrolled} />
+            <Logo compact={scrolled} dark={!scrolled && !isDesktop} />
 
             <nav aria-label="Navegação principal" className="hidden items-center gap-7 xl:flex">
               {NAV_LINKS.map((link) => (
@@ -159,36 +161,37 @@ export function Header() {
               </button>
             </div>
 
-            <nav
-              aria-label="Menu mobile"
-              className="flex flex-1 flex-col justify-center gap-1 px-8 pb-10"
-            >
-              {NAV_LINKS.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="group flex items-baseline gap-4 border-b border-line/80 py-4"
-                  initial={reduce ? false : { opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 + i * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <span className="text-xs font-semibold text-muted/60">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span className="text-[26px] font-bold tracking-tight text-ink transition-colors group-hover:text-grape">
-                    {link.label}
-                  </span>
-                </motion.a>
-              ))}
-            </nav>
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-8 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+              <nav
+                aria-label="Menu mobile"
+                className="flex min-h-full flex-col justify-center gap-1"
+              >
+                {NAV_LINKS.map((link, i) => (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="group flex items-baseline gap-4 border-b border-line/80 py-4"
+                    initial={reduce ? false : { opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 + i * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <span className="text-xs font-semibold text-muted/60">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="text-[26px] font-bold tracking-tight text-ink transition-colors group-hover:text-grape">
+                      {link.label}
+                    </span>
+                  </motion.a>
+                ))}
+              </nav>
 
-            <motion.div
-              className="px-8 pb-[max(2rem,env(safe-area-inset-bottom))]"
-              initial={reduce ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.4 }}
-            >
+              <motion.div
+                className="pt-2"
+                initial={reduce ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+              >
               <button
                 type="button"
                 onClick={() => {
@@ -221,7 +224,8 @@ export function Header() {
                 </a>
               </div>
               <p className="mt-4 text-center text-xs text-muted">{site.siteLocation}</p>
-            </motion.div>
+              </motion.div>
+            </div>
           </motion.div>
         ) : null}
       </AnimatePresence>

@@ -16,8 +16,6 @@ export const IMAGES = {
     familyAlt: 'Mãe com o bebê no colo, em casa',
     professional: '/images/hub/hub-professional.jpg',
     professionalAlt: 'Profissional sorrindo, pronta para trabalhar',
-    company: '/images/hub/hub-company.jpg',
-    companyAlt: 'Equipe reunida em ambiente profissional',
   },
   services: {
     baba: '/images/services/baba.jpg',
@@ -57,11 +55,7 @@ export const IMAGES = {
   },
   professionals: {
     main: '/images/professionals/professional-main.jpg',
-    mainAlt: 'Profissional sorrindo com confiança',
-  },
-  companies: {
-    main: '/images/companies/company-main.jpg',
-    mainAlt: 'Profissionais em reunião de trabalho',
+    professionalAlt: 'Profissional sorrindo com confiança',
   },
   cta: {
     main: '/images/cta/cta-main.jpg',

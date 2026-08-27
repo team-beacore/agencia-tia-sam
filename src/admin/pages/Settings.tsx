@@ -65,7 +65,6 @@ export default function SettingsPage() {
   const site = form.site ?? {}
   const hero = form.hero ?? {}
   const about = form.about ?? {}
-  const companies = form.companies ?? {}
   const professionals = form.professionals ?? {}
   const editorial = form.editorial ?? {}
   const social = form.social ?? {}
@@ -154,25 +153,6 @@ export default function SettingsPage() {
         </FieldSpan>
       </Section>
 
-      <Section title="Seção empresas" subtitle="Conteúdo para empresas">
-        <Field label="Título">
-          <Input value={companies.title ?? ''} onChange={(e) => set('companies', 'title', e.target.value)} />
-        </Field>
-        <Field label="CTA">
-          <Input value={companies.cta ?? ''} onChange={(e) => set('companies', 'cta', e.target.value)} />
-        </Field>
-        <FieldSpan>
-          <Field label="Texto">
-            <Textarea value={companies.text ?? ''} onChange={(e) => set('companies', 'text', e.target.value)} rows={2} />
-          </Field>
-        </FieldSpan>
-        <FieldSpan>
-          <Field label="Benefícios (um por linha)">
-            <Textarea value={(companies.benefits ?? []).join('\n')} onChange={(e) => set('companies', 'benefits', e.target.value.split('\n'))} rows={4} />
-          </Field>
-        </FieldSpan>
-      </Section>
-
       <Section title="Seção profissionais" subtitle="Conteúdo para profissionais">
         <Field label="Título">
           <Input value={professionals.title ?? ''} onChange={(e) => set('professionals', 'title', e.target.value)} />
@@ -210,7 +190,6 @@ export default function SettingsPage() {
           <ImageUpload value={images.heroMain ?? ''} onChange={(url) => set('images', 'heroMain', url)} label="Hero principal" />
           <ImageUpload value={images.heroAlt ?? ''} onChange={(url) => set('images', 'heroAlt', url)} label="Hero (alternativa)" />
           <ImageUpload value={images.about ?? ''} onChange={(url) => set('images', 'about', url)} label="Sobre" />
-          <ImageUpload value={images.companies ?? ''} onChange={(url) => set('images', 'companies', url)} label="Empresas" />
           <ImageUpload value={images.professionals ?? ''} onChange={(url) => set('images', 'professionals', url)} label="Profissionais" />
           <ImageUpload value={images.cta ?? ''} onChange={(url) => set('images', 'cta', url)} label="CTA final" />
           <ImageUpload value={images.editorial ?? ''} onChange={(url) => set('images', 'editorial', url)} label="Momento editorial" />

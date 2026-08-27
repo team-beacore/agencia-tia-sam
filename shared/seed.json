@@ -23,18 +23,6 @@
       "text1": "A Agência Tia Sam nasceu em Manaus com uma missão clara: conectar famílias a profissionais de confiança. Não somos uma plataforma automática — somos um time de pessoas que acompanha cada escolha com atenção.",
       "text2": "Acreditamos que cuidado de verdade começa com uma relação de confiança. Por isso, cada profissional que indicamos passou por um processo criterioso."
     },
-    "companies": {
-      "eyebrow": "Para empresas",
-      "title": "Soluções profissionais para empresas.",
-      "text": "Sua empresa merece profissionais que entendam o ambiente corporativo. A Tia Sam oferece soluções sob medida para diferentes necessidades.",
-      "cta": "Falar com a equipe",
-      "benefits": [
-        "Profissionais selecionadas e verificadas",
-        "Processo criterioso de triagem",
-        "Atendimento personalizado por demanda",
-        "Mais praticidade para o seu negócio"
-      ]
-    },
     "professionals": {
       "eyebrow": "Para profissionais",
       "title": "Faça parte das oportunidades da Tia Sam.",
@@ -56,13 +44,11 @@
       "heroMain": "/images/hero/hero-main.jpg",
       "heroAlt": "/images/hero/hero-alt.jpg",
       "about": "/images/about/about-main.jpg",
-      "companies": "/images/companies/company-main.jpg",
       "professionals": "/images/professionals/professional-main.jpg",
       "cta": "/images/cta/cta-main.jpg",
       "editorial": "/images/editorial/editorial-wide.jpg",
       "hubFamily": "/images/hub/hub-family.jpg",
-      "hubProfessional": "/images/hub/hub-professional.jpg",
-      "hubCompany": "/images/hub/hub-company.jpg"
+      "hubProfessional": "/images/hub/hub-professional.jpg"
     }
   },
   "contacts": [
@@ -210,26 +196,20 @@
     },
     {
       "question": "A agência atende Manaus?",
-      "answer": "Sim. A Agência Tia Sam está em Manaus - AM e atende famílias e empresas da região, com atendimento humano e próximo.",
+      "answer": "Sim. A Agência Tia Sam está em Manaus - AM e atende famílias da região, com atendimento humano e próximo.",
       "sortOrder": 4,
-      "active": true
-    },
-    {
-      "question": "Como funciona para empresas?",
-      "answer": "Oferecemos soluções profissionais sob medida: profissionais recorrentes, apoio para eventos ou serviços específicos. Conte a sua necessidade pelo caminho \"Sou uma empresa\" e nossa equipe monta a solução com você.",
-      "sortOrder": 5,
       "active": true
     },
     {
       "question": "Como entrar para a agência?",
       "answer": "Se você é profissional e busca oportunidades com seriedade, escolha \"Quero fazer parte\". Faremos uma análise do seu perfil e, se aprovada, você passa a ser encaminhada para as oportunidades que combinam com você.",
-      "sortOrder": 6,
+      "sortOrder": 5,
       "active": true
     },
     {
       "question": "Como entro em contato?",
       "answer": "Pelo WhatsApp, no número +55 92 98414-6066, ou pelo Instagram @agenciatiasam.manaus. Atendemos com atenção e respondemos a cada mensagem.",
-      "sortOrder": 7,
+      "sortOrder": 6,
       "active": true
     }
   ],

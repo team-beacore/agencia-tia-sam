@@ -9,7 +9,6 @@ export const NAV_LINKS = [
   { label: 'Como funciona', href: '#processo' },
   { label: 'Para famílias', href: '#familias' },
   { label: 'Para profissionais', href: '#profissionais' },
-  { label: 'Empresas', href: '#empresas' },
   { label: 'Sobre', href: '#sobre' },
 ] as const
 
@@ -18,7 +17,6 @@ export const FOOTER_LINKS = [
   { label: 'Como funciona', href: '#processo' },
   { label: 'Para famílias', href: '#familias' },
   { label: 'Para profissionais', href: '#profissionais' },
-  { label: 'Empresas', href: '#empresas' },
   { label: 'Sobre', href: '#sobre' },
   { label: 'FAQ', href: '#faq' },
 ] as const

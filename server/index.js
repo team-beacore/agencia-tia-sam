@@ -143,7 +143,6 @@ app.get('/api/public/site', (req, res) => {
     site: getSetting('site'),
     hero: getSetting('hero'),
     about: getSetting('about'),
-    companies: getSetting('companies'),
     professionals: getSetting('professionals'),
     editorial: getSetting('editorial'),
     social: getSetting('social'),

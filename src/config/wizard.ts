@@ -1,11 +1,11 @@
 /**
- * Configuração dos três fluxos do "Assistente Tia Sam".
+ * Configuração dos dois fluxos do "Assistente Tia Sam".
  * Data-driven: cada fluxo é uma lista de etapas reutilizáveis.
  * As opções do passo "serviço" (contratação) são injetadas dinamicamente
  * a partir dos serviços ativos cadastrados no painel administrativo.
  */
 
-export type WizardFlowId = 'hire' | 'professional' | 'company'
+export type WizardFlowId = 'hire' | 'professional'
 
 export type ChoiceOption = {
   id: string
@@ -153,60 +153,6 @@ export const WIZARD_FLOWS: Record<WizardFlowId, FlowConfig> = {
       },
     ],
   },
-
-  company: {
-    id: 'company',
-    title: 'Soluções para empresas',
-    eyebrow: 'Para empresas',
-    intro: 'Conte para a gente o que a sua empresa precisa. Vamos montar a solução juntos.',
-    finalCta: 'Falar com a equipe',
-    summaryTitle: 'Sua solicitação está pronta.',
-    summaryNote: 'Revise as informações e continue pelo WhatsApp. Nossa equipe responde com atenção.',
-    stepLabels: ['Solução', 'Quantidade', 'Necessidade', 'Resumo'],
-    summaryFields: [
-      { stepId: 'solution', label: 'Solução' },
-      { stepId: 'quantity', label: 'Quantidade' },
-      { stepId: 'need', label: 'Necessidade' },
-    ],
-    steps: [
-      {
-        id: 'solution',
-        kind: 'choice',
-        question: 'Que tipo de solução sua empresa procura?',
-        helper: 'Selecione uma opção para continuar.',
-        options: [
-          { id: 'recorrentes', label: 'Profissionais recorrentes', description: 'Apoio contínuo para o dia a dia.' },
-          { id: 'eventos', label: 'Eventos', description: 'Reforço pontual para ocasiões especiais.' },
-          { id: 'especificos', label: 'Serviços específicos', description: 'Uma necessidade bem definida.' },
-          { id: 'outra', label: 'Outra necessidade', description: 'Conte para a gente o que você imagina.' },
-        ],
-      },
-      {
-        id: 'quantity',
-        kind: 'choice',
-        question: 'Quantos profissionais você precisa?',
-        options: [
-          { id: '1', label: '1 profissional' },
-          { id: '2a5', label: 'De 2 a 5 profissionais' },
-          { id: '6mais', label: '6 ou mais' },
-          { id: 'naoSei', label: 'Ainda não sei' },
-        ],
-      },
-      {
-        id: 'need',
-        kind: 'textarea',
-        question: 'Conte um pouco sobre a necessidade',
-        helper: 'Opcional — quanto mais contexto, melhor a solução.',
-        label: 'Sua necessidade',
-        placeholder: 'Descreva o que a sua empresa precisa...',
-      },
-      {
-        id: 'summary',
-        kind: 'summary',
-        question: 'Sua solicitação está pronta.',
-      },
-    ],
-  },
 }
 
 /** Rótulo amigável de uma resposta (id → label), considerando o fluxo ativo. */
@@ -250,33 +196,17 @@ export function generateWhatsAppMessage(
     return lines.join('\n')
   }
 
-  if (flowId === 'professional') {
-    const about = answers.about?.trim()
-    const lines = [
-      'Olá, Agência Tia Sam!',
-      '',
-      'Quero fazer parte da agência.',
-      '',
-      `Oportunidade: ${label('opportunity')}`,
-      `Experiência: ${label('experience')}`,
-      ...(about ? ['', `Sobre mim: ${about}`] : []),
-      '',
-      'Gostaria de conversar sobre as oportunidades disponíveis.',
-    ]
-    return lines.join('\n')
-  }
-
-  const need = answers.need?.trim()
+  const about = answers.about?.trim()
   const lines = [
     'Olá, Agência Tia Sam!',
     '',
-    'Sou uma empresa e gostaria de conhecer as soluções da agência.',
+    'Quero fazer parte da agência.',
     '',
-    `Solução: ${label('solution')}`,
-    `Quantidade: ${label('quantity')}`,
-    ...(need ? ['', `Necessidade: ${need}`] : []),
+    `Oportunidade: ${label('opportunity')}`,
+    `Experiência: ${label('experience')}`,
+    ...(about ? ['', `Sobre mim: ${about}`] : []),
     '',
-    'Gostaria de falar com a equipe.',
+    'Gostaria de conversar sobre as oportunidades disponíveis.',
   ]
   return lines.join('\n')
 }

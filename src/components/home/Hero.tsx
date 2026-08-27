@@ -81,8 +81,21 @@ export function Hero() {
           'radial-gradient(ellipse 130% 100% at 50% 30%, #FCFAFF 0%, #FCFAFF 28%, #F7F1FB 62%, #F4ECFA 100%)',
       }}
     >
-      {/* Luz ambiente lilás — presença atmosférica suave, sem dominar */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+      {/* Imagem de fundo — apenas mobile */}
+      <div aria-hidden="true" className="absolute inset-0 md:hidden">
+        <img
+          src={imgs.heroMain || IMAGES.hero.main}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-night/55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-night/85 via-night/40 to-night/90" />
+      </div>
+
+      {/* Luz ambiente lilás — presença atmosférica suave, sem dominar (desktop) */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 max-md:hidden">
         <div className="absolute right-[-10%] top-[6%] h-[32rem] w-[32rem] rounded-full bg-[#F4ECFA] opacity-90 blur-[140px]" />
         <div className="absolute bottom-[-7rem] left-[-6rem] h-[24rem] w-[24rem] rounded-full bg-[#F7F1FB] opacity-70 blur-[130px]" />
       </div>
@@ -97,7 +110,7 @@ export function Hero() {
           >
             <motion.p
               variants={item}
-              className="flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.26em] text-grape md:justify-start"
+              className="flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.26em] text-lilac md:justify-start md:text-grape"
             >
               <span aria-hidden="true" className="hidden h-px w-9 bg-grape opacity-60 md:block" />
               {heroCfg.eyebrow || 'Agência Tia Sam · Manaus'}
@@ -105,10 +118,10 @@ export function Hero() {
 
             <motion.h1
               variants={item}
-              className="tracking-headline mx-auto mt-7 max-w-[22rem] text-balance text-center text-[clamp(2.6rem,7.2vw,4.9rem)] font-extrabold leading-[1.02] text-ink md:mx-0 md:max-w-none md:text-left"
+              className="tracking-headline mx-auto mt-7 max-w-[22rem] text-balance text-center text-[clamp(2.6rem,7.2vw,4.9rem)] font-extrabold leading-[1.02] text-white md:mx-0 md:max-w-none md:text-left md:text-ink"
             >
               {titleBefore ? <>{titleBefore}{' '}</> : null}
-              <span className="accent-serif relative text-grape">
+              <span className="accent-serif relative text-lilac md:text-grape">
                 {lastWord}
                 <svg
                   aria-hidden="true"
@@ -130,7 +143,7 @@ export function Hero() {
 
             <motion.p
               variants={item}
-              className="mx-auto mt-7 max-w-xl text-center text-lg leading-relaxed text-muted sm:text-[19px] md:mx-0 md:text-left"
+              className="mx-auto mt-7 max-w-xl text-center text-lg leading-relaxed text-lavender/90 sm:text-[19px] md:mx-0 md:text-left md:text-muted"
             >
               {heroCfg.subtitle ||
                 'Conectamos famílias e profissionais com cuidado, confiança e um processo de seleção criterioso.'}
@@ -141,16 +154,19 @@ export function Hero() {
                 Preciso de uma profissional
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
               </CTAButton>
-              <CTAButton variant="outline" onClick={() => openWizard('professional')} className="sm:w-auto">
+              <CTAButton variant="outlineLight" onClick={() => openWizard('professional')} className="sm:w-auto md:hidden">
+                Quero fazer parte
+              </CTAButton>
+              <CTAButton variant="outline" onClick={() => openWizard('professional')} className="max-md:hidden sm:w-auto">
                 Quero fazer parte
               </CTAButton>
             </motion.div>
 
             <motion.p
               variants={item}
-              className="mt-6 flex items-center justify-center gap-2 text-sm font-medium text-muted md:inline-flex md:justify-start"
+              className="mt-6 flex items-center justify-center gap-2 text-sm font-medium text-lavender/90 md:inline-flex md:justify-start md:text-muted"
             >
-              <WhatsAppIcon className="h-4 w-4 text-grape" />
+              <WhatsAppIcon className="h-4 w-4 text-lilac md:text-grape" />
               {heroCfg.whatsappHint || 'Atendimento humano pelo WhatsApp'}
             </motion.p>
           </motion.div>
@@ -209,38 +225,6 @@ export function Hero() {
                 <div className="animate-float rounded-2xl border border-line bg-white/95 px-4 py-2.5 shadow-soft backdrop-blur-sm [animation-delay:2s]">
                   <p className="text-[12px] font-bold text-ink">
                     Manaus <span className="font-medium text-muted">· AM</span>
-                  </p>
-                </div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-
-          {/* Coluna de fotografia — mobile (< 768px): composição própria, encurtada */}
-          <motion.div
-            variants={container}
-            initial={reduce ? false : 'hidden'}
-            animate="show"
-            className="relative mx-auto mt-12 w-full max-w-sm md:hidden"
-          >
-            <motion.div variants={imageItem} className="relative">
-              <div
-                aria-hidden="true"
-                className="absolute -inset-3 -z-10 rounded-[30px] border border-grape/10 bg-lavender/40"
-              />
-              <motion.figure className="overflow-hidden rounded-[24px] shadow-lift">
-                <img
-                  src={imgs.heroMain || IMAGES.hero.main}
-                  alt={IMAGES.hero.mainAlt}
-                  className="aspect-[4/3.1] w-full object-cover"
-                  fetchPriority="high"
-                  decoding="async"
-                />
-              </motion.figure>
-              <motion.div variants={item} className="absolute -bottom-4 left-4">
-                <div className="animate-float rounded-2xl border border-line bg-white/95 px-4 py-2.5 shadow-soft backdrop-blur-sm">
-                  <p className="flex items-center gap-1.5 text-[12px] font-bold text-ink">
-                    <Check className="h-3.5 w-3.5 text-magenta" aria-hidden="true" />
-                    Seleção criteriosa
                   </p>
                 </div>
               </motion.div>

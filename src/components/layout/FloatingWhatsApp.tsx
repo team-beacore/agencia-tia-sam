@@ -10,7 +10,6 @@ import { useWizard } from '../wizard/WizardContext'
 const OPTIONS = [
   { id: 'hire', label: 'Contratar' },
   { id: 'professional', label: 'Trabalhar com a Tia Sam' },
-  { id: 'company', label: 'Empresa' },
 ] as const
 
 /**

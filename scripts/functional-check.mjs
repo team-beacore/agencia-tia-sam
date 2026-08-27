@@ -122,39 +122,19 @@ try {
   await page.waitForTimeout(600)
 }
 
-/* ---------- Fluxo 3: Empresa via botão flutuante ---------- */
+/* ---------- Menu flutuante (sem empresas) ---------- */
 try {
   await page.getByRole('button', { name: 'Abrir menu do WhatsApp' }).click()
   await page.waitForTimeout(600)
   const menu = await page.getByLabel('Como podemos ajudar?').isVisible()
   menu ? ok('flutuante: menu abriu') : fail('flutuante: menu não abriu')
   const menuDialog = page.getByLabel('Como podemos ajudar?')
-  await menuDialog.getByRole('button', { name: 'Empresa', exact: true }).click()
-  await page.waitForTimeout(600)
-  await page.getByRole('radio', { name: /Eventos/ }).click()
-  await page.getByRole('button', { name: 'Continuar' }).click()
-  await page.waitForTimeout(500)
-  await page.getByRole('radio', { name: 'De 2 a 5 profissionais' }).click()
-  await page.getByRole('button', { name: 'Continuar' }).click()
-  await page.waitForTimeout(500)
-  await page.getByRole('button', { name: 'Continuar' }).click()
-  await page.waitForTimeout(500)
-  const companyCta = await page.getByRole('link', { name: /Falar com a equipe/ }).getAttribute('href')
-  const companyDecoded = companyCta ? decodeURIComponent(companyCta) : ''
-  companyDecoded.includes('Solução: Eventos') && companyDecoded.includes('Quantidade: De 2 a 5 profissionais')
-    ? ok('empresa: mensagem inclui solução e quantidade')
-    : fail('empresa: mensagem incompleta: ' + companyCta?.slice(0, 140))
-  await page.getByRole('button', { name: 'Fechar assistente' }).click().catch(() => {})
-  await page.waitForTimeout(200)
-  try {
-    await page.waitForFunction(() => !document.querySelector('[role="dialog"]'), { timeout: 3000 })
-  } catch {}
-  await page.waitForTimeout(300)
-  ok('empresa: fluxo completo via menu flutuante')
-} catch (e) {
-  fail('company flow exception: ' + e.message)
+  const hasCompany = await menuDialog.getByRole('button', { name: 'Empresa', exact: true }).count()
+  hasCompany === 0 ? ok('flutuante: sem opção Empresa') : fail('flutuante: opção Empresa ainda presente')
   await page.keyboard.press('Escape').catch(() => {})
-  await page.waitForTimeout(600)
+  await page.waitForTimeout(400)
+} catch (e) {
+  fail('flutuante check exception: ' + e.message)
 }
 
 /* ---------- ServiceExplorer pré-seleção ---------- */

@@ -14,7 +14,6 @@ const fail = (m) => log.push(`FAIL ${m}`)
 const SECTIONS = [
   { name: 'sobre', grid: '#sobre .grid', title: '#sobre h2', img: '#sobre img' },
   { name: 'counter', grid: '#familias .grid', title: '#familias h2', img: '#familias img' },
-  { name: 'empresas', grid: '#empresas .grid', title: '#empresas h2', img: '#empresas img' },
   { name: 'profissionais', grid: '#profissionais .grid', title: '#profissionais h2', img: '#profissionais img' },
   { name: 'processo', grid: '#processo [role="tabpanel"]', title: '#processo [role="tabpanel"] h3', img: '#processo [role="tabpanel"] img' },
   { name: 'cta-final', title: '#final-cta-title', img: 'section[aria-labelledby="final-cta-title"] img' },
@@ -90,24 +89,21 @@ for (const w of MOBILE_W) {
     return {
       sobre: { img: m('#sobre img'), txt: m('#sobre h2') },
       counter: { img: m('#familias img'), txt: m('#familias h2') },
-      empresas: { img: m('#empresas img'), txt: m('#empresas h2') },
       profissionais: { img: m('#profissionais img'), txt: m('#profissionais h2') },
       processo: { img: m('#processo [role="tabpanel"] img'), txt: m('#processo [role="tabpanel"] h3') },
       cta: { img: m('main img'), txt: m('#final-cta-title') },
     }
   })
 
-  // Desktop esperado: sobre=counter=empresas=profissionais: foto à esquerda ou direita?
+  // Desktop esperado: sobre=counter=profissionais: foto à esquerda ou direita?
   // sobre: FOTO esquerda (grid 1.1fr/0.9fr, imagem primeiro) — o original: imagem LEFT
   // counter: FOTO direita (texto left)
-  // empresas: FOTO esquerda
   // profissionais: FOTO direita (texto left)
   // processo: FOTO esquerda
   // cta: FOTO direita (texto left)
   const cases = [
     ['sobre', 'esquerda', rel.sobre.img.left < rel.sobre.txt.left],
     ['counter', 'direita', rel.counter.img.left > rel.counter.txt.right],
-    ['empresas', 'esquerda', rel.empresas.img.left < rel.empresas.txt.left],
     ['profissionais', 'direita', rel.profissionais.img.left > rel.profissionais.txt.right],
     ['processo', 'esquerda', rel.processo.img.left < rel.processo.txt.left],
     ['cta', 'direita', rel.cta.img.left > rel.cta.txt.right],

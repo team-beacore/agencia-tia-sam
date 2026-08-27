@@ -13,7 +13,7 @@ export function Footer() {
   return (
     <footer className="border-t border-line/60 bg-paper/70">
       <Container className="py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr]">
+        <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr_1fr] lg:gap-12">
           {/* Marca */}
           <div>
             <Logo />
@@ -24,8 +24,8 @@ export function Footer() {
             <p className="mt-5 text-sm font-medium text-grape">{site.siteLocation}</p>
           </div>
 
-          {/* Links */}
-          <nav aria-label="Links do rodapé">
+          {/* Links (apenas desktop — no mobile a navegação já está no menu principal) */}
+          <nav aria-label="Links do rodapé" className="hidden lg:block">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted">
               Navegação
             </p>

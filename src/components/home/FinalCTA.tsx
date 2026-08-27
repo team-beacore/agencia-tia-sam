@@ -52,9 +52,6 @@ export function FinalCTA() {
                 <CTAButton variant="outlineLight" onClick={() => openWizard('professional')}>
                   Quero fazer parte
                 </CTAButton>
-                <CTAButton variant="outlineLight" onClick={() => openWizard('company')}>
-                  Sou uma empresa
-                </CTAButton>
               </div>
             </Reveal>
           </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 /** Observa uma media query e re-renderiza quando ela muda. */
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(false)
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches)
 
   useEffect(() => {
     const mq = window.matchMedia(query)
