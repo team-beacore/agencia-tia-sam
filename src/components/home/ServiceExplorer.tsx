@@ -13,6 +13,7 @@ export function ServiceExplorer() {
   const site = useSite()
   const reduce = useReducedMotion()
   const SERVICES = site.services
+  if (SERVICES.length === 0) return null
   const service = SERVICES[active]
 
   const pad = (n: number) => String(n + 1).padStart(2, '0')
