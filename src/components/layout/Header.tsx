@@ -94,7 +94,7 @@ export function Header() {
           )}
         >
           <Container className="flex items-center justify-between gap-4">
-            <Logo compact={scrolled} dark={!scrolled && !isDesktop} />
+            <Logo compact={scrolled} desktop={isDesktop} />
 
             <nav aria-label="Navegação principal" className="hidden items-center gap-7 xl:flex">
               {NAV_LINKS.map((link) => (
@@ -161,10 +161,10 @@ export function Header() {
               </button>
             </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-8 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-8 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
               <nav
                 aria-label="Menu mobile"
-                className="flex min-h-full flex-col justify-center gap-1"
+                className="flex flex-1 flex-col justify-center gap-1"
               >
                 {NAV_LINKS.map((link, i) => (
                   <motion.a
