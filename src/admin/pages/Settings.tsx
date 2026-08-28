@@ -44,6 +44,21 @@ export default function SettingsPage() {
     setSaved(false)
   }
 
+  const setNested = (section: string, field: string, sub: string, value: unknown) => {
+    setForm((prev) =>
+      prev
+        ? {
+            ...prev,
+            [section]: {
+              ...(prev[section] ?? {}),
+              [field]: { ...(prev[section]?.[field] ?? {}), [sub]: value },
+            },
+          }
+        : prev,
+    )
+    setSaved(false)
+  }
+
   const save = async () => {
     if (!form) return
     setBusy(true)
@@ -65,6 +80,7 @@ export default function SettingsPage() {
   const site = form.site ?? {}
   const hero = form.hero ?? {}
   const about = form.about ?? {}
+  const founder = about.founder ?? {}
   const professionals = form.professionals ?? {}
   const editorial = form.editorial ?? {}
   const social = form.social ?? {}
@@ -137,6 +153,11 @@ export default function SettingsPage() {
 
       <Section title="Sobre a agência" subtitle="Seção institucional 'Sobre'">
         <FieldSpan>
+          <Field label="Rótulo (eyebrow)">
+            <Input value={about.eyebrow ?? ''} onChange={(e) => set('about', 'eyebrow', e.target.value)} />
+          </Field>
+        </FieldSpan>
+        <FieldSpan>
           <Field label="Título">
             <Input value={about.title ?? ''} onChange={(e) => set('about', 'title', e.target.value)} />
           </Field>
@@ -149,6 +170,68 @@ export default function SettingsPage() {
         <FieldSpan>
           <Field label="Texto 2">
             <Textarea value={about.text2 ?? ''} onChange={(e) => set('about', 'text2', e.target.value)} rows={3} />
+          </Field>
+        </FieldSpan>
+      </Section>
+
+      <Section title="Quem está por trás" subtitle="Apresentação da fundadora (Samara Santos)">
+        <FieldSpan>
+          <Field label="Rótulo (eyebrow)">
+            <Input value={founder.eyebrow ?? ''} onChange={(e) => setNested('about', 'founder', 'eyebrow', e.target.value)} />
+          </Field>
+        </FieldSpan>
+        <Field label="Nome">
+          <Input value={founder.name ?? ''} onChange={(e) => setNested('about', 'founder', 'name', e.target.value)} />
+        </Field>
+        <Field label="Cargo / papel">
+          <Input value={founder.role ?? ''} onChange={(e) => setNested('about', 'founder', 'role', e.target.value)} />
+        </Field>
+        <Field label="Idade (ex.: 28 anos)">
+          <Input value={founder.age ?? ''} onChange={(e) => setNested('about', 'founder', 'age', e.target.value)} />
+        </Field>
+        <Field label="Formação">
+          <Input value={founder.formation ?? ''} onChange={(e) => setNested('about', 'founder', 'formation', e.target.value)} />
+        </Field>
+        <Field label="Experiência">
+          <Input value={founder.experience ?? ''} onChange={(e) => setNested('about', 'founder', 'experience', e.target.value)} />
+        </Field>
+        <FieldSpan>
+          <Field label="Apresentação (bio)">
+            <Textarea value={founder.bio ?? ''} onChange={(e) => setNested('about', 'founder', 'bio', e.target.value)} rows={3} />
+          </Field>
+        </FieldSpan>
+      </Section>
+
+      <Section title="Números da história" subtitle="Indicadores exibidos em cards na seção 'Sobre'">
+        <Field label="Fundação">
+          <Input value={about.stats?.founded ?? ''} onChange={(e) => setNested('about', 'stats', 'founded', e.target.value)} />
+        </Field>
+        <Field label="Experiência da fundadora">
+          <Input value={about.stats?.founderExperience ?? ''} onChange={(e) => setNested('about', 'stats', 'founderExperience', e.target.value)} />
+        </Field>
+        <Field label="Atuação da agência">
+          <Input value={about.stats?.monthsActive ?? ''} onChange={(e) => setNested('about', 'stats', 'monthsActive', e.target.value)} />
+        </Field>
+      </Section>
+
+      <Section title="Missão, visão e valores" subtitle="Área institucional compacta">
+        <FieldSpan>
+          <Field label="Missão">
+            <Textarea value={about.mission ?? ''} onChange={(e) => set('about', 'mission', e.target.value)} rows={2} />
+          </Field>
+        </FieldSpan>
+        <FieldSpan>
+          <Field label="Visão">
+            <Textarea value={about.vision ?? ''} onChange={(e) => set('about', 'vision', e.target.value)} rows={2} />
+          </Field>
+        </FieldSpan>
+        <FieldSpan>
+          <Field label="Valores" hint="Um valor por linha. Ex.: Ética, Respeito, Empatia...">
+            <Textarea
+              value={Array.isArray(about.values) ? about.values.join('\n') : ''}
+              onChange={(e) => set('about', 'values', e.target.value.split('\n').map((v) => v.trim()).filter(Boolean))}
+              rows={4}
+            />
           </Field>
         </FieldSpan>
       </Section>
@@ -190,6 +273,7 @@ export default function SettingsPage() {
           <ImageUpload value={images.heroMain ?? ''} onChange={(url) => set('images', 'heroMain', url)} label="Hero principal" />
           <ImageUpload value={images.heroAlt ?? ''} onChange={(url) => set('images', 'heroAlt', url)} label="Hero (alternativa)" />
           <ImageUpload value={images.about ?? ''} onChange={(url) => set('images', 'about', url)} label="Sobre" />
+          <ImageUpload value={images.founder ?? ''} onChange={(url) => set('images', 'founder', url)} label="Fundadora (Samara)" />
           <ImageUpload value={images.professionals ?? ''} onChange={(url) => set('images', 'professionals', url)} label="Profissionais" />
           <ImageUpload value={images.cta ?? ''} onChange={(url) => set('images', 'cta', url)} label="CTA final" />
           <ImageUpload value={images.editorial ?? ''} onChange={(url) => set('images', 'editorial', url)} label="Momento editorial" />

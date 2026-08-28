@@ -21,7 +21,24 @@
       "eyebrow": "Sobre a agência",
       "title": "Uma agência que acolhe como alguém próximo e trabalha com rigor profissional.",
       "text1": "A Agência Tia Sam nasceu em Manaus com uma missão clara: conectar famílias a profissionais de confiança. Não somos uma plataforma automática — somos um time de pessoas que acompanha cada escolha com atenção.",
-      "text2": "Acreditamos que cuidado de verdade começa com uma relação de confiança. Por isso, cada profissional que indicamos passou por um processo criterioso."
+      "text2": "Acreditamos que cuidado de verdade começa com uma relação de confiança. Por isso, cada profissional que indicamos passou por um processo criterioso.",
+      "founder": {
+        "eyebrow": "Quem está por trás",
+        "name": "Samara Santos",
+        "role": "Fundadora da Agência Tia Sam",
+        "age": "28 anos",
+        "formation": "Graduanda em Recursos Humanos",
+        "experience": "4 anos de experiência",
+        "bio": "Samara Santos tem 28 anos e é graduanda em Recursos Humanos, com 4 anos de experiência como babysitter, cuidadora infantil e assistência pós-parto. Em dezembro de 2025, ela fundou a Agência Tia Sam, especializada em conectar famílias às profissionais ideais para o cuidado e bem-estar de quem mais importa."
+      },
+      "stats": {
+        "founded": "Dezembro de 2025",
+        "founderExperience": "4 anos",
+        "monthsActive": "9 meses"
+      },
+      "mission": "Conectar famílias aos melhores profissionais, oferecendo segurança, confiança e tranquilidade no dia a dia.",
+      "vision": "Ser referência em intermediação de profissionais do lar e cuidado, transformando vidas e fortalecendo laços.",
+      "values": ["Ética", "Respeito", "Empatia", "Compromisso", "Excelência no atendimento"]
     },
     "professionals": {
       "eyebrow": "Para profissionais",
@@ -44,6 +61,7 @@
       "heroMain": "/images/hero/hero-main.jpg",
       "heroAlt": "/images/hero/hero-alt.jpg",
       "about": "/images/about/about-main.jpg",
+      "founder": null,
       "professionals": "/images/professionals/professional-main.jpg",
       "cta": "/images/cta/cta-main.jpg",
       "editorial": "/images/editorial/editorial-wide.jpg",
