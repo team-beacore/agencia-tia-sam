@@ -9,6 +9,7 @@ import { useWizard } from '../wizard/WizardContext'
 
 export function ServiceExplorer() {
   const [active, setActive] = useState(0)
+  const [mobileOpen, setMobileOpen] = useState(0)
   const { openWizard } = useWizard()
   const site = useSite()
   const reduce = useReducedMotion()
@@ -117,13 +118,21 @@ export function ServiceExplorer() {
                 className="relative"
               >
                 {/* Imagem */}
-                <figure className="overflow-hidden rounded-[26px] shadow-soft">
+                <figure className="relative overflow-hidden rounded-[26px] shadow-soft">
+                  <img
+                    src={service.image}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl"
+                  />
                   <img
                     src={service.image}
                     alt={service.alt}
                     loading="lazy"
                     decoding="async"
-                    className="aspect-[4/3.2] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="relative aspect-[4/3.2] w-full object-contain"
                   />
                 </figure>
 
@@ -161,7 +170,7 @@ export function ServiceExplorer() {
         {/* Mobile accordion */}
         <div className="mt-14 space-y-3 lg:hidden">
           {SERVICES.map((s, i) => {
-            const open = active === i
+            const open = mobileOpen === i
             return (
               <div
                 key={s.slug}
@@ -172,7 +181,7 @@ export function ServiceExplorer() {
               >
                 <button
                   type="button"
-                  onClick={() => setActive(open ? -1 : i)}
+                  onClick={() => setMobileOpen(open ? -1 : i)}
                   id={`service-btn-${s.slug}`}
                   aria-expanded={open}
                   aria-controls={`service-panel-${s.slug}`}
@@ -227,13 +236,21 @@ export function ServiceExplorer() {
                       className="overflow-hidden"
                     >
                       <div className="px-5 pb-6">
-                        <figure className="overflow-hidden rounded-[18px]">
+                        <figure className="relative overflow-hidden rounded-[18px]">
+                          <img
+                            src={s.image}
+                            alt=""
+                            aria-hidden="true"
+                            loading="lazy"
+                            decoding="async"
+                            className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl"
+                          />
                           <img
                             src={s.image}
                             alt={s.alt}
                             loading="lazy"
                             decoding="async"
-                            className="aspect-[16/10] w-full object-cover"
+                            className="relative aspect-[16/10] w-full object-contain"
                           />
                         </figure>
                         <p className="mt-4 text-sm leading-relaxed text-muted">
