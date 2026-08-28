@@ -1,16 +1,17 @@
 import { cn } from '../../lib/cn'
 
 type LogoProps = {
-  dark?: boolean
+  desktop?: boolean
   compact?: boolean
   onClick?: () => void
 }
 
 /**
  * Marca da Agência Tia Sam (imagem oficial).
- * Em fundos transparentes (mobile), recebe um fundo claro para se destacar.
+ * Um pouco maior no desktop; compacta ao rolar a página.
  */
-export function Logo({ dark = false, compact = false, onClick }: LogoProps) {
+export function Logo({ desktop = false, compact = false, onClick }: LogoProps) {
+  const heightClass = compact ? 'h-9' : desktop ? 'h-12' : 'h-11'
   return (
     <a
       href="#inicio"
@@ -18,21 +19,14 @@ export function Logo({ dark = false, compact = false, onClick }: LogoProps) {
       aria-label="Agência Tia Sam — voltar ao início"
       className="group inline-flex items-center transition-colors duration-500"
     >
-      <span
+      <img
+        src="/images/hero/logo.png"
+        alt="Agência Tia Sam"
         className={cn(
-          'flex items-center justify-center transition-all duration-500 group-hover:-rotate-3',
-          dark && 'rounded-full bg-white/95 p-2 shadow-soft backdrop-blur-sm',
+          'w-auto object-contain transition-all duration-500 group-hover:-rotate-3',
+          heightClass,
         )}
-      >
-        <img
-          src="/images/hero/logo.png"
-          alt="Agência Tia Sam"
-          className={cn(
-            'h-11 w-auto object-contain transition-all duration-500',
-            compact && 'h-9',
-          )}
-        />
-      </span>
+      />
     </a>
   )
 }

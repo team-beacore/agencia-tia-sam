@@ -94,7 +94,7 @@ export function Header() {
           )}
         >
           <Container className="flex items-center justify-between gap-4">
-            <Logo compact={scrolled} dark={!scrolled && !isDesktop} />
+            <Logo compact={scrolled} desktop={isDesktop} />
 
             <nav aria-label="Navegação principal" className="hidden items-center gap-7 xl:flex">
               {NAV_LINKS.map((link) => (
