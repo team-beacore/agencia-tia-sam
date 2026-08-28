@@ -87,6 +87,7 @@ export function ProcessTimeline() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const stepRefs = useRef<(HTMLButtonElement | null)[]>([])
   const reduce = usePrefersReducedMotion()
+  const isFirstRender = useRef(true)
 
   const step = STEPS[active]
 
@@ -125,9 +126,14 @@ export function ProcessTimeline() {
     [active, select],
   )
 
-  // Centraliza o item ativo no scroll horizontal (mobile)
+  // Centraliza o item ativo no scroll horizontal (mobile).
+  // Ignora a primeira renderização para não rolar a página ao carregar a seção.
   useEffect(() => {
     if (reduce) return
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
     stepRefs.current[active]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
   }, [active, reduce])
 
