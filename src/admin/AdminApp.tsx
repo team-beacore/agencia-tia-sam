@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import {
-  LayoutDashboard, Users, Briefcase, Star, MessageSquare, Phone, Settings, Menu, X, LogOut,
+  LayoutDashboard, Users, Briefcase, Star, MessageSquare, Phone, Settings, Menu, X, LogOut, ArrowLeft,
 } from 'lucide-react'
 import { AuthProvider, useAuth } from './AuthContext'
 import LoginPage from './pages/Login'
@@ -77,6 +77,16 @@ function AdminLayout() {
             </button>
           ))}
         </nav>
+
+        <div className="px-3 pb-2">
+          <a
+            href="/"
+            className="flex w-full items-center gap-3 rounded-xl bg-grape px-4 py-2.5 text-sm font-semibold text-white shadow-soft transition-colors hover:bg-plum"
+          >
+            <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
+            Voltar ao site
+          </a>
+        </div>
 
         <div className="border-t border-line/70 px-4 py-4">
           <p className="truncate text-[13px] font-semibold text-ink">{user.name}</p>

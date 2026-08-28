@@ -107,7 +107,9 @@ export default function ProfessionalsPage() {
 
       <p className="mb-4 flex items-start gap-2 rounded-xl border border-grape/15 bg-lavender/40 px-4 py-3 text-xs leading-relaxed text-grape">
         <Info className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-        Apenas profissionais <strong>ativas</strong> e com <strong>"Exibir no site"</strong> ativado aparecem publicamente. Não inclua dados sensíveis (documentos, endereço completo, contato direto).
+        <span className="min-w-0">
+          Apenas profissionais <strong>ativas</strong> e com <strong>"Exibir no site"</strong> ativado aparecem publicamente. Não inclua dados sensíveis (documentos, endereço completo, contato direto).
+        </span>
       </p>
 
       {error ? <p className="mb-4 rounded-xl border border-magenta/20 bg-magenta/5 px-4 py-3 text-sm font-semibold text-magenta">{error}</p> : null}
