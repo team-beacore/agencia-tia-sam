@@ -38,7 +38,7 @@ export function ProfessionalsSection() {
 
             {/* Fotografia (mobile: após o título; desktop: coluna separada) */}
             <Reveal delay={0.12} className="lg:hidden">
-              <figure className="overflow-hidden rounded-[28px] shadow-lift">
+              <figure className="mt-8 overflow-hidden rounded-[28px] shadow-lift">
                 <img
                   src={imgs.professionals || '/images/professionals/professional-main.jpg'}
                   alt="Profissional sorrindo com confiança"

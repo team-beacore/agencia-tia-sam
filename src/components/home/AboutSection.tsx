@@ -3,6 +3,7 @@ import { useSite } from '../../data/SiteContext'
 import { Container } from '../ui/Container'
 import { Reveal } from '../ui/Reveal'
 import { Eyebrow } from '../ui/Eyebrow'
+import { cn } from '../../lib/cn'
 import { useCountUp } from '../../hooks/useCountUp'
 
 const DEFAULT_MISSION =
@@ -10,6 +11,37 @@ const DEFAULT_MISSION =
 const DEFAULT_VISION =
   'Ser referência em intermediação de profissionais do lar e cuidado, transformando vidas e fortalecendo laços.'
 const DEFAULT_VALUES = ['Ética', 'Respeito', 'Empatia', 'Compromisso', 'Excelência no atendimento']
+
+function FounderPhoto({ name, image, age, className }: { name: string; image: string; age: string; className?: string }) {
+  return (
+    <div className={cn('relative', className)}>
+      <div aria-hidden="true" className="absolute -right-5 -top-5 h-28 w-28 rounded-full bg-blush sm:-right-6 sm:-top-6" />
+      <div aria-hidden="true" className="absolute -bottom-5 -left-5 h-24 w-24 rounded-full bg-lavender/70 sm:-left-6" />
+      <div className="relative overflow-hidden rounded-[28px] border border-line bg-paper shadow-lift">
+        {image ? (
+          <img
+            src={image}
+            alt={`Foto de ${name}`}
+            loading="lazy"
+            decoding="async"
+            className="aspect-[4/4.4] w-full object-cover"
+          />
+        ) : (
+          <div className="flex aspect-[4/4.4] w-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-lavender/70 via-paper to-blush/70 p-8 text-center">
+            <span aria-hidden="true" className="accent-serif text-[clamp(4.5rem,12vw,6.5rem)] leading-none text-grape/80">
+              SS
+            </span>
+            <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-grape">{name}</span>
+          </div>
+        )}
+      </div>
+      <div className="absolute -bottom-5 left-6 rounded-2xl border border-line bg-white/95 px-5 py-3.5 shadow-soft backdrop-blur-sm sm:left-10">
+        <p className="text-[13px] font-extrabold tracking-tight text-ink">{age}</p>
+        <p className="text-[11px] font-medium text-muted">fundadora</p>
+      </div>
+    </div>
+  )
+}
 
 export function AboutSection() {
   const site = useSite()
@@ -48,6 +80,20 @@ export function AboutSection() {
                   'Uma agência que acolhe como alguém próximo e trabalha com rigor profissional.'}
               </h2>
             </Reveal>
+
+            {/* Fotografia da agência (mobile/tablet: logo abaixo do título) */}
+            <Reveal delay={0.12} className="lg:hidden">
+              <figure className="mt-6 overflow-hidden rounded-[28px] shadow-lift">
+                <img
+                  src={aboutImg}
+                  alt="Momento afetuoso entre avó e criança"
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/3.4] w-full object-cover"
+                />
+              </figure>
+            </Reveal>
+
             <Reveal delay={0.16}>
               <p className="mt-5 text-base leading-relaxed text-muted">
                 {about.text1 ||
@@ -72,8 +118,8 @@ export function AboutSection() {
             </Reveal>
           </div>
 
-          {/* Fotografia da agência (desktop à direita / mobile após o texto) */}
-          <Reveal className="min-w-0">
+          {/* Fotografia da agência (desktop: coluna separada) */}
+          <Reveal className="min-w-0 max-lg:hidden">
             <div className="relative">
               <div
                 aria-hidden="true"
@@ -124,36 +170,14 @@ export function AboutSection() {
 
         {/* ---------- BLOCO 2 — QUEM ESTÁ POR TRÁS ---------- */}
         <div className="mt-20 grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20 sm:mt-28">
-          {/* Fotografia da fundadora */}
-          <Reveal className="min-w-0 lg:order-1">
-            <div className="relative mx-auto max-w-sm sm:max-w-md lg:max-w-none">
-              <div aria-hidden="true" className="absolute -right-5 -top-5 h-28 w-28 rounded-full bg-blush sm:-right-6 sm:-top-6" />
-              <div aria-hidden="true" className="absolute -bottom-5 -left-5 h-24 w-24 rounded-full bg-lavender/70 sm:-left-6" />
-              <div className="relative overflow-hidden rounded-[28px] border border-line bg-paper shadow-lift">
-                {founderImg ? (
-                  <img
-                    src={founderImg}
-                    alt={`Foto de ${founderName}`}
-                    loading="lazy"
-                    decoding="async"
-                    className="aspect-[4/4.4] w-full object-cover"
-                  />
-                ) : (
-                  <div className="flex aspect-[4/4.4] w-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-lavender/70 via-paper to-blush/70 p-8 text-center">
-                    <span aria-hidden="true" className="accent-serif text-[clamp(4.5rem,12vw,6.5rem)] leading-none text-grape/80">
-                      SS
-                    </span>
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-grape">
-                      {founderName}
-                    </span>
-                  </div>
-                )}
-              </div>
-              <div className="absolute -bottom-5 left-6 rounded-2xl border border-line bg-white/95 px-5 py-3.5 shadow-soft backdrop-blur-sm sm:left-10">
-                <p className="text-[13px] font-extrabold tracking-tight text-ink">{founder.age || '28 anos'}</p>
-                <p className="text-[11px] font-medium text-muted">fundadora</p>
-              </div>
-            </div>
+          {/* Fotografia da fundadora (desktop: coluna separada) */}
+          <Reveal className="min-w-0 lg:order-1 max-lg:hidden">
+            <FounderPhoto
+              name={founderName}
+              image={founderImg}
+              age={founder.age || '28 anos'}
+              className="mx-auto max-w-sm sm:max-w-md lg:max-w-none"
+            />
           </Reveal>
 
           {/* Conteúdo da fundadora */}
@@ -169,9 +193,20 @@ export function AboutSection() {
                 {founderName}
               </h3>
             </Reveal>
+
+            {/* Fotografia da fundadora (mobile/tablet: logo abaixo do nome) */}
+            <Reveal delay={0.12} className="lg:hidden">
+              <FounderPhoto
+                name={founderName}
+                image={founderImg}
+                age={founder.age || '28 anos'}
+                className="mx-auto mt-6 max-w-sm sm:max-w-md"
+              />
+            </Reveal>
+
             <Reveal delay={0.14}>
-              <p className="mt-3 text-[13px] font-bold uppercase tracking-[0.18em] text-grape">
-                {founder.role || 'Fundadora da Agência Tia Sam'}
+              <p className="mt-6 text-[13px] font-bold uppercase tracking-[0.18em] text-grape">
+                {founder.role || 'CEO da Agência Tia Sam'}
               </p>
             </Reveal>
             <Reveal delay={0.2}>
