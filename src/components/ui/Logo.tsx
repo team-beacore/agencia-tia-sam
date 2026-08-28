@@ -11,7 +11,7 @@ type LogoProps = {
  * Um pouco maior no desktop; compacta ao rolar a página.
  */
 export function Logo({ desktop = false, compact = false, onClick }: LogoProps) {
-  const heightClass = compact ? 'h-9' : desktop ? 'h-12' : 'h-11'
+  const heightClass = compact ? 'h-10' : desktop ? 'h-14' : 'h-12'
   return (
     <a
       href="#inicio"
