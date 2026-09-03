@@ -15,6 +15,14 @@ export type ChoiceOption = {
   alt?: string
 }
 
+export type DateOption = ChoiceOption & {
+  /** Modo de captura de data ao selecionar a opção. */
+  mode?: 'single' | 'range'
+  dateLabel?: string
+  startLabel?: string
+  endLabel?: string
+}
+
 export type StepConfig =
   | {
       id: string
@@ -22,6 +30,13 @@ export type StepConfig =
       question: string
       helper?: string
       options: ChoiceOption[]
+    }
+  | {
+      id: string
+      kind: 'date'
+      question: string
+      helper?: string
+      options: DateOption[]
     }
   | {
       id: string
@@ -79,12 +94,18 @@ export const WIZARD_FLOWS: Record<WizardFlowId, FlowConfig> = {
       },
       {
         id: 'timeline',
-        kind: 'choice',
+        kind: 'date',
         question: 'Quando você precisa?',
+        helper: 'Escolha a opção que melhor se encaixa no seu planejamento.',
         options: [
-          { id: 'asap', label: 'O quanto antes' },
-          { id: 'week', label: 'Nesta semana' },
-          { id: 'days', label: 'Nos próximos dias' },
+          { id: 'day', label: 'Dia', mode: 'single', dateLabel: 'Data desejada' },
+          {
+            id: 'period',
+            label: 'Período personalizado (início / fim)',
+            mode: 'range',
+            startLabel: 'Início',
+            endLabel: 'Fim',
+          },
           { id: 'researching', label: 'Ainda estou pesquisando' },
         ],
       },
@@ -159,11 +180,55 @@ export const WIZARD_FLOWS: Record<WizardFlowId, FlowConfig> = {
 export function answerLabel(flowId: WizardFlowId, stepId: string, value: string): string {
   const flow = WIZARD_FLOWS[flowId]
   const step = flow.steps.find((s) => s.id === stepId)
-  if (step && step.kind === 'choice') {
+  if (step && (step.kind === 'choice' || step.kind === 'date')) {
     const opt = step.options.find((o) => o.id === value)
     if (opt) return opt.label
   }
   return value
+}
+
+/** Converte "YYYY-MM-DD" (input date) para "DD/MM/AAAA". */
+function formatDate(iso: string): string {
+  const [y, m, d] = iso.split('-')
+  if (!y || !m || !d) return iso
+  return `${d}/${m}/${y}`
+}
+
+/** Formata a resposta de uma etapa do tipo 'date' incluindo as datas informadas. */
+export function formatDateAnswer(
+  step: Extract<StepConfig, { kind: 'date' }>,
+  answers: Record<string, string>,
+): string {
+  const optionId = answers[step.id] ?? ''
+  const opt = step.options.find((o) => o.id === optionId)
+  if (!opt) return optionId
+  if (opt.mode === 'single') {
+    const d = answers[`${step.id}.date`]
+    return d ? `Dia: ${formatDate(d)}` : opt.label
+  }
+  if (opt.mode === 'range') {
+    const s = answers[`${step.id}.start`]
+    const e = answers[`${step.id}.end`]
+    return s && e ? `Período: ${formatDate(s)} a ${formatDate(e)}` : opt.label
+  }
+  return opt.label
+}
+
+/** Resolve o texto de exibição de uma resposta no resumo (labels e datas). */
+export function summaryValue(
+  flowId: WizardFlowId,
+  step: StepConfig | undefined,
+  answers: Record<string, string>,
+  resolve?: (stepId: string, value: string) => string | undefined,
+): string {
+  if (!step) return ''
+  if (step.kind === 'date') return formatDateAnswer(step, answers)
+  if (step.kind === 'choice') {
+    const custom = resolve?.(step.id, answers[step.id] ?? '')
+    if (custom !== undefined) return custom
+    return answerLabel(flowId, step.id, answers[step.id] ?? '')
+  }
+  return answers[step.id] ?? ''
 }
 
 /** Monta a mensagem personalizada do WhatsApp a partir das respostas.
@@ -175,6 +240,8 @@ export function generateWhatsAppMessage(
   resolve?: (stepId: string, value: string) => string | undefined,
 ): string {
   const label = (stepId: string) => {
+    const step = WIZARD_FLOWS[flowId].steps.find((s) => s.id === stepId)
+    if (step?.kind === 'date') return formatDateAnswer(step, answers)
     const custom = resolve?.(stepId, answers[stepId] ?? '')
     if (custom !== undefined) return custom
     return answerLabel(flowId, stepId, answers[stepId] ?? '')

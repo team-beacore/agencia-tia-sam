@@ -5,6 +5,7 @@ import { cn } from '../../lib/cn'
 import { whatsappLink } from '../../config/site'
 import {
   generateWhatsAppMessage,
+  summaryValue,
   WIZARD_FLOWS,
 } from '../../config/wizard'
 import type { ChoiceOption, StepConfig, WizardFlowId } from '../../config/wizard'
@@ -158,6 +159,14 @@ function WizardPanel({
 
   const canContinue = useMemo(() => {
     if (resolvedStep.kind === 'choice') return Boolean(answers[resolvedStep.id])
+    if (resolvedStep.kind === 'date') {
+      const optionId = answers[resolvedStep.id]
+      if (!optionId) return false
+      const opt = resolvedStep.options.find((o) => o.id === optionId)
+      if (opt?.mode === 'single') return Boolean(answers[`${resolvedStep.id}.date`])
+      if (opt?.mode === 'range') return Boolean(answers[`${resolvedStep.id}.start`] && answers[`${resolvedStep.id}.end`])
+      return true
+    }
     return true
   }, [resolvedStep, answers])
 
@@ -183,8 +192,21 @@ function WizardPanel({
 
   // Seleção de opção: salva + limpa erro + auto-avança no passo de serviço
   const selectOption = (value: string) => {
-    answer(resolvedStep.id, value)
     setShowError(false)
+    if (resolvedStep.kind === 'date') {
+      setAnswers((prev) => {
+        const next = { ...prev }
+        if (next[resolvedStep.id] !== value) {
+          delete next[`${resolvedStep.id}.date`]
+          delete next[`${resolvedStep.id}.start`]
+          delete next[`${resolvedStep.id}.end`]
+        }
+        next[resolvedStep.id] = value
+        return next
+      })
+      return
+    }
+    answer(resolvedStep.id, value)
     if (resolvedStep.id === 'service' && flowId === 'hire') {
       if (advanceTimer.current !== null) window.clearTimeout(advanceTimer.current)
       advanceTimer.current = window.setTimeout(() => {
@@ -192,6 +214,11 @@ function WizardPanel({
         setStepIndex((i) => (i === 0 ? 1 : i))
       }, AUTO_ADVANCE_MS)
     }
+  }
+
+  const setDateValue = (key: string, value: string) => {
+    setAnswers((prev) => ({ ...prev, [key]: value }))
+    setShowError(false)
   }
 
   // Opção selecionada exibida no banner (serviço na contratação; oportunidade no fluxo
@@ -320,6 +347,15 @@ function WizardPanel({
                   />
                 )}
 
+                {resolvedStep.kind === 'date' && (
+                  <DateStep
+                    step={resolvedStep}
+                    answers={answers}
+                    onSelect={selectOption}
+                    onDateChange={setDateValue}
+                  />
+                )}
+
                 {resolvedStep.kind === 'textarea' && (
                   <label className="block">
                     <span className="sr-only">{resolvedStep.label}</span>
@@ -339,6 +375,7 @@ function WizardPanel({
                     flowId={flowId}
                     answers={answers}
                     onEdit={jumpTo}
+                    resolve={resolveLabel}
                   />
                 )}
               </div>
@@ -385,9 +422,13 @@ function WizardPanel({
                     <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-magenta" />
                     {resolvedStep.kind === 'choice' && resolvedStep.id === 'service'
                       ? 'Selecione um serviço para continuar.'
-                      : resolvedStep.kind === 'choice' && resolvedStep.helper
-                        ? resolvedStep.helper
-                        : 'Selecione uma opção para continuar.'}
+                      : resolvedStep.kind === 'date' && !answers[resolvedStep.id]
+                        ? 'Selecione uma opção para continuar.'
+                        : resolvedStep.kind === 'date'
+                          ? 'Informe a(s) data(s) para continuar.'
+                          : resolvedStep.kind === 'choice' && resolvedStep.helper
+                            ? resolvedStep.helper
+                            : 'Selecione uma opção para continuar.'}
                   </motion.p>
                 ) : null}
               </AnimatePresence>
@@ -616,9 +657,10 @@ function ChoiceStep({
             >
               {selected && (
                 <motion.span
-                  layoutId={`dot-${step.id}`}
+                  key={`dot-${opt.id}`}
                   initial={reduce ? false : { scale: 0 }}
                   animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 24 }}
                   className="h-2.5 w-2.5 rounded-full bg-grape"
                 />
               )}
@@ -638,16 +680,134 @@ function ChoiceStep({
   )
 }
 
+/* ---------- Etapa com data ---------- */
+
+function DateStep({
+  step,
+  answers,
+  onSelect,
+  onDateChange,
+}: {
+  step: Extract<(typeof WIZARD_FLOWS)[WizardFlowId]['steps'][number], { kind: 'date' }>
+  answers: Record<string, string>
+  onSelect: (value: string) => void
+  onDateChange: (key: string, value: string) => void
+}) {
+  const reduce = useReducedMotion()
+  const selected = answers[step.id] ?? ''
+  const active = step.options.find((o) => o.id === selected)
+
+  const inputCls =
+    'w-full rounded-2xl border border-line bg-white/70 px-5 py-3.5 text-[15px] text-ink placeholder:text-muted/60 focus:border-grape focus:outline-none focus:ring-2 focus:ring-grape/20'
+
+  return (
+    <div>
+      <div role="radiogroup" aria-label={step.question} className="space-y-2.5">
+        {step.options.map((opt) => {
+          const sel = selected === opt.id
+          return (
+            <motion.button
+              key={opt.id}
+              type="button"
+              role="radio"
+              aria-checked={sel}
+              onClick={() => onSelect(opt.id)}
+              whileTap={reduce ? undefined : { scale: 0.99 }}
+              className={cn(
+                'flex w-full items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-300',
+                sel
+                  ? 'border-grape bg-lavender/40 shadow-soft'
+                  : 'border-line bg-white/60 hover:-translate-y-0.5 hover:border-grape/35 hover:bg-lavender/20 hover:shadow-soft',
+              )}
+            >
+              <span
+                aria-hidden="true"
+                className={cn(
+                  'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors duration-300',
+                  sel ? 'border-grape' : 'border-muted/40',
+                )}
+              >
+                {sel && (
+                  <motion.span
+                    key={`dot-${opt.id}`}
+                    initial={reduce ? false : { scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 24 }}
+                    className="h-2.5 w-2.5 rounded-full bg-grape"
+                  />
+                )}
+              </span>
+              <span className="min-w-0">
+                <span className={cn('block text-[15px] font-bold', sel ? 'text-grape' : 'text-ink')}>
+                  {opt.label}
+                </span>
+                {opt.description ? (
+                  <span className="mt-0.5 block text-sm text-muted">{opt.description}</span>
+                ) : null}
+              </span>
+            </motion.button>
+          )
+        })}
+      </div>
+
+      {active?.mode === 'single' ? (
+        <div className="mt-5">
+          <label className="block">
+            <span className="mb-1.5 block text-[13px] font-semibold text-ink">
+              {active.dateLabel ?? 'Data desejada'}
+            </span>
+            <input
+              type="date"
+              value={answers[`${step.id}.date`] ?? ''}
+              onChange={(e) => onDateChange(`${step.id}.date`, e.target.value)}
+              className={inputCls}
+            />
+          </label>
+        </div>
+      ) : null}
+
+      {active?.mode === 'range' ? (
+        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+          <label className="block">
+            <span className="mb-1.5 block text-[13px] font-semibold text-ink">
+              {active.startLabel ?? 'Início'}
+            </span>
+            <input
+              type="date"
+              value={answers[`${step.id}.start`] ?? ''}
+              onChange={(e) => onDateChange(`${step.id}.start`, e.target.value)}
+              className={inputCls}
+            />
+          </label>
+          <label className="block">
+            <span className="mb-1.5 block text-[13px] font-semibold text-ink">
+              {active.endLabel ?? 'Fim'}
+            </span>
+            <input
+              type="date"
+              value={answers[`${step.id}.end`] ?? ''}
+              onChange={(e) => onDateChange(`${step.id}.end`, e.target.value)}
+              className={inputCls}
+            />
+          </label>
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
 /* ---------- Resumo ---------- */
 
 function SummaryStep({
   flowId,
   answers,
   onEdit,
+  resolve,
 }: {
   flowId: WizardFlowId
   answers: Record<string, string>
   onEdit: (stepIndex: number) => void
+  resolve?: (stepId: string, value: string) => string | undefined
 }) {
   const flow = WIZARD_FLOWS[flowId]
 
@@ -656,7 +816,8 @@ function SummaryStep({
       <p className="mb-5 text-base leading-relaxed text-muted">{flow.summaryNote}</p>
       <ul className="overflow-hidden rounded-2xl border border-line bg-white/60">
         {flow.summaryFields.map((field, i) => {
-          const value = answers[field.stepId] ?? ''
+          const step = flow.steps.find((s) => s.id === field.stepId)
+          const value = summaryValue(flowId, step, answers, resolve)
           const stepIdx = flow.steps.findIndex((s) => s.id === field.stepId)
           return (
             <li
