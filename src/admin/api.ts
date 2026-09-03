@@ -34,6 +34,9 @@ export const api = {
 
   me: () => request<{ user: { id: number; name: string; email: string; role: string } }>('GET', '/auth/me'),
 
+  changePassword: (currentPassword: string, newPassword: string) =>
+    request<{ ok: boolean }>('POST', '/auth/change-password', { currentPassword, newPassword }),
+
   upload: async (file: File): Promise<{ url: string }> => {
     const form = new FormData()
     form.append('file', file)

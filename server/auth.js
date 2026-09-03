@@ -97,3 +97,24 @@ export function meHandler(req, res) {
   }
   res.json({ user })
 }
+
+export function changePasswordHandler(req, res) {
+  const { currentPassword, newPassword } = req.body
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ error: 'Senha atual e nova senha são obrigatórias' })
+  }
+  if (String(newPassword).length < 8) {
+    return res.status(400).json({ error: 'A nova senha deve ter no mínimo 8 caracteres' })
+  }
+  const user = db.prepare('SELECT * FROM admin_users WHERE id = ?').get(req.user.id)
+  if (!user) {
+    return res.status(401).json({ error: 'Usuário não encontrado' })
+  }
+  const passwordOk = bcrypt.compareSync(String(currentPassword), user.password_hash)
+  if (!passwordOk) {
+    return res.status(400).json({ error: 'Senha atual incorreta' })
+  }
+  const hash = bcrypt.hashSync(String(newPassword), 12)
+  db.prepare('UPDATE admin_users SET password_hash = ? WHERE id = ?').run(hash, req.user.id)
+  res.json({ ok: true })
+}

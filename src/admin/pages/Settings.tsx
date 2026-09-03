@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Loader2, Save } from 'lucide-react'
+import { KeyRound, Loader2, Save } from 'lucide-react'
 import { api } from '../api'
 import { Button, Card, Field, Input, Textarea, Spinner, ImageUpload, cx } from '../ui'
 import type { SiteSettings } from '../../lib/types'
@@ -17,6 +17,102 @@ function Section({ title, subtitle, children }: { title: string; subtitle?: stri
 
 function FieldSpan({ children }: { children: React.ReactNode }) {
   return <div className="sm:col-span-2">{children}</div>
+}
+
+function PasswordSection() {
+  const [currentPassword, setCurrentPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+  const [busy, setBusy] = useState(false)
+
+  const reset = () => {
+    setCurrentPassword('')
+    setNewPassword('')
+    setConfirmPassword('')
+  }
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setSuccess('')
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      setError('Preencha todos os campos')
+      return
+    }
+    if (newPassword.length < 8) {
+      setError('A nova senha deve ter no mínimo 8 caracteres')
+      return
+    }
+    if (newPassword !== confirmPassword) {
+      setError('A confirmação não confere com a nova senha')
+      return
+    }
+    setBusy(true)
+    try {
+      await api.changePassword(currentPassword, newPassword)
+      setSuccess('Senha alterada com sucesso.')
+      reset()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao alterar a senha')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <Card title="Senha do administrador" subtitle="Altere a senha usada para acessar o painel" className="mb-6">
+      <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2">
+        <Field label="Senha atual">
+          <Input
+            type="password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            placeholder="••••••••"
+            autoComplete="current-password"
+            required
+          />
+        </Field>
+        <Field label="Nova senha" hint="Mínimo de 8 caracteres">
+          <Input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            placeholder="••••••••"
+            autoComplete="new-password"
+            required
+          />
+        </Field>
+        <Field label="Confirmar nova senha">
+          <Input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="••••••••"
+            autoComplete="new-password"
+            required
+          />
+        </Field>
+        <div className="flex items-end justify-end sm:col-span-2">
+          <Button type="submit" disabled={busy}>
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <KeyRound className="h-4 w-4" aria-hidden="true" />}
+            Alterar senha
+          </Button>
+        </div>
+        {error ? (
+          <p className="rounded-xl border border-magenta/20 bg-magenta/5 px-4 py-3 text-sm font-semibold text-magenta sm:col-span-2">
+            {error}
+          </p>
+        ) : null}
+        {success ? (
+          <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700 sm:col-span-2">
+            {success}
+          </p>
+        ) : null}
+      </form>
+    </Card>
+  )
 }
 
 export default function SettingsPage() {
@@ -105,6 +201,8 @@ export default function SettingsPage() {
           Alterações salvas. O site público será atualizado automaticamente.
         </p>
       ) : null}
+
+      <PasswordSection />
 
       <Section title="Identidade da agência" subtitle="Nome, slogan e informações institucionais">
         <Field label="Nome da agência">

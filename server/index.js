@@ -8,7 +8,7 @@ import { dirname, join, extname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { db, getSetting, setSetting, toInt, toBool, hydrate, UPLOADS_DIR } from './db.js'
 import { seedIfEmpty } from './seed.js'
-import { loginHandler, logoutHandler, meHandler, requireAuth } from './auth.js'
+import { loginHandler, logoutHandler, meHandler, changePasswordHandler, requireAuth } from './auth.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const DIST_DIR = join(__dirname, '..', 'dist')
@@ -136,6 +136,7 @@ const upload = multer({
 app.post('/api/auth/login', loginLimiter, loginHandler)
 app.post('/api/auth/logout', logoutHandler)
 app.get('/api/auth/me', requireAuth, meHandler)
+app.post('/api/auth/change-password', requireAuth, changePasswordHandler)
 
 /* ---------- API pública (site) ---------- */
 app.get('/api/public/site', (req, res) => {

@@ -97,6 +97,25 @@ async function meHandler(req, res) {
   res.json({ user })
 }
 
+async function changePasswordHandler(req, res) {
+  const { currentPassword, newPassword } = req.body ?? {}
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ error: 'Senha atual e nova senha são obrigatórias' })
+  }
+  if (String(newPassword).length < 8) {
+    return res.status(400).json({ error: 'A nova senha deve ter no mínimo 8 caracteres' })
+  }
+  const user = await get('SELECT * FROM admin_users WHERE id = ?', [req.user.id])
+  if (!user) return res.status(401).json({ error: 'Usuário não encontrado' })
+  const passwordOk = bcrypt.compareSync(String(currentPassword), user.password_hash)
+  if (!passwordOk) {
+    return res.status(400).json({ error: 'Senha atual incorreta' })
+  }
+  const hash = bcrypt.hashSync(String(newPassword), 12)
+  await run('UPDATE admin_users SET password_hash = ? WHERE id = ?', [hash, req.user.id])
+  res.json({ ok: true })
+}
+
 /* ---------- Inicialização do banco (schema + seed) ---------- */
 
 await seedIfEmpty()
@@ -194,6 +213,7 @@ const upload = multer({
 app.post('/api/auth/login', loginLimiter, loginHandler)
 app.post('/api/auth/logout', logoutHandler)
 app.get('/api/auth/me', requireAuth, meHandler)
+app.post('/api/auth/change-password', requireAuth, changePasswordHandler)
 
 /* ---------- API pública ---------- */
 
