@@ -21,7 +21,7 @@ type HubPath = {
 const PATHS: HubPath[] = [
   {
     id: 'hire',
-    number: '01',
+    number: '',
     title: 'Preciso contratar',
     description: 'Encontrar uma profissional para a minha família.',
     image: IMAGES.hub.family,
@@ -29,7 +29,7 @@ const PATHS: HubPath[] = [
   },
   {
     id: 'professional',
-    number: '02',
+    number: '',
     title: 'Quero fazer parte',
     description: 'Trabalhar através da Agência Tia Sam.',
     image: IMAGES.hub.professional,
