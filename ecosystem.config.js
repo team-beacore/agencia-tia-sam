@@ -13,7 +13,9 @@ module.exports = {
         NODE_ENV: 'production',
         PORT: '4000',
         TRUST_PROXY: '1',
-        // JWT_SECRET, ADMIN_PASSWORD, CORS_ORIGINS etc. vêm do .env (não versionado)
+        // JWT_SECRET, ADMIN_PASSWORD (apenas no 1º boot), ADMIN_EMAIL,
+        // CORS_ORIGINS, DATA_DIR e variáveis de backup vêm do .env (não versionado).
+        // Em produção o processo ABORTA sem JWT_SECRET (e sem ADMIN_PASSWORD com banco vazio).
       },
 
       instances: 1,

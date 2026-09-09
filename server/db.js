@@ -1,15 +1,39 @@
 import { DatabaseSync } from 'node:sqlite'
 import { mkdirSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { dirname, isAbsolute, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-export const DATA_DIR = join(__dirname, '..', 'data')
+
+/*
+ * Fonte única de verdade para dados persistentes (SQLite + uploads).
+ * DESENVOLVIMENTO: DATA_DIR opcional — sem ele, usa ./data (relativo ao repo).
+ * PRODUÇÃO: DATA_DIR é OBRIGATÓRIO — sem ele o startup ABORTA (não existe
+ * fallback ./data em produção, para o banco nunca viver dentro do código).
+ */
+const isProd = process.env.NODE_ENV === 'production'
+
+function resolveDataDir() {
+  const fromEnv = (process.env.DATA_DIR || '').trim()
+  if (fromEnv) return isAbsolute(fromEnv) ? fromEnv : resolve(process.cwd(), fromEnv)
+  if (isProd) {
+    console.error(
+      '[db] DATA_DIR é obrigatório em produção. Configure um caminho absoluto de dados ' +
+        'persistentes (ex.: DATA_DIR=/var/www/agencia-tia-sam/data) no .env. ' +
+        'O startup foi abortado para não gravar dados dentro do código. Encerrando.',
+    )
+    process.exit(1)
+  }
+  return join(__dirname, '..', 'data')
+}
+
+export const DATA_DIR = resolveDataDir()
 export const UPLOADS_DIR = join(DATA_DIR, 'uploads')
 mkdirSync(DATA_DIR, { recursive: true })
 mkdirSync(UPLOADS_DIR, { recursive: true })
 
-export const db = new DatabaseSync(join(DATA_DIR, 'tiasam.db'))
+export const DB_PATH = join(DATA_DIR, 'tiasam.db')
+export const db = new DatabaseSync(DB_PATH)
 
 db.exec(`
 PRAGMA journal_mode = WAL;

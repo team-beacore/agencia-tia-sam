@@ -1,28 +1,38 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
+import { randomBytes } from 'node:crypto'
 import { db } from './db.js'
 
 const isProd = process.env.NODE_ENV === 'production'
-const JWT_SECRET = process.env.JWT_SECRET
 const JWT_EXPIRES = '7d'
 const COOKIE_NAME = 'tiasam_token'
 
-if (!JWT_SECRET) {
+/*
+ * Não existe segredo hardcoded. Em produção a ausência de JWT_SECRET aborta
+ * o startup. Fora de produção é gerada uma chave efêmera (aleatória por
+ * processo) — sessões caem a cada restart — e isso é advertido no log.
+ */
+function resolveSecret() {
+  const secret = (process.env.JWT_SECRET || '').trim()
+  if (secret) return secret
   if (isProd) {
-    console.error('[auth] JWT_SECRET é obrigatório em produção. Configure a variável de ambiente.')
+    console.error('[auth] JWT_SECRET é obrigatório em produção. Configure a variável de ambiente. Encerrando.')
     process.exit(1)
   }
-  console.warn('[auth] AVISO: usando JWT_SECRET de desenvolvimento. Configure JWT_SECRET em produção.')
+  console.warn(
+    '[auth] AVISO (somente desenvolvimento): JWT_SECRET não definido. ' +
+      'Usando chave aleatória efêmera — TODAS as sessões serão invalidadas a cada reinício. ' +
+      'Defina JWT_SECRET no .env para desenvolvimento persistente.',
+  )
+  return randomBytes(32).toString('hex')
 }
 
-function getSecret() {
-  return process.env.JWT_SECRET || 'tiasam-dev-secret-key-change-in-production'
-}
+const SECRET = resolveSecret()
 
 export const TOKEN_COOKIE = COOKIE_NAME
 
 export function signToken(user) {
-  return jwt.sign({ sub: user.id, name: user.name, email: user.email, role: user.role }, getSecret(), {
+  return jwt.sign({ sub: user.id, name: user.name, email: user.email, role: user.role }, SECRET, {
     expiresIn: JWT_EXPIRES,
   })
 }
@@ -50,7 +60,7 @@ export function requireAuth(req, res, next) {
     return res.status(401).json({ error: 'Token não fornecido' })
   }
   try {
-    const payload = jwt.verify(token, getSecret())
+    const payload = jwt.verify(token, SECRET)
     const user = db.prepare('SELECT * FROM admin_users WHERE id = ?').get(payload.sub)
     if (!user || user.active !== 1 || user.deleted_at) {
       return res.status(401).json({ error: 'Usuário desativado ou inexistente' })

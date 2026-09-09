@@ -3,8 +3,11 @@
 # backup.sh — Backup automático da Agência Tia Sam (Linux)
 #
 # Gera uma cópia consistente de:
-#   - data/tiasam.db            (SQLite em modo WAL)
-#   - data/uploads/             (imagens enviadas pelo painel)
+#   - $DATA_DIR/tiasam.db       (SQLite em modo WAL)
+#   - $DATA_DIR/uploads/        (imagens enviadas pelo painel)
+#
+# DATA_DIR é a mesma variável usada pela aplicação (server/db.js).
+# Se não definida, cai no padrão de desenvolvimento: <repo>/data.
 #
 # Estratégia de backup do SQLite (WAL):
 #   1. Se o CLI `sqlite3` existir: usa o backup online API (`.backup`),
@@ -13,23 +16,33 @@
 #      que faz PRAGMA wal_checkpoint(TRUNCATE) antes de copiar o arquivo.
 #      NUNCA faz cópia ingênua de um banco aberto sem checkpoint.
 #
+# Backup EXTERNO (obrigatório como segunda via — disco local não basta):
+#   Configure BACKUP_REMOTE e a cópia final usa rclone (configurado fora do
+#   repositório, ex.: `rclone config` — nenhuma credencial versionada):
+#     BACKUP_REMOTE=rclone-destino:tia-sam-backups
+#   Alternativa com rsync/ssh (sem rclone):
+#     BACKUP_REMOTE=usuario@outra-maquina:/backups/tia-sam  (usa rsync)
+#
 # Retenção: mantém backups por BACKUP_RETENTION_DAYS (padrão 14) e remove
 # os mais antigos. Nunca remove o backup mais recente do mesmo dia.
 #
 # Uso:
-#   bash scripts/backup.sh                        # usa o padrão (pasta backups/)
+#   bash scripts/backup.sh                        # DATA_DIR padrão do repo
+#   DATA_DIR=/var/www/agencia-tia-sam/data bash scripts/backup.sh
 #   BACKUP_DIR=/mnt/backup/tia-sam bash scripts/backup.sh
 #   BACKUP_RETENTION_DAYS=30 bash scripts/backup.sh
+#   BACKUP_REMOTE=rclone-destino:tia-sam-backups bash scripts/backup.sh
 #
-# Agendamento (cron, diário às 03:00):
-#   0 3 * * * cd /var/www/agencia-tia-sam && bash scripts/backup.sh >> /var/log/tia-sam-backup.log 2>&1
+# Agendamento (cron, diário às 03:00 — carregando as variáveis do .env):
+#   0 3 * * * cd /var/www/agencia-tia-sam && set -a && . ./.env && set +a && bash scripts/backup.sh >> /var/log/tia-sam-backup.log 2>&1
 
 set -euo pipefail
 
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+DATA_DIR_RESOLVED="${DATA_DIR:-$APP_DIR/data}"
 BACKUP_ROOT="${BACKUP_DIR:-$APP_DIR/backups}"
-DB_FILE="$APP_DIR/data/tiasam.db"
-UPLOADS_DIR="$APP_DIR/data/uploads"
+DB_FILE="$DATA_DIR_RESOLVED/tiasam.db"
+UPLOADS_DIR="$DATA_DIR_RESOLVED/uploads"
 RETENTION_DAYS="${BACKUP_RETENTION_DAYS:-14}"
 
 TS="$(date +%Y%m%d-%H%M%S)"
@@ -68,7 +81,42 @@ if [ -d "$UPLOADS_DIR" ] && [ -n "$(ls -A "$UPLOADS_DIR" 2>/dev/null)" ]; then
   echo "[backup] Uploads copiados."
 fi
 
-# 3) Retenção — remove backups com mais de RETENTION_DAYS dias
+# 3) Cópia externa (opcional na configuração, obrigatória como prática — backup
+#    local no mesmo disco NÃO protege da perda da VPS).
+#    Nenhuma credencial fica neste repositório: rclone usa sua própria config
+#    (rclone config), rsync usa chaves SSH do usuário de deploy.
+#    BACKUP_REMOTE ausente → backup local segue normalmente (exit 0).
+#    BACKUP_REMOTE presente e cópia falhando → erro claro + exit 1, SEM
+#    destruir o backup local recém-criado (retenção é pulada nesse caso).
+EXTERNAL_OK=1
+if [ -n "${BACKUP_REMOTE:-}" ]; then
+  if [[ "$BACKUP_REMOTE" == /* ]]; then
+    if command -v rsync >/dev/null 2>&1; then
+      rsync -a "$BACKUP_DIR/" "$BACKUP_REMOTE/$TS/" || EXTERNAL_OK=0
+      [ "$EXTERNAL_OK" = 1 ] && echo "[backup] Cópia para destino externo (rsync local/montado): $BACKUP_REMOTE/$TS"
+    else
+      echo "[backup] ERRO: BACKUP_REMOTE é um caminho local, mas rsync não está instalado." >&2
+      EXTERNAL_OK=0
+    fi
+  elif command -v rclone >/dev/null 2>&1; then
+    rclone copy "$BACKUP_DIR" "$BACKUP_REMOTE/$TS" || EXTERNAL_OK=0
+    [ "$EXTERNAL_OK" = 1 ] && echo "[backup] Cópia externa enviada via rclone: $BACKUP_REMOTE/$TS"
+  elif command -v rsync >/dev/null 2>&1; then
+    rsync -a -e ssh "$BACKUP_DIR/" "$BACKUP_REMOTE/$TS/" || EXTERNAL_OK=0
+    [ "$EXTERNAL_OK" = 1 ] && echo "[backup] Cópia externa enviada via rsync/ssh: $BACKUP_REMOTE/$TS"
+  else
+    echo "[backup] ERRO: BACKUP_REMOTE definido, mas nem rclone nem rsync estão instalados — cópia externa impossível." >&2
+    EXTERNAL_OK=0
+  fi
+  if [ "$EXTERNAL_OK" != 1 ]; then
+    echo "[backup] ERRO: falha na cópia externa para '$BACKUP_REMOTE'. O backup LOCAL foi PRESERVADO em $BACKUP_DIR." >&2
+    exit 1
+  fi
+else
+  echo "[backup] AVISO: BACKUP_REMOTE não definido — este backup existe apenas no mesmo disco da aplicação."
+fi
+
+# 4) Retenção — remove backups com mais de RETENTION_DAYS dias
 #    (usa -mtime: nunca remove backups recentes; o de hoje fica intocado)
 OLD_BACKUPS="$(find "$BACKUP_ROOT" -mindepth 1 -maxdepth 1 -type d -mtime +"$RETENTION_DAYS")"
 if [ -n "$OLD_BACKUPS" ]; then

@@ -3,17 +3,19 @@ import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
 import { rateLimit } from 'express-rate-limit'
 import multer from 'multer'
-import { existsSync, mkdirSync, readFileSync, unlinkSync } from 'node:fs'
+import { existsSync, mkdirSync, openSync, readSync, closeSync, unlinkSync } from 'node:fs'
 import { dirname, join, extname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { db, getSetting, setSetting, toInt, toBool, hydrate, UPLOADS_DIR } from './db.js'
+import { db, getSetting, setSetting, toInt, toBool, hydrate, DATA_DIR, UPLOADS_DIR } from './db.js'
 import { seedIfEmpty } from './seed.js'
 import { loginHandler, logoutHandler, meHandler, changePasswordHandler, requireAuth } from './auth.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const DIST_DIR = join(__dirname, '..', 'dist')
 const PORT = process.env.PORT || 4000
-const isProd = process.env.NODE_ENV === 'production'
+
+/* Guardas de startup: DATA_DIR (server/db.js) e JWT_SECRET (server/auth.js)
+ * abortam o processo em produção se ausentes. */
 
 seedIfEmpty()
 
@@ -87,7 +89,18 @@ const loginLimiter = rateLimit({
   message: { error: 'Muitas tentativas de login. Tente novamente em 15 minutos.' },
 })
 
-/* Upload de imagens */
+/* Upload de imagens — validação tripla: extensão + MIME + assinatura de bytes.
+ * As três informações precisam concordar com o tipo real detectado no arquivo.
+ * O MIME enviado pelo navegador nunca é a única fonte de verdade. */
+const IMAGE_KINDS = {
+  jpeg: { exts: ['jpg', 'jpeg'], mimes: ['image/jpeg', 'image/jpg'] },
+  png: { exts: ['png'], mimes: ['image/png'] },
+  webp: { exts: ['webp'], mimes: ['image/webp'] },
+  gif: { exts: ['gif'], mimes: ['image/gif'] },
+}
+const ALLOWED_EXT = new Set(Object.values(IMAGE_KINDS).flatMap((k) => k.exts))
+const MAX_UPLOAD_BYTES = 6 * 1024 * 1024
+
 function getImageSignature(buf) {
   if (!buf || buf.length < 4) return null
   if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return 'jpeg'
@@ -101,29 +114,56 @@ function getImageSignature(buf) {
   return null
 }
 
+/* Lê só o cabeçalho do arquivo (não carrega 6MB na memória de forma síncrona) */
+function readHead(path, bytes = 16) {
+  const fd = openSync(path, 'r')
+  try {
+    const buf = Buffer.alloc(bytes)
+    const n = readSync(fd, buf, 0, bytes, 0)
+    return buf.subarray(0, n)
+  } finally {
+    closeSync(fd)
+  }
+}
+
+function sanitizeBase(originalname) {
+  const safe = String(originalname || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9._-]+/g, '-')
+  const ext = extname(safe).replace(/^\./, '')
+  const base = safe.replace(/\.[^.]+$/, '').replace(/^\.+|\.+$/g, '') || 'imagem'
+  return { base, ext }
+}
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     mkdirSync(UPLOADS_DIR, { recursive: true })
     cb(null, UPLOADS_DIR)
   },
   filename: (req, file, cb) => {
-    const safe = file.originalname
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9._-]+/g, '-')
-    const ext = extname(safe) || '.jpg'
-    const base = safe.replace(/\.[^.]+$/, '') || 'imagem'
-    cb(null, `${Date.now()}-${base}${ext}`)
+    const { base, ext } = sanitizeBase(file.originalname)
+    const finalExt = ALLOWED_EXT.has(ext) ? ext : 'jpg'
+    cb(null, `${Date.now()}-${base}.${finalExt}`)
   },
 })
 
 const upload = multer({
   storage,
-  limits: { fileSize: 6 * 1024 * 1024 },
+  limits: {
+    fileSize: MAX_UPLOAD_BYTES,
+    files: 1,
+    fields: 4,
+    fieldNameSize: 100,
+    fieldSize: 16 * 1024,
+  },
   fileFilter: (req, file, cb) => {
+    const { ext } = sanitizeBase(file.originalname)
     // SVG bloqueado: permite XSS via <script> quando aberto diretamente.
-    if (/^image\/(jpe?g|png|webp|gif)$/.test(file.mimetype)) cb(null, true)
+    const mimeOk = /^image\/(jpe?g|png|webp|gif)$/.test(file.mimetype)
+    const extOk = ALLOWED_EXT.has(ext)
+    if (mimeOk && extOk) cb(null, true)
     else {
       const e = new Error('Formato de imagem não suportado (use JPG, PNG, WEBP ou GIF)')
       e.statusCode = 400
@@ -311,10 +351,18 @@ app.put('/api/admin/settings/:key', requireAuth, (req, res) => {
 /* ---------- Upload ---------- */
 app.post('/api/admin/upload', requireAuth, upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'Nenhum arquivo enviado' })
-  const signature = getImageSignature(readFileSync(req.file.path))
-  if (!signature) {
+  const reject = (message) => {
     try { unlinkSync(req.file.path) } catch {}
-    return res.status(400).json({ error: 'Arquivo não é uma imagem válida' })
+    return res.status(400).json({ error: message })
+  }
+  const kind = getImageSignature(readHead(req.file.path))
+  if (!kind) return reject('Arquivo não é uma imagem válida')
+  const savedExt = extname(req.file.filename).replace(/^\./, '').toLowerCase()
+  if (!IMAGE_KINDS[kind].exts.includes(savedExt)) {
+    return reject('Extensão do arquivo não corresponde ao conteúdo real')
+  }
+  if (!IMAGE_KINDS[kind].mimes.includes(String(req.file.mimetype).toLowerCase())) {
+    return reject('MIME type não corresponde ao conteúdo real')
   }
   res.status(201).json({ url: `/uploads/${req.file.filename}` })
 })
@@ -356,5 +404,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`[api] Agência Tia Sam — servidor rodando em http://localhost:${PORT}`)
+  console.log(`[api] Agência Tia Sam rodando na porta ${PORT} (NODE_ENV=${process.env.NODE_ENV || 'development'}, DATA_DIR=${DATA_DIR})`)
 })

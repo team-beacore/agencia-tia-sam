@@ -2,6 +2,9 @@
   "name": "agencia-tia-sam",
   "private": true,
   "version": "1.0.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "type": "module",
   "description": "Agência Tia Sam — Babás, Domésticas, Home Care. Manaus - AM. Cuidado que conecta.",
   "scripts": {
@@ -24,7 +27,7 @@
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.454.0",
     "motion": "^11.11.17",
-    "multer": "^2.2.0",
+    "multer": "^2.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.18.2"

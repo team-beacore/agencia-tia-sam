@@ -6,6 +6,7 @@ import multer from 'multer'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { put } from '@vercel/blob'
+import { randomBytes } from 'node:crypto'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
@@ -25,16 +26,26 @@ const isProd = process.env.NODE_ENV === 'production'
 
 /* ---------- Autenticação (JWT + cookies, igual à produção) ---------- */
 
-const JWT_SECRET = process.env.JWT_SECRET
+/*
+ * Homologação (Vercel): não aborta o boot (o ambiente precisa subir), mas
+ * também NÃO usa segredo hardcoded. Sem JWT_SECRET, gera uma chave aleatória
+ * EFÊMERA — as sessões caem a cada cold start/deploy. Defina JWT_SECRET no
+ * projeto da Vercel para sessões persistentes.
+ */
 const JWT_EXPIRES = '7d'
 const COOKIE_NAME = 'tiasam_token'
 
-if (!JWT_SECRET && isProd) {
-  console.warn('[homolog] AVISO: JWT_SECRET não definido. Usando chave de DEMONSTRAÇÃO (somente homologação).')
+function resolveSecret() {
+  const secret = (process.env.JWT_SECRET || '').trim()
+  if (secret) return secret
+  console.warn(
+    '[homolog] AVISO: JWT_SECRET não definido na Vercel. Usando chave aleatória efêmera ' +
+      '(sessões caem a cada restart). Configure JWT_SECRET nas env vars do projeto.',
+  )
+  return randomBytes(32).toString('hex')
 }
-function getSecret() {
-  return process.env.JWT_SECRET || 'tiasam-homolog-secret-change-in-vercel'
-}
+
+const SECRET = resolveSecret()
 
 function cookieOptions() {
   return {
@@ -57,7 +68,7 @@ async function requireAuth(req, res, next) {
   const token = extractToken(req)
   if (!token) return res.status(401).json({ error: 'Token não fornecido' })
   try {
-    const payload = jwt.verify(token, getSecret())
+    const payload = jwt.verify(token, SECRET)
     const user = await get('SELECT * FROM admin_users WHERE id = ?', [payload.sub])
     if (!user || toBool(user.active) !== 1 || user.deleted_at) {
       return res.status(401).json({ error: 'Usuário desativado ou inexistente' })
@@ -79,7 +90,7 @@ async function loginHandler(req, res) {
   }
   const token = jwt.sign(
     { sub: user.id, name: user.name, email: user.email, role: user.role },
-    getSecret(),
+    SECRET,
     { expiresIn: JWT_EXPIRES },
   )
   res.cookie(COOKIE_NAME, token, cookieOptions())

@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { randomBytes } from 'node:crypto'
 import bcrypt from 'bcryptjs'
 import { db, setSetting } from './db.js'
 
@@ -53,19 +54,32 @@ export function seedIfEmpty() {
 
   if (userCount === 0) {
     const isProd = process.env.NODE_ENV === 'production'
-    const email = process.env.ADMIN_EMAIL || 'admin@tiasam.local'
-    const password = process.env.ADMIN_PASSWORD
+    const email = (process.env.ADMIN_EMAIL || '').trim()
+    let password = (process.env.ADMIN_PASSWORD || '').trim()
+
     if (!password) {
       if (isProd) {
-        console.error('[seed] ADMIN_PASSWORD é obrigatório em produção. Configure a variável de ambiente.')
+        console.error('[seed] ADMIN_PASSWORD é obrigatório em produção quando o banco está vazio. Configure a variável de ambiente e inicie novamente. Encerrando.')
         process.exit(1)
       }
-      console.warn('[seed] AVISO: usando senha padrão (tiasam.admin). Configure ADMIN_PASSWORD em produção.')
+      /* Desenvolvimento: gera senha ALEATÓRIA (nada hardcoded) e exibe no console. */
+      password = randomBytes(12).toString('base64url')
+      console.warn('[seed] AVISO (desenvolvimento): ADMIN_PASSWORD não definido. Senha aleatória gerada abaixo.')
     }
-    const hash = bcrypt.hashSync(password || 'tiasam.admin', 12)
+    const adminEmail = email || (isProd ? '' : 'admin@localhost')
+    if (!adminEmail) {
+      console.error('[seed] ADMIN_EMAIL é obrigatório em produção junto com ADMIN_PASSWORD para criar o admin inicial. Encerrando.')
+      process.exit(1)
+    }
+
+    const hash = bcrypt.hashSync(password, 12)
     db.prepare(
       `INSERT INTO admin_users (name, email, password_hash, role, active) VALUES (?, ?, ?, ?, 1)`,
-    ).run('Administrador', email, hash, 'admin')
-    console.log(`[seed] Usuário admin criado: ${email}`)
+    ).run('Administrador', adminEmail, hash, 'admin')
+    if (isProd) {
+      console.log(`[seed] Usuário admin inicial criado: ${adminEmail}. Recomenda-se remover ADMIN_PASSWORD do .env após o primeiro boot.`)
+    } else {
+      console.log(`[seed] Usuário admin de desenvolvimento criado: ${adminEmail} / ${password}`)
+    }
   }
 }

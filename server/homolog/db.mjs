@@ -1,6 +1,7 @@
 import { readFileSync, mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { randomBytes } from 'node:crypto'
 import { DatabaseSync } from 'node:sqlite'
 import bcrypt from 'bcryptjs'
 
@@ -22,7 +23,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const USE_TURSO = Boolean(process.env.TURSO_DATABASE_URL && process.env.TURSO_AUTH_TOKEN)
 const DATABASE_URL = process.env.TURSO_DATABASE_URL
 const AUTH_TOKEN = process.env.TURSO_AUTH_TOKEN
-const LOCAL_DB_PATH = process.env.HOMOLOG_LOCAL_DB || join(__dirname, '..', '..', 'data', 'homolog-local.db')
+/* Banco local de homologação fica em DATA_DIR quando definido (mesma fonte de
+ * verdade do backend de produção), senão no ./data do repo. Nunca é o banco de
+ * produção — é arquivo separado (homolog-local.db). */
+const DATA_DIR = (process.env.DATA_DIR || '').trim() || join(__dirname, '..', '..', 'data')
+const LOCAL_DB_PATH = process.env.HOMOLOG_LOCAL_DB || join(DATA_DIR, 'homolog-local.db')
 
 if (!USE_TURSO) {
   console.warn('[homolog/db] TURSO não configurado — usando SQLite local de desenvolvimento (somente teste local).')
@@ -395,13 +400,15 @@ export async function seedIfEmpty() {
     })
   }
 
-  /* Admin de demonstração (credenciais da homologação — separadas da produção) */
-  const email = process.env.ADMIN_EMAIL || 'admin@tiasam.local'
-  const password = process.env.ADMIN_PASSWORD
+  /* Admin da homologação. Sem credencial hardcoded: usa ADMIN_EMAIL/ADMIN_PASSWORD
+   * ou gera senha aleatória exibida no log (acessível só a quem detém o projeto Vercel). */
+  const email = process.env.ADMIN_EMAIL || 'admin@tiasam.homolog.local'
+  let password = (process.env.ADMIN_PASSWORD || '').trim()
   if (!password) {
-    console.warn('[homolog/db] AVISO: ADMIN_PASSWORD não definido. Usando senha padrão de DEMONSTRAÇÃO (somente homologação).')
+    password = randomBytes(12).toString('base64url')
+    console.warn('[homolog/db] AVISO: ADMIN_PASSWORD não definido. Senha aleatória gerada (veja o log desta execução).')
   }
-  const hash = bcrypt.hashSync(password || 'tiasam.demo.2026', 12)
+  const hash = bcrypt.hashSync(password, 12)
   requests.push({
     type: 'execute',
     stmt: {
@@ -409,6 +416,7 @@ export async function seedIfEmpty() {
       args: ['Administrador (Homologação)', email, hash],
     },
   })
+  console.log(`[homolog/db] Admin de homologação criado: ${email} / ${password}`)
 
   if (requests.length > 0) {
     await execMany(requests)
