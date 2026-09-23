@@ -101,7 +101,7 @@ function PasswordSection() {
           </Button>
         </div>
         {error ? (
-          <p className="rounded-xl border border-magenta/20 bg-magenta/5 px-4 py-3 text-sm font-semibold text-magenta sm:col-span-2">
+          <p className="rounded-xl border border-danger/20 bg-danger/5 px-4 py-3 text-sm font-semibold text-danger sm:col-span-2">
             {error}
           </p>
         ) : null}
@@ -195,7 +195,7 @@ export default function SettingsPage() {
         </Button>
       </header>
 
-      {error ? <p className="mb-4 rounded-xl border border-magenta/20 bg-magenta/5 px-4 py-3 text-sm font-semibold text-magenta">{error}</p> : null}
+      {error ? <p className="mb-4 rounded-xl border border-danger/20 bg-danger/5 px-4 py-3 text-sm font-semibold text-danger">{error}</p> : null}
       {saved ? (
         <p className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
           Alterações salvas. O site público será atualizado automaticamente.

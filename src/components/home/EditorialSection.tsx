@@ -33,7 +33,7 @@ export function EditorialSection() {
           decoding="async"
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-night/55" />
+        <div className="absolute inset-0 bg-cocoa/55" />
       </motion.div>
 
       <div className="relative z-10 max-w-4xl px-6 py-28 text-center sm:px-10">
@@ -51,7 +51,7 @@ export function EditorialSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-7 text-[11px] font-semibold uppercase tracking-[0.3em] text-lilac"
+          className="mt-7 text-[11px] font-semibold uppercase tracking-[0.3em] text-wheat"
         >
           {editorial.attribution || 'Agência Tia Sam · Manaus'}
         </motion.p>

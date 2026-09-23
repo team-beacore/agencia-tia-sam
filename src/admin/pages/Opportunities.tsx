@@ -93,7 +93,7 @@ export default function OpportunitiesPage() {
         </Button>
       </header>
 
-      {error ? <p className="mb-4 rounded-xl border border-magenta/20 bg-magenta/5 px-4 py-3 text-sm font-semibold text-magenta">{error}</p> : null}
+      {error ? <p className="mb-4 rounded-xl border border-danger/20 bg-danger/5 px-4 py-3 text-sm font-semibold text-danger">{error}</p> : null}
 
       {!rows ? (
         <Spinner />

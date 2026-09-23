@@ -258,7 +258,7 @@ function WizardPanel({
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-night/55 backdrop-blur-[3px]"
+        className="absolute inset-0 bg-cocoa/55 backdrop-blur-[3px]"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -276,7 +276,7 @@ function WizardPanel({
         {/* Cabeçalho */}
         <header className="flex items-center justify-between gap-4 border-b border-line/70 px-5 pb-4 pt-5 sm:px-8 sm:pt-7">
           <div className="min-w-0">
-            <p className="text-[10.5px] font-semibold uppercase tracking-[0.24em] text-grape">
+            <p className="text-[10.5px] font-semibold uppercase tracking-[0.24em] text-gold">
               {flow.eyebrow}
             </p>
             <h2 id="wizard-title" className="mt-1 truncate text-xl font-bold tracking-tight text-ink sm:text-2xl">
@@ -287,7 +287,7 @@ function WizardPanel({
             type="button"
             onClick={onClose}
             aria-label="Fechar assistente"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-lavender/70 hover:text-grape"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-honey/70 hover:text-gold"
           >
             <X className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -298,7 +298,7 @@ function WizardPanel({
 
         {/* Barra de progresso */}
         <div
-          className="h-1 w-full bg-lavender/60"
+          className="h-1 w-full bg-honey/60"
           role="progressbar"
           aria-valuenow={progress}
           aria-valuemin={0}
@@ -306,7 +306,7 @@ function WizardPanel({
           aria-label={`Etapa ${stepIndex + 1} de ${total}`}
         >
           <motion.div
-            className="h-full bg-grape"
+            className="h-full bg-sun"
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.45, ease: EASE }}
           />
@@ -365,7 +365,7 @@ function WizardPanel({
                       placeholder={resolvedStep.placeholder}
                       rows={5}
                       autoFocus={!reduce}
-                      className="w-full resize-none rounded-2xl border border-line bg-white/70 px-5 py-4 text-[15px] leading-relaxed text-ink placeholder:text-muted/60 focus:border-grape focus:outline-none focus:ring-2 focus:ring-grape/20"
+                      className="w-full resize-none rounded-2xl border border-line bg-white/70 px-5 py-4 text-[15px] leading-relaxed text-ink placeholder:text-muted/60 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20"
                     />
                   </label>
                 )}
@@ -382,7 +382,7 @@ function WizardPanel({
 
               {/* Banner da escolha selecionada (serviço na contratação; oportunidade no profissional) */}
               {choiceBanner?.option ? (
-                <div className="mt-6 flex items-center justify-between gap-3 rounded-2xl border border-grape/15 bg-lavender/50 px-4 py-3.5 sm:px-5">
+                <div className="mt-6 flex items-center justify-between gap-3 rounded-2xl border border-gold/15 bg-honey/50 px-4 py-3.5 sm:px-5">
                   <div className="flex min-w-0 items-center gap-3">
                     {choiceBanner.option.image ? (
                       <img
@@ -396,13 +396,13 @@ function WizardPanel({
                       <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">
                         Você escolheu
                       </p>
-                      <p className="truncate text-[15px] font-bold text-grape">{choiceBanner.option.label}</p>
+                      <p className="truncate text-[15px] font-bold text-gold">{choiceBanner.option.label}</p>
                     </div>
                   </div>
                   <button
                     type="button"
                     onClick={() => jumpTo(0)}
-                    className="shrink-0 rounded-full px-3 py-1.5 text-[13px] font-bold text-grape underline-offset-4 transition-colors hover:bg-lavender/70 hover:underline"
+                    className="shrink-0 rounded-full px-3 py-1.5 text-[13px] font-bold text-gold underline-offset-4 transition-colors hover:bg-honey/70 hover:underline"
                   >
                     {choiceBanner.changeLabel}
                   </button>
@@ -417,9 +417,9 @@ function WizardPanel({
                     initial={reduce ? false : { opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={reduce ? undefined : { opacity: 0 }}
-                    className="mt-4 flex items-center gap-2.5 rounded-xl border border-magenta/20 bg-magenta/5 px-4 py-3 text-sm font-semibold text-magenta"
+                    className="mt-4 flex items-center gap-2.5 rounded-xl border border-danger/20 bg-danger/5 px-4 py-3 text-sm font-semibold text-danger"
                   >
-                    <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-magenta" />
+                    <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-danger" />
                     {resolvedStep.kind === 'choice' && resolvedStep.id === 'service'
                       ? 'Selecione um serviço para continuar.'
                       : resolvedStep.kind === 'date' && !answers[resolvedStep.id]
@@ -443,7 +443,7 @@ function WizardPanel({
               href={whatsappLink(message, site.whatsappNumber)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-grape px-7 py-4 text-[15px] font-semibold text-white shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-plum"
+              className="group inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-sun px-7 py-4 text-[15px] font-semibold text-cocoa shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-sun-deep"
             >
               <WhatsAppIcon className="h-5 w-5" />
               {flow.finalCta}
@@ -459,7 +459,7 @@ function WizardPanel({
                   'inline-flex items-center gap-2 rounded-full px-5 py-3.5 text-[15px] font-semibold transition-colors',
                   stepIndex === 0
                     ? 'cursor-not-allowed text-muted/40'
-                    : 'text-grape hover:bg-lavender/60',
+                    : 'text-gold hover:bg-honey/60',
                 )}
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden="true" />
@@ -468,7 +468,7 @@ function WizardPanel({
               <button
                 type="button"
                 onClick={goNext}
-                className="inline-flex items-center gap-2.5 rounded-full bg-grape px-7 py-3.5 text-[15px] font-semibold text-white shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-plum"
+                className="inline-flex items-center gap-2.5 rounded-full bg-sun px-7 py-3.5 text-[15px] font-semibold text-cocoa shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-sun-deep"
               >
                 Continuar
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -508,8 +508,8 @@ function StepIndicator({
                   transition={{ duration: 0.25, ease: EASE }}
                   className={cn(
                     'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition-all duration-300 sm:h-7 sm:w-7 sm:text-[11px]',
-                    done && 'bg-grape text-white',
-                    active && 'border-2 border-grape bg-lavender text-grape shadow-[0_0_0_3px_rgba(138,92,184,0.15)]',
+                    done && 'bg-gold text-white',
+                    active && 'border-2 border-gold bg-honey text-gold shadow-[0_0_0_3px_rgba(217,152,47,0.18)]',
                     !done && !active && 'border border-line bg-white/70 text-muted/50',
                   )}
                 >
@@ -528,7 +528,7 @@ function StepIndicator({
                 <span
                   className={cn(
                     'hidden whitespace-nowrap text-[11px] font-semibold tracking-wide transition-colors duration-300 sm:block',
-                    active ? 'text-grape' : done ? 'text-muted' : 'text-muted/50',
+                    active ? 'text-gold' : done ? 'text-muted' : 'text-muted/50',
                   )}
                 >
                   {label}
@@ -539,7 +539,7 @@ function StepIndicator({
                   aria-hidden="true"
                   className={cn(
                     'mx-2 h-px min-w-2 flex-1 transition-colors duration-500 sm:mx-3',
-                    i < current ? 'bg-grape/40' : 'bg-line',
+                    i < current ? 'bg-gold/40' : 'bg-line',
                   )}
                 />
               ) : null}
@@ -581,12 +581,12 @@ function ChoiceStep({
               className={cn(
                 'group relative overflow-hidden rounded-2xl border text-left transition-all duration-300',
                 selected
-                  ? 'border-grape bg-white shadow-soft ring-2 ring-grape/25'
-                  : 'border-line bg-white/70 hover:-translate-y-0.5 hover:border-grape/40 hover:shadow-soft',
+                  ? 'border-gold bg-white shadow-soft ring-2 ring-gold/25'
+                  : 'border-line bg-white/70 hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-soft',
               )}
             >
               {opt.image ? (
-                <div className="relative aspect-[4/3] overflow-hidden bg-lavender/40">
+                <div className="relative aspect-[4/3] overflow-hidden bg-honey/40">
                   <img
                     src={opt.image}
                     alt=""
@@ -596,7 +596,7 @@ function ChoiceStep({
                   <div
                     className={cn(
                       'absolute inset-0 transition-colors duration-300',
-                      selected ? 'bg-grape/15' : 'bg-night/10 group-hover:bg-night/5',
+                      selected ? 'bg-gold/15' : 'bg-cocoa/10 group-hover:bg-cocoa/5',
                     )}
                   />
                   <AnimatePresence>
@@ -606,7 +606,7 @@ function ChoiceStep({
                         animate={{ scale: 1, opacity: 1 }}
                         exit={reduce ? undefined : { scale: 0, opacity: 0 }}
                         transition={{ type: 'spring', stiffness: 500, damping: 22 }}
-                        className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-grape text-white shadow-soft"
+                        className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-gold text-white shadow-soft"
                       >
                         <Check className="h-3.5 w-3.5" strokeWidth={3} aria-hidden="true" />
                       </motion.span>
@@ -615,7 +615,7 @@ function ChoiceStep({
                 </div>
               ) : null}
               <div className="px-3.5 py-3">
-                <p className={cn('text-sm font-bold', selected ? 'text-grape' : 'text-ink')}>
+                <p className={cn('text-sm font-bold', selected ? 'text-gold' : 'text-ink')}>
                   {opt.label}
                 </p>
                 {opt.description ? (
@@ -644,15 +644,15 @@ function ChoiceStep({
             className={cn(
               'flex w-full items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-300',
               selected
-                ? 'border-grape bg-lavender/40 shadow-soft'
-                : 'border-line bg-white/60 hover:-translate-y-0.5 hover:border-grape/35 hover:bg-lavender/20 hover:shadow-soft',
+                ? 'border-gold bg-honey/40 shadow-soft'
+                : 'border-line bg-white/60 hover:-translate-y-0.5 hover:border-gold/35 hover:bg-honey/20 hover:shadow-soft',
             )}
           >
             <span
               aria-hidden="true"
               className={cn(
                 'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors duration-300',
-                selected ? 'border-grape' : 'border-muted/40',
+                selected ? 'border-gold' : 'border-muted/40',
               )}
             >
               {selected && (
@@ -661,12 +661,12 @@ function ChoiceStep({
                   initial={reduce ? false : { scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', stiffness: 500, damping: 24 }}
-                  className="h-2.5 w-2.5 rounded-full bg-grape"
+                  className="h-2.5 w-2.5 rounded-full bg-gold"
                 />
               )}
             </span>
             <span className="min-w-0">
-              <span className={cn('block text-[15px] font-bold', selected ? 'text-grape' : 'text-ink')}>
+              <span className={cn('block text-[15px] font-bold', selected ? 'text-gold' : 'text-ink')}>
                 {opt.label}
               </span>
               {opt.description ? (
@@ -698,7 +698,7 @@ function DateStep({
   const active = step.options.find((o) => o.id === selected)
 
   const inputCls =
-    'w-full rounded-2xl border border-line bg-white/70 px-5 py-3.5 text-[15px] text-ink placeholder:text-muted/60 focus:border-grape focus:outline-none focus:ring-2 focus:ring-grape/20'
+    'w-full rounded-2xl border border-line bg-white/70 px-5 py-3.5 text-[15px] text-ink placeholder:text-muted/60 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20'
 
   return (
     <div>
@@ -716,15 +716,15 @@ function DateStep({
               className={cn(
                 'flex w-full items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-300',
                 sel
-                  ? 'border-grape bg-lavender/40 shadow-soft'
-                  : 'border-line bg-white/60 hover:-translate-y-0.5 hover:border-grape/35 hover:bg-lavender/20 hover:shadow-soft',
+                  ? 'border-gold bg-honey/40 shadow-soft'
+                  : 'border-line bg-white/60 hover:-translate-y-0.5 hover:border-gold/35 hover:bg-honey/20 hover:shadow-soft',
               )}
             >
               <span
                 aria-hidden="true"
                 className={cn(
                   'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors duration-300',
-                  sel ? 'border-grape' : 'border-muted/40',
+                  sel ? 'border-gold' : 'border-muted/40',
                 )}
               >
                 {sel && (
@@ -733,12 +733,12 @@ function DateStep({
                     initial={reduce ? false : { scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: 'spring', stiffness: 500, damping: 24 }}
-                    className="h-2.5 w-2.5 rounded-full bg-grape"
+                    className="h-2.5 w-2.5 rounded-full bg-gold"
                   />
                 )}
               </span>
               <span className="min-w-0">
-                <span className={cn('block text-[15px] font-bold', sel ? 'text-grape' : 'text-ink')}>
+                <span className={cn('block text-[15px] font-bold', sel ? 'text-gold' : 'text-ink')}>
                   {opt.label}
                 </span>
                 {opt.description ? (
@@ -840,7 +840,7 @@ function SummaryStep({
                   type="button"
                   onClick={() => onEdit(stepIdx)}
                   aria-label={`Editar ${field.label}`}
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-lavender/70 hover:text-grape"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-honey/70 hover:text-gold"
                 >
                   <Pencil className="h-4 w-4" aria-hidden="true" />
                 </button>

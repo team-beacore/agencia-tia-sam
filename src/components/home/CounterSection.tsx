@@ -20,14 +20,14 @@ export function CounterSection() {
           {/* Número gigante (desktop) */}
           <div className="min-w-0 lg:order-1">
             <Reveal>
-              <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-grape">
-                <span aria-hidden="true" className="h-px w-8 bg-grape opacity-60" />
+              <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-gold">
+                <span aria-hidden="true" className="h-px w-8 bg-gold opacity-60" />
                 Nossa história
               </p>
             </Reveal>
 
             <Reveal delay={0.08}>
-              <p className="tracking-headline mt-4 font-extrabold text-grape tabular-nums max-lg:hidden">
+              <p className="tracking-headline mt-4 font-extrabold text-gold tabular-nums max-lg:hidden">
                 <span ref={ref} className="text-[clamp(4.5rem,13vw,9rem)] leading-none">
                   +{value.toLocaleString('pt-BR')}
                 </span>
@@ -51,7 +51,7 @@ export function CounterSection() {
           {/* Fotografia editorial */}
           <Reveal delay={0.1} className="min-w-0 lg:order-2">
             <div className="relative">
-              <div aria-hidden="true" className="absolute -right-4 -top-4 h-28 w-28 rounded-full bg-blush sm:-right-6 sm:-top-6" />
+              <div aria-hidden="true" className="absolute -right-4 -top-4 h-28 w-28 rounded-full bg-peach sm:-right-6 sm:-top-6" />
               <figure className="relative overflow-hidden rounded-[28px] shadow-lift">
                 <img
                   src={heroAlt}
@@ -61,7 +61,7 @@ export function CounterSection() {
                   className="aspect-[4/3.1] w-full object-cover sm:aspect-[4/3.4]"
                 />
                 {/* Overlay mobile: número + título sobrepostos à imagem */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-gradient-to-t from-night/70 via-night/35 to-night/25 p-6 text-center lg:hidden">
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-gradient-to-t from-cocoa/70 via-cocoa/35 to-cocoa/25 p-6 text-center lg:hidden">
                   <p className="tracking-headline font-extrabold text-white tabular-nums leading-none">
                     <span ref={mobileRef} className="text-[clamp(3.5rem,11vw,4.5rem)] font-extrabold">
                       +{mobileValue.toLocaleString('pt-BR')}

@@ -15,12 +15,12 @@ export function Button({
   className,
   ...rest
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: BtnVariant }) {
-  const base = 'inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grape/40'
+  const base = 'inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/40'
   const variants: Record<BtnVariant, string> = {
-    primary: 'bg-grape text-white hover:bg-plum shadow-soft',
-    outline: 'border border-line bg-white text-ink hover:border-grape/40 hover:bg-lavender/30',
-    ghost: 'text-grape hover:bg-lavender/50',
-    danger: 'bg-magenta text-white hover:bg-magenta/90',
+    primary: 'bg-sun text-cocoa hover:bg-sun-deep shadow-soft',
+    outline: 'border border-line bg-white text-ink hover:border-gold/40 hover:bg-honey/30',
+    ghost: 'text-gold hover:bg-honey/50',
+    danger: 'bg-danger text-white hover:bg-danger/90',
   }
   return (
     <button className={cx(base, variants[variant], className)} {...rest}>
@@ -51,7 +51,7 @@ export function Field({
 }
 
 const inputCls =
-  'w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/50 transition-colors focus:border-grape focus:outline-none focus:ring-2 focus:ring-grape/20'
+  'w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/50 transition-colors focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20'
 
 export function Input({ className, ...rest }: InputHTMLAttributes<HTMLInputElement>) {
   return <input className={cx(inputCls, className)} {...rest} />
@@ -90,7 +90,7 @@ export function Toggle({
       <span
         className={cx(
           'relative h-6 w-11 shrink-0 rounded-full transition-colors duration-300',
-          checked ? 'bg-grape' : 'bg-line',
+          checked ? 'bg-gold' : 'bg-line',
         )}
       >
         <span
@@ -130,12 +130,12 @@ export function Card({ title, subtitle, actions, children, className }: {
 }
 
 /* ---------- Badge ---------- */
-export function Badge({ tone = 'neutral', children }: { tone?: 'green' | 'amber' | 'red' | 'neutral' | 'violet'; children: ReactNode }) {
+export function Badge({ tone = 'neutral', children }: { tone?: 'green' | 'amber' | 'red' | 'neutral' | 'brand'; children: ReactNode }) {
   const map = {
     green: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     amber: 'bg-amber-50 text-amber-700 border-amber-200',
     red: 'bg-red-50 text-red-700 border-red-200',
-    violet: 'bg-lavender text-grape border-grape/20',
+    brand: 'bg-honey text-gold border-gold/20',
     neutral: 'bg-paper text-muted border-line',
   } as const
   return (
@@ -149,7 +149,7 @@ export function Badge({ tone = 'neutral', children }: { tone?: 'green' | 'amber'
 export function Spinner({ label = 'Carregando...' }: { label?: string }) {
   return (
     <div className="flex items-center justify-center gap-2 py-12 text-muted">
-      <Loader2 className="h-5 w-5 animate-spin text-grape" />
+      <Loader2 className="h-5 w-5 animate-spin text-gold" />
       <span className="text-sm">{label}</span>
     </div>
   )
@@ -196,7 +196,7 @@ export function Modal({
   if (!open) return null
   return (
     <div className="fixed inset-0 z-[200] flex items-end justify-center sm:items-center sm:p-6">
-      <div className="absolute inset-0 bg-night/55 backdrop-blur-[3px]" onClick={onClose} aria-hidden="true" />
+      <div className="absolute inset-0 bg-cocoa/55 backdrop-blur-[3px]" onClick={onClose} aria-hidden="true" />
       <div
         role="dialog"
         aria-modal="true"
@@ -212,7 +212,7 @@ export function Modal({
             type="button"
             onClick={onClose}
             aria-label="Fechar"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-lavender/70 hover:text-grape"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-honey/70 hover:text-gold"
           >
             <X className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -309,7 +309,7 @@ export function ImageUpload({
             ) : null}
           </div>
           {value ? <span className="truncate text-xs text-muted">{value}</span> : null}
-          {error ? <span className="text-xs font-medium text-magenta">{error}</span> : null}
+          {error ? <span className="text-xs font-medium text-danger">{error}</span> : null}
         </div>
       </div>
       <input
@@ -337,7 +337,7 @@ export function RowActions({ onEdit, onDelete }: { onEdit?: () => void; onDelete
           type="button"
           onClick={onDelete}
           aria-label="Excluir"
-          className="flex h-8 w-8 items-center justify-center rounded-lg text-muted transition-colors hover:bg-red-50 hover:text-magenta"
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-muted transition-colors hover:bg-red-50 hover:text-danger"
         >
           <Trash2 className="h-4 w-4" aria-hidden="true" />
         </button>

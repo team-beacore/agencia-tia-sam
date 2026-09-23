@@ -38,7 +38,7 @@ function AdminLayout() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-cream">
         <div className="flex items-center gap-2 text-sm text-muted">
-          <span className="h-4 w-4 animate-spin rounded-full border-2 border-grape/30 border-t-grape" aria-hidden="true" />
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-gold/30 border-t-gold" aria-hidden="true" />
           Verificando sessão...
         </div>
       </div>
@@ -51,7 +51,7 @@ function AdminLayout() {
     <div className="min-h-screen bg-cream text-ink">
       {/* Overlay mobile */}
       {sidebar && (
-        <div className="fixed inset-0 z-40 bg-night/40 backdrop-blur-sm lg:hidden" onClick={() => setSidebar(false)} />
+        <div className="fixed inset-0 z-40 bg-cocoa/40 backdrop-blur-sm lg:hidden" onClick={() => setSidebar(false)} />
       )}
 
       {/* Sidebar */}
@@ -59,12 +59,15 @@ function AdminLayout() {
         className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-line/70 bg-white transition-transform duration-300 lg:translate-x-0 ${sidebar ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex items-center justify-between border-b border-line/70 px-5 py-5">
-          <span className="text-lg font-extrabold tracking-tight text-grape">Tia Sam</span>
+          <span className="flex items-center gap-2.5">
+            <img src="/images/brand/logo-mark.png" alt="" width={256} height={256} className="h-9 w-9 object-contain" />
+            <span className="font-serif text-lg font-semibold tracking-tight text-gold">Tia Sam</span>
+          </span>
           <button
             type="button"
             onClick={() => setSidebar(false)}
             aria-label="Fechar menu"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-muted hover:bg-lavender/70 hover:text-grape lg:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-muted hover:bg-honey/70 hover:text-gold lg:hidden"
           >
             <X className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -81,8 +84,8 @@ function AdminLayout() {
               }}
               className={`flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-left text-sm font-semibold transition-colors ${
                 isActive(item.path, item.exact)
-                  ? 'bg-lavender/60 text-grape'
-                  : 'text-muted hover:bg-lavender/30 hover:text-ink'
+                  ? 'bg-honey/60 text-gold'
+                  : 'text-muted hover:bg-honey/30 hover:text-ink'
               }`}
             >
               <item.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -94,7 +97,7 @@ function AdminLayout() {
         <div className="px-3 pb-2">
           <a
             href="/"
-            className="flex w-full items-center gap-3 rounded-xl bg-grape px-4 py-2.5 text-sm font-semibold text-white shadow-soft transition-colors hover:bg-plum"
+            className="flex w-full items-center gap-3 rounded-xl bg-sun px-4 py-2.5 text-sm font-semibold text-cocoa shadow-soft transition-colors hover:bg-sun-deep"
           >
             <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
             Voltar ao site
@@ -107,7 +110,7 @@ function AdminLayout() {
           <button
             type="button"
             onClick={() => { logout(); navigate('/admin/login') }}
-            className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-muted transition-colors hover:text-magenta"
+            className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-muted transition-colors hover:text-danger"
           >
             <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
             Sair
@@ -121,17 +124,20 @@ function AdminLayout() {
           type="button"
           onClick={() => setSidebar(true)}
           aria-label="Abrir menu"
-          className="flex h-9 w-9 items-center justify-center rounded-full text-muted hover:bg-lavender/70 hover:text-grape lg:hidden"
+          className="flex h-9 w-9 items-center justify-center rounded-full text-muted hover:bg-honey/70 hover:text-gold lg:hidden"
         >
           <Menu className="h-5 w-5" aria-hidden="true" />
         </button>
-        <span className="text-sm font-bold text-ink lg:hidden">Painel Tia Sam</span>
+        <span className="flex items-center gap-2 lg:hidden">
+          <img src="/images/brand/logo-mark.png" alt="" width={256} height={256} className="h-7 w-7 object-contain" />
+          <span className="text-sm font-bold text-ink">Painel Tia Sam</span>
+        </span>
         <div className="flex items-center gap-2">
           <span className="hidden text-sm text-muted lg:inline">{user.name}</span>
           <button
             type="button"
             onClick={() => { logout(); navigate('/admin/login') }}
-            className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:bg-red-50 hover:text-magenta lg:border lg:border-line"
+            className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:bg-red-50 hover:text-danger lg:border lg:border-line"
           >
             <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
             <span className="hidden lg:inline">Sair</span>

@@ -111,8 +111,8 @@ export function TrustSection() {
           {/* Grande afirmação */}
           <div className="lg:sticky lg:top-32 lg:self-start">
             <Reveal>
-              <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-grape">
-                <span aria-hidden="true" className="h-px w-8 bg-grape opacity-60" />
+              <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-gold">
+                <span aria-hidden="true" className="h-px w-8 bg-gold opacity-60" />
                 Por que confiar
               </p>
             </Reveal>
@@ -122,7 +122,7 @@ export function TrustSection() {
                 className="tracking-headline text-balance mt-5 text-[clamp(1.75rem,4.2vw,2.75rem)] font-extrabold leading-[1.08] text-ink"
               >
                 Escolher alguém para cuidar da sua família{' '}
-                <span className="accent-serif text-grape">exige confiança</span>.
+                <span className="accent-serif text-gold">exige confiança</span>.
               </h2>
             </Reveal>
             <Reveal delay={0.16}>
@@ -136,11 +136,11 @@ export function TrustSection() {
           {/* Pilares */}
           <div className="grid gap-10 sm:grid-cols-3 sm:gap-8">
             {PILLARS.map((p, i) => (
-              <Reveal key={p.word} delay={0.1 + i * 0.1} className="group border-t-2 border-grape/15 pt-8 transition-colors duration-500 hover:border-grape/50">
-                <div className="text-grape transition-colors duration-500 group-hover:text-magenta">
+              <Reveal key={p.word} delay={0.1 + i * 0.1} className="group border-t-2 border-gold/15 pt-8 transition-colors duration-500 hover:border-gold/50">
+                <div className="text-gold transition-colors duration-500 group-hover:text-ember">
                   {reduce ? null : p.draw}
                 </div>
-                <h3 className="mt-6 text-[clamp(1.15rem,2vw,1.45rem)] font-extrabold uppercase tracking-tight text-ink transition-colors duration-300 group-hover:text-grape">
+                <h3 className="mt-6 text-[clamp(1.15rem,2vw,1.45rem)] font-extrabold uppercase tracking-tight text-ink transition-colors duration-300 group-hover:text-gold">
                   {p.word}
                 </h3>
                 <p className="mt-3 text-[15px] leading-relaxed text-muted">

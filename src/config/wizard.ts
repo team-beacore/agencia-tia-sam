@@ -250,7 +250,7 @@ export function generateWhatsAppMessage(
   if (flowId === 'hire') {
     const note = answers.notes?.trim()
     const lines = [
-      'Olá, Agência Tia Sam! 💜',
+      'Olá, Agência Tia Sam! 🧡',
       '',
       'Gostaria de contratar uma profissional.',
       '',

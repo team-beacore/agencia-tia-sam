@@ -27,7 +27,7 @@ export default function HomePage() {
       <div className="min-h-screen overflow-x-clip bg-cream text-ink">
         <a
           href="#inicio"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-grape focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-gold focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
         >
           Pular para o conteúdo
         </a>

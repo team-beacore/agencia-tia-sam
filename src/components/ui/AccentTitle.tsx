@@ -14,7 +14,7 @@ export function AccentTitle({ text, className }: { text: string; className?: str
   return (
     <span className={cn(className)}>
       {before ? <>{before}{' '}</> : null}
-      <span className="accent-serif text-grape">{lastWord}</span>
+      <span className="accent-serif text-gold">{lastWord}</span>
       {punct}
     </span>
   )

@@ -15,8 +15,8 @@ const DEFAULT_VALUES = ['Ética', 'Respeito', 'Empatia', 'Compromisso', 'Excelê
 function FounderPhoto({ name, image, age, className }: { name: string; image: string; age: string; className?: string }) {
   return (
     <div className={cn('relative', className)}>
-      <div aria-hidden="true" className="absolute -right-5 -top-5 h-28 w-28 rounded-full bg-blush sm:-right-6 sm:-top-6" />
-      <div aria-hidden="true" className="absolute -bottom-5 -left-5 h-24 w-24 rounded-full bg-lavender/70 sm:-left-6" />
+      <div aria-hidden="true" className="absolute -right-5 -top-5 h-28 w-28 rounded-full bg-peach sm:-right-6 sm:-top-6" />
+      <div aria-hidden="true" className="absolute -bottom-5 -left-5 h-24 w-24 rounded-full bg-honey/70 sm:-left-6" />
       <div className="relative overflow-hidden rounded-[28px] border border-line bg-paper shadow-lift">
         {image ? (
           <img
@@ -27,11 +27,11 @@ function FounderPhoto({ name, image, age, className }: { name: string; image: st
             className="aspect-[4/4.4] w-full object-cover"
           />
         ) : (
-          <div className="flex aspect-[4/4.4] w-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-lavender/70 via-paper to-blush/70 p-8 text-center">
-            <span aria-hidden="true" className="accent-serif text-[clamp(4.5rem,12vw,6.5rem)] leading-none text-grape/80">
+          <div className="flex aspect-[4/4.4] w-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-honey/70 via-paper to-peach/70 p-8 text-center">
+            <span aria-hidden="true" className="accent-serif text-[clamp(4.5rem,12vw,6.5rem)] leading-none text-gold/80">
               SS
             </span>
-            <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-grape">{name}</span>
+            <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-gold">{name}</span>
           </div>
         )}
       </div>
@@ -108,10 +108,10 @@ export function AboutSection() {
             </Reveal>
             <Reveal delay={0.32}>
               <div className="mt-8 flex flex-wrap gap-3">
-                <span className="inline-flex items-center gap-2 rounded-full border border-grape/20 bg-lavender/50 px-5 py-2.5 text-[13px] font-bold text-grape">
+                <span className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-honey/50 px-5 py-2.5 text-[13px] font-bold text-gold">
                   {site.siteLocation}
                 </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-grape/20 bg-lavender/50 px-5 py-2.5 text-[13px] font-bold text-grape">
+                <span className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-honey/50 px-5 py-2.5 text-[13px] font-bold text-gold">
                   Processo criterioso
                 </span>
               </div>
@@ -123,7 +123,7 @@ export function AboutSection() {
             <div className="relative">
               <div
                 aria-hidden="true"
-                className="absolute -bottom-4 -left-4 h-36 w-36 rounded-full bg-lavender/60 sm:-left-6"
+                className="absolute -bottom-4 -left-4 h-36 w-36 rounded-full bg-honey/60 sm:-left-6"
               />
               <figure className="relative overflow-hidden rounded-[28px] shadow-lift">
                 <img
@@ -143,25 +143,25 @@ export function AboutSection() {
           <dl className="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-[24px] border border-line bg-line shadow-soft sm:mt-20 lg:grid-cols-4">
             <div className="bg-white p-6 sm:p-7">
               <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Fundada</dt>
-              <dd className="tracking-headline mt-2.5 text-lg font-extrabold leading-tight text-grape sm:text-xl">
+              <dd className="tracking-headline mt-2.5 text-lg font-extrabold leading-tight text-gold sm:text-xl">
                 {about.stats?.founded || 'Dezembro de 2025'}
               </dd>
             </div>
             <div className="bg-white p-6 sm:p-7">
               <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Famílias atendidas</dt>
-              <dd className="tracking-headline mt-2.5 text-lg font-extrabold leading-tight text-grape tabular-nums sm:text-xl">
+              <dd className="tracking-headline mt-2.5 text-lg font-extrabold leading-tight text-gold tabular-nums sm:text-xl">
                 <span ref={familiesRef}>+{families.toLocaleString('pt-BR')}</span>
               </dd>
             </div>
             <div className="bg-white p-6 sm:p-7">
               <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Experiência da fundadora</dt>
-              <dd className="tracking-headline mt-2.5 text-lg font-extrabold leading-tight text-grape sm:text-xl">
+              <dd className="tracking-headline mt-2.5 text-lg font-extrabold leading-tight text-gold sm:text-xl">
                 {about.stats?.founderExperience || '4 anos'}
               </dd>
             </div>
             <div className="bg-white p-6 sm:p-7">
               <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Atuação da agência</dt>
-              <dd className="tracking-headline mt-2.5 text-lg font-extrabold leading-tight text-grape sm:text-xl">
+              <dd className="tracking-headline mt-2.5 text-lg font-extrabold leading-tight text-gold sm:text-xl">
                 {about.stats?.monthsActive || '9 meses'}
               </dd>
             </div>
@@ -205,7 +205,7 @@ export function AboutSection() {
             </Reveal>
 
             <Reveal delay={0.14}>
-              <p className="mt-6 text-[13px] font-bold uppercase tracking-[0.18em] text-grape">
+              <p className="mt-6 text-[13px] font-bold uppercase tracking-[0.18em] text-gold">
                 {founder.role || 'CEO da Agência Tia Sam'}
               </p>
             </Reveal>
@@ -217,10 +217,10 @@ export function AboutSection() {
             </Reveal>
             <Reveal delay={0.28}>
               <div className="mt-7 flex flex-wrap gap-3">
-                <span className="inline-flex items-center gap-2 rounded-full border border-grape/20 bg-lavender/50 px-4 py-2 text-[12px] font-bold text-grape">
+                <span className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-honey/50 px-4 py-2 text-[12px] font-bold text-gold">
                   {founder.formation || 'Graduanda em Recursos Humanos'}
                 </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-grape/20 bg-lavender/50 px-4 py-2 text-[12px] font-bold text-grape">
+                <span className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-honey/50 px-4 py-2 text-[12px] font-bold text-gold">
                   {founder.experience || '4 anos de experiência'}
                 </span>
               </div>
@@ -244,33 +244,33 @@ export function AboutSection() {
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             <Reveal delay={0.05}>
               <div className="flex h-full flex-col rounded-[24px] border border-line bg-white p-7 shadow-soft">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-lavender text-grape">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-honey text-gold">
                   <Target className="h-5 w-5" aria-hidden="true" />
                 </div>
-                <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-grape">Missão</p>
+                <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-gold">Missão</p>
                 <p className="mt-3 text-[15px] leading-relaxed text-muted">{about.mission || DEFAULT_MISSION}</p>
               </div>
             </Reveal>
             <Reveal delay={0.12}>
               <div className="flex h-full flex-col rounded-[24px] border border-line bg-white p-7 shadow-soft">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-lavender text-grape">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-honey text-gold">
                   <Eye className="h-5 w-5" aria-hidden="true" />
                 </div>
-                <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-grape">Visão</p>
+                <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-gold">Visão</p>
                 <p className="mt-3 text-[15px] leading-relaxed text-muted">{about.vision || DEFAULT_VISION}</p>
               </div>
             </Reveal>
             <Reveal delay={0.19}>
               <div className="flex h-full flex-col rounded-[24px] border border-line bg-white p-7 shadow-soft">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-lavender text-grape">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-honey text-gold">
                   <Heart className="h-5 w-5" aria-hidden="true" />
                 </div>
-                <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-grape">Valores</p>
+                <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-gold">Valores</p>
                 <ul className="mt-3 flex flex-wrap gap-2">
                   {values.map((v: string) => (
                     <li
                       key={v}
-                      className="rounded-full border border-grape/20 bg-lavender/50 px-3.5 py-1.5 text-[12px] font-bold text-grape"
+                      className="rounded-full border border-gold/20 bg-honey/50 px-3.5 py-1.5 text-[12px] font-bold text-gold"
                     >
                       {v}
                     </li>

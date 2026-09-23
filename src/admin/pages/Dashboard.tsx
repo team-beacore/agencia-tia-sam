@@ -73,12 +73,12 @@ export default function DashboardPage() {
       </header>
 
       {error ? (
-        <p className="mb-4 rounded-xl border border-magenta/20 bg-magenta/5 px-4 py-3 text-sm font-semibold text-magenta">{error}</p>
+        <p className="mb-4 rounded-xl border border-danger/20 bg-danger/5 px-4 py-3 text-sm font-semibold text-danger">{error}</p>
       ) : null}
 
       {!counts ? (
         <div className="flex items-center justify-center gap-2 py-16 text-muted">
-          <Loader2 className="h-5 w-5 animate-spin text-grape" />
+          <Loader2 className="h-5 w-5 animate-spin text-gold" />
           <span className="text-sm">Carregando resumo...</span>
         </div>
       ) : (
@@ -88,9 +88,9 @@ export default function DashboardPage() {
               key={c.label}
               type="button"
               onClick={() => navigate(c.to)}
-              className="group rounded-2xl border border-line bg-white p-4 text-left shadow-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-grape/30 hover:shadow-lift"
+              className="group rounded-2xl border border-line bg-white p-4 text-left shadow-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-gold/30 hover:shadow-lift"
             >
-              <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-lavender/60 text-grape">
+              <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-honey/60 text-gold">
                 <c.icon className="h-4 w-4" aria-hidden="true" />
               </div>
               <p className="text-2xl font-extrabold tabular-nums tracking-tight text-ink">{c.value}</p>
@@ -108,10 +108,10 @@ export default function DashboardPage() {
               key={s.to}
               type="button"
               onClick={() => navigate(s.to)}
-              className="group flex items-center justify-between rounded-xl border border-line/70 bg-cream/50 px-4 py-3 text-left transition-colors hover:border-grape/30 hover:bg-lavender/30"
+              className="group flex items-center justify-between rounded-xl border border-line/70 bg-cream/50 px-4 py-3 text-left transition-colors hover:border-gold/30 hover:bg-honey/30"
             >
               <span className="inline-flex items-center gap-2.5 text-sm font-semibold text-ink">
-                <s.icon className="h-4 w-4 text-grape" aria-hidden="true" />
+                <s.icon className="h-4 w-4 text-gold" aria-hidden="true" />
                 {s.label}
               </span>
               <ChevronRight className="h-4 w-4 text-muted transition-transform group-hover:translate-x-0.5" aria-hidden="true" />

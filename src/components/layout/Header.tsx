@@ -46,7 +46,7 @@ export function Header() {
         className={cn(
           'fixed inset-x-0 top-0 z-50 transition-all duration-500',
           scrolled
-            ? 'border-b border-line/70 bg-cream/85 shadow-[0_8px_30px_-18px_rgba(60,27,94,0.25)] backdrop-blur-md'
+            ? 'border-b border-line/70 bg-cream/85 shadow-[0_8px_30px_-18px_rgba(110,71,12,0.25)] backdrop-blur-md'
             : 'bg-transparent',
         )}
       >
@@ -57,7 +57,7 @@ export function Header() {
             scrolled ? 'max-h-0' : 'max-h-10',
           )}
         >
-          <div className="border-b border-grape/10 bg-lavender/30">
+          <div className="border-b border-gold/10 bg-honey/30">
             <Container className="flex h-9 items-center justify-between text-xs text-muted">
               <p className="font-medium tracking-wide">
                 {site.siteLocation} · {site.data.settings?.site?.hours || 'Atendimento humano pelo WhatsApp'}
@@ -67,16 +67,16 @@ export function Header() {
                   href={site.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 font-medium text-grape transition-colors hover:text-plum"
+                  className="inline-flex items-center gap-1.5 font-medium text-gold transition-colors hover:text-bronze"
                 >
                   <InstagramIcon className="h-3.5 w-3.5" />
                   {site.instagramHandle}
                 </a>
                 <a
-                  href={whatsappLink('Olá, Agência Tia Sam! 💜 Gostaria de conversar.', site.whatsappNumber)}
+                  href={whatsappLink('Olá, Agência Tia Sam! 🧡 Gostaria de conversar.', site.whatsappNumber)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 font-medium text-grape transition-colors hover:text-plum"
+                  className="inline-flex items-center gap-1.5 font-medium text-gold transition-colors hover:text-bronze"
                 >
                   <WhatsAppIcon className="h-3.5 w-3.5" />
                   {site.whatsappDisplay}
@@ -94,14 +94,14 @@ export function Header() {
           )}
         >
           <Container className="flex items-center justify-between gap-4">
-            <Logo compact={scrolled} desktop={isDesktop} />
+            <Logo compact={scrolled} desktop={isDesktop} onDark={!scrolled && !isDesktop} />
 
             <nav aria-label="Navegação principal" className="hidden items-center gap-7 xl:flex">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-[14px] font-medium text-ink/80 transition-colors hover:text-grape"
+                  className="text-[14px] font-medium text-ink/80 transition-colors hover:text-gold"
                 >
                   {link.label}
                 </a>
@@ -112,7 +112,7 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => openWizard('hire')}
-                className="group hidden items-center gap-2 rounded-full bg-grape px-6 py-2.5 text-[14px] font-semibold text-white shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-plum sm:inline-flex"
+                className="group hidden items-center gap-2 rounded-full bg-sun px-6 py-2.5 text-[14px] font-semibold text-cocoa shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-sun-deep sm:inline-flex"
               >
                 Quero contratar
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
@@ -124,7 +124,7 @@ export function Header() {
                 aria-label="Abrir menu"
                 aria-expanded={menuOpen}
                 aria-controls="mobile-menu"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white/70 text-ink transition-colors hover:border-grape/40 hover:text-grape xl:hidden"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white/70 text-ink transition-colors hover:border-gold/40 hover:text-gold xl:hidden"
               >
                 <Menu className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -155,7 +155,7 @@ export function Header() {
                 type="button"
                 onClick={() => setMenuOpen(false)}
                 aria-label="Fechar menu"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white/70 text-ink transition-colors hover:border-grape/40 hover:text-grape"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white/70 text-ink transition-colors hover:border-gold/40 hover:text-gold"
               >
                 <X className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -179,7 +179,7 @@ export function Header() {
                     <span className="text-xs font-semibold text-muted/60">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span className="text-[26px] font-bold tracking-tight text-ink transition-colors group-hover:text-grape">
+                    <span className="text-[26px] font-bold tracking-tight text-ink transition-colors group-hover:text-gold">
                       {link.label}
                     </span>
                   </motion.a>
@@ -198,7 +198,7 @@ export function Header() {
                   setMenuOpen(false)
                   openWizard('hire')
                 }}
-                className="flex w-full items-center justify-center gap-2.5 rounded-full bg-grape px-7 py-4 text-base font-semibold text-white shadow-soft transition-colors hover:bg-plum"
+                className="flex w-full items-center justify-center gap-2.5 rounded-full bg-sun px-7 py-4 text-base font-semibold text-cocoa shadow-soft transition-colors hover:bg-sun-deep"
               >
                 Quero contratar
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -208,16 +208,16 @@ export function Header() {
                   href={site.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-grape"
+                  className="inline-flex items-center gap-2 text-gold"
                 >
                   <InstagramIcon className="h-4 w-4" />
                   Instagram
                 </a>
                 <a
-                  href={whatsappLink('Olá, Agência Tia Sam! 💜 Gostaria de conversar.', site.whatsappNumber)}
+                  href={whatsappLink('Olá, Agência Tia Sam! 🧡 Gostaria de conversar.', site.whatsappNumber)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-grape"
+                  className="inline-flex items-center gap-2 text-gold"
                 >
                   <WhatsAppIcon className="h-4 w-4" />
                   WhatsApp

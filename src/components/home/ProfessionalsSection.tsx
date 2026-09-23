@@ -22,8 +22,8 @@ export function ProfessionalsSection() {
           {/* Conteúdo */}
           <div className="min-w-0 lg:order-1">
             <Reveal>
-              <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-grape">
-                <span aria-hidden="true" className="h-px w-8 bg-grape opacity-60" />
+              <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-gold">
+                <span aria-hidden="true" className="h-px w-8 bg-gold opacity-60" />
                 {prof.eyebrow || 'Para profissionais'}
               </p>
             </Reveal>
@@ -63,7 +63,7 @@ export function ProfessionalsSection() {
                   <div key={step} className="flex items-center gap-1 sm:gap-3">
                     <div className="flex flex-col items-center">
                       <span
-                        className="flex h-8 w-8 items-center justify-center rounded-full bg-lavender text-[11px] font-bold text-grape"
+                        className="flex h-8 w-8 items-center justify-center rounded-full bg-honey text-[11px] font-bold text-gold"
                         aria-hidden="true"
                       >
                         {i + 1}
@@ -84,7 +84,7 @@ export function ProfessionalsSection() {
               <button
                 type="button"
                 onClick={() => openWizard('professional')}
-                className="group mt-8 inline-flex items-center gap-2.5 rounded-full bg-grape px-7 py-3.5 text-[14px] font-semibold text-white shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-plum"
+                className="group mt-8 inline-flex items-center gap-2.5 rounded-full bg-sun px-7 py-3.5 text-[14px] font-semibold text-cocoa shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-sun-deep"
               >
                 {prof.cta || 'Quero fazer parte'}
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />

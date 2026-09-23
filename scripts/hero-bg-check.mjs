@@ -1,6 +1,6 @@
 /**
  * Verificação do background do Hero (dev only).
- * Decodifica o screenshot e mede os pixels reais: centro branco, bordas lilás suave.
+ * Decodifica o screenshot e mede os pixels reais: centro branco, bordas âmbar/creme suave.
  * Uso: node scripts/hero-bg-check.mjs
  */
 import { chromium } from 'playwright'
@@ -120,10 +120,10 @@ for (let y = 0; y < H; y += 4) {
 const pct = (whitePx / total) * 100
 pct > 60 ? ok(`predominância branca: ${pct.toFixed(0)}% da área clara (>235)`) : fail(`branco em apenas ${pct.toFixed(0)}%`)
 
-// Lilás deve ser perceptível apenas nas bordas (canal azul > vermelho, sem saturação forte)
+// Âmbar/creme deve ser perceptível apenas nas bordas (vermelho > azul, sem saturação forte)
 const corner = points.cantoSupEsq
-const lilacSoft = corner[2] > corner[0] && corner[2] - corner[0] < 15 && corner[2] < 253 && corner[0] > 235
-lilacSoft ? ok('borda: lilás extremamente suave (azul levemente acima, sem saturação)') : fail(`borda: ${hex(corner)} não parece lilás suave`)
+const amberSoft = corner[0] > corner[2] && corner[0] - corner[2] < 60 && corner[2] < 253 && corner[0] > 240
+amberSoft ? ok('borda: âmbar/creme suave (vermelho levemente acima, sem saturação)') : fail(`borda: ${hex(corner)} não parece âmbar suave`)
 
 // Sem overflow e layout intacto
 const overflow = await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)

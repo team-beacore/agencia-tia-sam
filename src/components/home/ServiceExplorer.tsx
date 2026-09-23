@@ -27,7 +27,7 @@ export function ServiceExplorer() {
           title={
             <span id="services-title">
               Profissionais para cada{' '}
-              <span className="accent-serif text-grape">momento da vida</span>.
+              <span className="accent-serif text-gold">momento da vida</span>.
             </span>
           }
           intro="Cada serviço é pensado para oferecer o cuidado certo na medida certa — para a sua casa, para a sua família, para você."
@@ -47,15 +47,15 @@ export function ServiceExplorer() {
                   className={cn(
                     'group flex w-full items-center gap-5 rounded-2xl px-6 py-5 text-left transition-all duration-400',
                     active === i
-                      ? 'bg-lavender/60'
-                      : 'hover:bg-lavender/30',
+                      ? 'bg-honey/60'
+                      : 'hover:bg-honey/30',
                   )}
                 >
                   <span
                     aria-hidden="true"
                     className={cn(
                       'text-[13px] font-bold transition-colors duration-300',
-                      active === i ? 'text-grape' : 'text-muted/50',
+                      active === i ? 'text-gold' : 'text-muted/50',
                     )}
                   >
                     {pad(i)}
@@ -64,7 +64,7 @@ export function ServiceExplorer() {
                     <span
                       className={cn(
                         'block text-[17px] font-bold transition-colors duration-300',
-                        active === i ? 'text-grape' : 'text-ink',
+                        active === i ? 'text-gold' : 'text-ink',
                       )}
                     >
                       {s.name}
@@ -83,7 +83,7 @@ export function ServiceExplorer() {
                     aria-hidden="true"
                     className={cn(
                       'h-1.5 w-1.5 rounded-full transition-all duration-400',
-                      active === i ? 'bg-magenta scale-125' : 'bg-line scale-100',
+                      active === i ? 'bg-sun scale-125' : 'bg-line scale-100',
                     )}
                   />
                 </button>
@@ -91,15 +91,15 @@ export function ServiceExplorer() {
             ))}
             {/* Contador de progresso */}
             <li className="mt-3 flex items-center gap-3 pl-6">
-              <span className="text-[12px] font-bold text-grape">
+              <span className="text-[12px] font-bold text-gold">
                 {String(active + 1).padStart(2, '0')}
               </span>
               <span className="text-[12px] font-medium text-muted/60">
                 de {String(SERVICES.length).padStart(2, '0')}
               </span>
-              <div aria-hidden="true" className="h-1 flex-1 rounded-full bg-lavender">
+              <div aria-hidden="true" className="h-1 flex-1 rounded-full bg-honey">
                 <div
-                  className="h-full rounded-full bg-grape transition-all duration-500 ease-soft"
+                  className="h-full rounded-full bg-sun transition-all duration-500 ease-soft"
                   style={{ width: `${((active + 1) / SERVICES.length) * 100}%` }}
                 />
               </div>
@@ -147,7 +147,7 @@ export function ServiceExplorer() {
                   <ul className="mt-4 space-y-2">
                     {service.benefits.map((b) => (
                       <li key={b} className="flex items-start gap-3 text-sm font-medium text-ink">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-magenta" aria-hidden="true" />
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-ember" aria-hidden="true" />
                         {b}
                       </li>
                     ))}
@@ -156,7 +156,7 @@ export function ServiceExplorer() {
                   <button
                     type="button"
                     onClick={() => openWizard('hire', { service: service.slug })}
-                    className="group mt-7 inline-flex items-center gap-2.5 rounded-full bg-grape px-7 py-3.5 text-[14px] font-semibold text-white shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-plum"
+                    className="group mt-7 inline-flex items-center gap-2.5 rounded-full bg-sun px-7 py-3.5 text-[14px] font-semibold text-cocoa shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-sun-deep"
                   >
                     {service.cta}
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
@@ -176,7 +176,7 @@ export function ServiceExplorer() {
                 key={s.slug}
                 className={cn(
                   'overflow-hidden rounded-2xl border transition-all duration-400',
-                  open ? 'border-grape/30 bg-white shadow-soft' : 'border-line bg-white/70',
+                  open ? 'border-gold/30 bg-white shadow-soft' : 'border-line bg-white/70',
                 )}
               >
                 <button
@@ -191,7 +191,7 @@ export function ServiceExplorer() {
                     aria-hidden="true"
                     className={cn(
                       'text-[11px] font-bold',
-                      open ? 'text-grape' : 'text-muted/50',
+                      open ? 'text-gold' : 'text-muted/50',
                     )}
                   >
                     {pad(i)}
@@ -200,7 +200,7 @@ export function ServiceExplorer() {
                     <span
                       className={cn(
                         'block text-[15px] font-bold',
-                        open ? 'text-grape' : 'text-ink',
+                        open ? 'text-gold' : 'text-ink',
                       )}
                     >
                       {s.name}
@@ -214,7 +214,7 @@ export function ServiceExplorer() {
                     className={cn(
                       'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-colors duration-300',
                       open
-                        ? 'border-grape/30 bg-lavender/60 text-grape'
+                        ? 'border-gold/30 bg-honey/60 text-gold'
                         : 'border-line text-muted/50',
                     )}
                   >
@@ -259,7 +259,7 @@ export function ServiceExplorer() {
                         <ul className="mt-3 space-y-1.5">
                           {s.benefits.map((b) => (
                             <li key={b} className="flex items-start gap-2 text-xs font-medium text-ink">
-                              <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-magenta" aria-hidden="true" />
+                              <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-ember" aria-hidden="true" />
                               {b}
                             </li>
                           ))}
@@ -267,7 +267,7 @@ export function ServiceExplorer() {
                         <button
                           type="button"
                           onClick={() => openWizard('hire', { service: s.slug })}
-                          className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-grape px-6 py-3.5 text-[13px] font-semibold text-white shadow-soft transition-colors hover:bg-plum"
+                          className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-sun px-6 py-3.5 text-[13px] font-semibold text-cocoa shadow-soft transition-colors hover:bg-sun-deep"
                         >
                           {s.cta}
                           <ArrowRight className="h-4 w-4" aria-hidden="true" />

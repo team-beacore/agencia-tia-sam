@@ -31,9 +31,13 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="rounded-2xl border border-line bg-white p-8 shadow-soft">
           <div className="mb-6 text-center">
-            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-[14px] bg-grape text-white shadow-soft">
-              <span className="font-serif text-2xl font-bold">S</span>
-            </div>
+            <img
+              src="/images/brand/logo-mark.png"
+              alt=""
+              width={256}
+              height={256}
+              className="mx-auto mb-3 h-20 w-20 object-contain"
+            />
             <h1 className="text-xl font-extrabold tracking-tight text-ink">Painel Tia Sam</h1>
             <p className="mt-1 text-sm text-muted">Acesse para gerenciar o conteúdo</p>
           </div>
@@ -48,7 +52,7 @@ export default function LoginPage() {
                 placeholder="admin@tiasam.local"
                 required
                 autoFocus
-                className="w-full rounded-xl border border-line bg-cream px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/50 focus:border-grape focus:outline-none focus:ring-2 focus:ring-grape/20"
+                className="w-full rounded-xl border border-line bg-cream px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/50 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20"
               />
             </div>
             <div>
@@ -59,12 +63,12 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full rounded-xl border border-line bg-cream px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/50 focus:border-grape focus:outline-none focus:ring-2 focus:ring-grape/20"
+                className="w-full rounded-xl border border-line bg-cream px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/50 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20"
               />
             </div>
 
             {error ? (
-              <p className="rounded-xl border border-magenta/20 bg-magenta/5 px-4 py-2.5 text-sm font-semibold text-magenta">
+              <p className="rounded-xl border border-danger/20 bg-danger/5 px-4 py-2.5 text-sm font-semibold text-danger">
                 {error}
               </p>
             ) : null}

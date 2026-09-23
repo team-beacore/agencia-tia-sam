@@ -4,36 +4,40 @@
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
 
-  /* Neutros quentes */
-  --color-cream: #faf7f1;
-  --color-paper: #f3eee5;
-  --color-sand: #e8e0d1;
-  --color-line: #e4dbcd;
+  /* Neutros quentes (creme da logomarca) */
+  --color-cream: #fbf7ef;
+  --color-paper: #f5eee1;
+  --color-sand: #ecdfc8;
+  --color-line: #e8dcc6;
 
-  /* Roxos e lilases */
-  --color-lavender: #ece5f5;
-  --color-lilac: #d9cceb;
-  --color-violet: #8a5cb8;
-  --color-grape: #5b2a86;
-  --color-plum: #3c1b5e;
-  --color-night: #241238;
+  /* Dourados e âmbares da identidade */
+  --color-honey: #fcefd6;
+  --color-wheat: #f8d9a0;
+  --color-gold: #915f0f;
+  --color-bronze: #6e470c;
+  --color-cocoa: #2e1f0e;
 
-  /* Acentos */
-  --color-magenta: #c2255c;
-  --color-blush: #faeef4;
+  /* Cor principal da marca e acentos */
+  --color-sun: #fdbb5a;
+  --color-sun-deep: #f5a83a;
+  --color-ember: #b8650f;
+  --color-peach: #fff1dc;
+
+  /* Estados */
+  --color-danger: #b42318;
 
   /* Texto */
-  --color-ink: #2a2033;
-  --color-muted: #6f6479;
+  --color-ink: #2b2118;
+  --color-muted: #6e6152;
 
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
   --shadow-soft:
-    0 1px 2px rgba(60, 27, 94, 0.05),
-    0 16px 40px -20px rgba(60, 27, 94, 0.18);
+    0 1px 2px rgba(110, 71, 12, 0.05),
+    0 16px 40px -20px rgba(110, 71, 12, 0.18);
   --shadow-lift:
-    0 2px 6px rgba(60, 27, 94, 0.06),
-    0 32px 64px -24px rgba(60, 27, 94, 0.3);
+    0 2px 6px rgba(110, 71, 12, 0.06),
+    0 32px 64px -24px rgba(110, 71, 12, 0.3);
 
   --animate-float: float 7s ease-in-out infinite;
   --animate-float-slow: float 9s ease-in-out infinite 1.2s;
@@ -76,12 +80,12 @@ body {
 }
 
 ::selection {
-  background: var(--color-grape);
+  background: var(--color-gold);
   color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-magenta);
+  outline: 2px solid var(--color-ember);
   outline-offset: 3px;
   border-radius: 4px;
 }

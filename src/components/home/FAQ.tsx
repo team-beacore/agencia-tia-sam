@@ -29,7 +29,7 @@ export function FAQ() {
                 key={faq.question}
                 className={cn(
                   'border-b border-line/80 transition-colors duration-300',
-                  isOpen && 'border-grape/25',
+                  isOpen && 'border-gold/25',
                 )}
               >
                 <button
@@ -45,7 +45,7 @@ export function FAQ() {
                       aria-hidden="true"
                       className={cn(
                         'text-[11px] font-bold transition-colors duration-300',
-                        isOpen ? 'text-magenta' : 'text-muted/50',
+                        isOpen ? 'text-ember' : 'text-muted/50',
                       )}
                     >
                       {String(i + 1).padStart(2, '0')}
@@ -53,7 +53,7 @@ export function FAQ() {
                     <span
                       className={cn(
                         'text-[16px] font-bold tracking-tight transition-colors duration-300 sm:text-[17px]',
-                        isOpen ? 'text-grape' : 'text-ink group-hover:text-grape',
+                        isOpen ? 'text-gold' : 'text-ink group-hover:text-gold',
                       )}
                     >
                       {faq.question}
@@ -64,8 +64,8 @@ export function FAQ() {
                     className={cn(
                       'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300',
                       isOpen
-                        ? 'rotate-45 border-magenta text-magenta'
-                        : 'border-line text-muted group-hover:border-grape/40 group-hover:text-grape',
+                        ? 'rotate-45 border-ember text-ember'
+                        : 'border-line text-muted group-hover:border-gold/40 group-hover:text-gold',
                     )}
                   >
                     <Plus className="h-4 w-4" />

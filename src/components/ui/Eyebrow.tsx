@@ -14,7 +14,7 @@ export function Eyebrow({ children, dark = false, className, withLine = true }: 
     <p
       className={cn(
         'flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em]',
-        dark ? 'text-lilac' : 'text-grape',
+        dark ? 'text-wheat' : 'text-gold',
         className,
       )}
     >

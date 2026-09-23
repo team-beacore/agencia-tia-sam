@@ -105,14 +105,14 @@ export default function ProfessionalsPage() {
         </Button>
       </header>
 
-      <p className="mb-4 flex items-start gap-2 rounded-xl border border-grape/15 bg-lavender/40 px-4 py-3 text-xs leading-relaxed text-grape">
+      <p className="mb-4 flex items-start gap-2 rounded-xl border border-gold/15 bg-honey/40 px-4 py-3 text-xs leading-relaxed text-gold">
         <Info className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
         <span className="min-w-0">
           Apenas profissionais <strong>ativas</strong> e com <strong>"Exibir no site"</strong> ativado aparecem publicamente. Não inclua dados sensíveis (documentos, endereço completo, contato direto).
         </span>
       </p>
 
-      {error ? <p className="mb-4 rounded-xl border border-magenta/20 bg-magenta/5 px-4 py-3 text-sm font-semibold text-magenta">{error}</p> : null}
+      {error ? <p className="mb-4 rounded-xl border border-danger/20 bg-danger/5 px-4 py-3 text-sm font-semibold text-danger">{error}</p> : null}
 
       {!rows ? (
         <Spinner />
@@ -134,7 +134,7 @@ export default function ProfessionalsPage() {
                   {p.photo ? (
                     <img src={p.photo} alt="" className="h-10 w-10 shrink-0 rounded-full object-cover" />
                   ) : (
-                    <div className="h-10 w-10 shrink-0 rounded-full bg-lavender/60" />
+                    <div className="h-10 w-10 shrink-0 rounded-full bg-honey/60" />
                   )}
                   <div className="min-w-0">
                     <p className="font-semibold text-ink">{p.name}</p>
@@ -144,7 +144,7 @@ export default function ProfessionalsPage() {
               </td>
               <td className="hidden px-4 py-3 lg:table-cell">
                 <div className="flex flex-wrap gap-1">
-                  {(p.services ?? []).length ? p.services.slice(0, 2).map((s) => <Badge key={s} tone="violet">{s}</Badge>) : <span className="text-xs text-muted">—</span>}
+                  {(p.services ?? []).length ? p.services.slice(0, 2).map((s) => <Badge key={s} tone="brand">{s}</Badge>) : <span className="text-xs text-muted">—</span>}
                   {(p.services ?? []).length > 2 ? <Badge tone="neutral">+{(p.services ?? []).length - 2}</Badge> : null}
                 </div>
               </td>
@@ -192,7 +192,7 @@ export default function ProfessionalsPage() {
                   key={s.slug}
                   type="button"
                   onClick={() => toggleService(s.slug)}
-                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${form.services.includes(s.slug) ? 'border-grape bg-grape text-white' : 'border-line bg-white text-muted hover:border-grape/40'}`}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${form.services.includes(s.slug) ? 'border-gold bg-gold text-white' : 'border-line bg-white text-muted hover:border-gold/40'}`}
                 >
                   {s.name}
                 </button>

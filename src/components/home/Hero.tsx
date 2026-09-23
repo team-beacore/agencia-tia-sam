@@ -78,7 +78,7 @@ export function Hero() {
       className="relative overflow-hidden pb-20 pt-32 sm:pt-40 lg:pb-28 lg:pt-44"
       style={{
         background:
-          'radial-gradient(ellipse 130% 100% at 50% 30%, #FCFAFF 0%, #FCFAFF 28%, #F7F1FB 62%, #F4ECFA 100%)',
+          'radial-gradient(ellipse 130% 100% at 50% 30%, #FFFCF6 0%, #FFFCF6 28%, #FDF3E2 62%, #FBEACB 100%)',
       }}
     >
       {/* Imagem de fundo — apenas mobile */}
@@ -90,14 +90,14 @@ export function Hero() {
           decoding="async"
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-night/55" />
-        <div className="absolute inset-0 bg-gradient-to-b from-night/85 via-night/40 to-night/90" />
+        <div className="absolute inset-0 bg-cocoa/55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cocoa/85 via-cocoa/40 to-cocoa/90" />
       </div>
 
-      {/* Luz ambiente lilás — presença atmosférica suave, sem dominar (desktop) */}
+      {/* Luz ambiente âmbar — presença atmosférica suave, sem dominar (desktop) */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 max-md:hidden">
-        <div className="absolute right-[-10%] top-[6%] h-[32rem] w-[32rem] rounded-full bg-[#F4ECFA] opacity-90 blur-[140px]" />
-        <div className="absolute bottom-[-7rem] left-[-6rem] h-[24rem] w-[24rem] rounded-full bg-[#F7F1FB] opacity-70 blur-[130px]" />
+        <div className="absolute right-[-10%] top-[6%] h-[32rem] w-[32rem] rounded-full bg-[#FBEACB] opacity-90 blur-[140px]" />
+        <div className="absolute bottom-[-7rem] left-[-6rem] h-[24rem] w-[24rem] rounded-full bg-[#FDF3E2] opacity-70 blur-[130px]" />
       </div>
 
       <Container className="relative">
@@ -110,9 +110,9 @@ export function Hero() {
           >
             <motion.p
               variants={item}
-              className="flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.26em] text-lilac md:justify-start md:text-grape"
+              className="flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.26em] text-wheat md:justify-start md:text-gold"
             >
-              <span aria-hidden="true" className="hidden h-px w-9 bg-grape opacity-60 md:block" />
+              <span aria-hidden="true" className="hidden h-px w-9 bg-gold opacity-60 md:block" />
               {heroCfg.eyebrow || 'Agência Tia Sam · Manaus'}
             </motion.p>
 
@@ -121,12 +121,12 @@ export function Hero() {
               className="tracking-headline mx-auto mt-7 max-w-[22rem] text-balance text-center text-[clamp(2.6rem,7.2vw,4.9rem)] font-extrabold leading-[1.02] text-white md:mx-0 md:max-w-none md:text-left md:text-ink"
             >
               {titleBefore ? <>{titleBefore}{' '}</> : null}
-              <span className="accent-serif relative text-lilac md:text-grape">
+              <span className="accent-serif relative text-wheat md:text-gold">
                 {lastWord}
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 220 14"
-                  className="absolute -bottom-2 left-0 w-full text-magenta/70"
+                  className="absolute -bottom-2 left-0 w-full text-sun"
                   preserveAspectRatio="none"
                 >
                   <path
@@ -143,7 +143,7 @@ export function Hero() {
 
             <motion.p
               variants={item}
-              className="mx-auto mt-7 max-w-xl text-center text-lg leading-relaxed text-lavender/90 sm:text-[19px] md:mx-0 md:text-left md:text-muted"
+              className="mx-auto mt-7 max-w-xl text-center text-lg leading-relaxed text-honey/90 sm:text-[19px] md:mx-0 md:text-left md:text-muted"
             >
               {heroCfg.subtitle ||
                 'Conectamos famílias e profissionais com cuidado, confiança e um processo de seleção criterioso.'}
@@ -164,9 +164,9 @@ export function Hero() {
 
             <motion.p
               variants={item}
-              className="mt-6 flex items-center justify-center gap-2 text-sm font-medium text-lavender/90 md:inline-flex md:justify-start md:text-muted"
+              className="mt-6 flex items-center justify-center gap-2 text-sm font-medium text-honey/90 md:inline-flex md:justify-start md:text-muted"
             >
-              <WhatsAppIcon className="h-4 w-4 text-lilac md:text-grape" />
+              <WhatsAppIcon className="h-4 w-4 text-wheat md:text-gold" />
               {heroCfg.whatsappHint || 'Atendimento humano pelo WhatsApp'}
             </motion.p>
           </motion.div>
@@ -177,7 +177,7 @@ export function Hero() {
               {/* Moldura decorativa */}
               <div
                 aria-hidden="true"
-                className="absolute -inset-4 -z-10 rounded-[38px] border border-grape/10 bg-lavender/40 sm:-inset-6"
+                className="absolute -inset-4 -z-10 rounded-[38px] border border-gold/10 bg-honey/40 sm:-inset-6"
               />
               <motion.figure
                 style={reduce ? undefined : { x: imgX, y: imgY }}
@@ -199,7 +199,7 @@ export function Hero() {
                 className="absolute -left-3 top-6 sm:-left-8"
               >
                 <div className="animate-float rounded-2xl border border-line bg-white/95 px-4 py-3 shadow-soft backdrop-blur-sm">
-                  <p className="text-[13px] font-extrabold tracking-tight text-grape">
+                  <p className="text-[13px] font-extrabold tracking-tight text-gold">
                     +{site.familiesServed.toLocaleString('pt-BR')} famílias
                   </p>
                   <p className="text-[11px] font-medium text-muted">atendidas com cuidado</p>
@@ -212,7 +212,7 @@ export function Hero() {
               >
                 <div className="animate-float-slow rounded-2xl border border-line bg-white/95 px-4 py-3 shadow-soft backdrop-blur-sm">
                   <p className="flex items-center gap-1.5 text-[12px] font-bold text-ink">
-                    <Check className="h-3.5 w-3.5 text-magenta" aria-hidden="true" />
+                    <Check className="h-3.5 w-3.5 text-ember" aria-hidden="true" />
                     Seleção criteriosa
                   </p>
                 </div>

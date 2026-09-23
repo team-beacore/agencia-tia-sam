@@ -49,16 +49,16 @@ export function FloatingWhatsApp() {
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className="absolute bottom-[4.25rem] right-0 w-[calc(100vw-2.5rem)] max-w-xs overflow-hidden rounded-[22px] border border-line bg-white shadow-lift"
           >
-            <div className="flex items-center justify-between bg-grape px-5 py-4">
+            <div className="flex items-center justify-between bg-bronze px-5 py-4">
               <div>
                 <p className="text-[13px] font-bold text-white">Como podemos ajudar?</p>
-                <p className="mt-0.5 text-[11px] text-lilac">Atendimento humano pelo WhatsApp</p>
+                <p className="mt-0.5 text-[11px] text-wheat">Atendimento humano pelo WhatsApp</p>
               </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Fechar menu do WhatsApp"
-                className="flex h-8 w-8 items-center justify-center rounded-full text-lilac transition-colors hover:bg-white/10 hover:text-white"
+                className="flex h-8 w-8 items-center justify-center rounded-full text-wheat transition-colors hover:bg-white/10 hover:text-white"
               >
                 <X className="h-4 w-4" aria-hidden="true" />
               </button>
@@ -73,22 +73,22 @@ export function FloatingWhatsApp() {
                   className={cn(
                     'group flex w-full items-center justify-between rounded-2xl px-4 py-3.5 text-left transition-colors duration-200',
                     i === 0 ? 'mt-0' : 'mt-1',
-                    'hover:bg-lavender/50',
+                    'hover:bg-honey/50',
                   )}
                 >
-                  <span className="text-[14px] font-bold text-ink transition-colors group-hover:text-grape">
+                  <span className="text-[14px] font-bold text-ink transition-colors group-hover:text-gold">
                     {opt.label}
                   </span>
-                  <ArrowUpRight className="h-4 w-4 text-muted transition-all duration-300 group-hover:translate-x-0.5 group-hover:translate-y-[-2px] group-hover:text-grape" aria-hidden="true" />
+                  <ArrowUpRight className="h-4 w-4 text-muted transition-all duration-300 group-hover:translate-x-0.5 group-hover:translate-y-[-2px] group-hover:text-gold" aria-hidden="true" />
                 </button>
               ))}
             </div>
 
             <a
-              href={whatsappLink('Olá, Agência Tia Sam! 💜 Gostaria de conversar.', site.whatsappNumber)}
+              href={whatsappLink('Olá, Agência Tia Sam! 🧡 Gostaria de conversar.', site.whatsappNumber)}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 border-t border-line/70 px-5 py-3.5 text-[12px] font-semibold text-muted transition-colors hover:text-grape"
+              className="flex items-center justify-center gap-2 border-t border-line/70 px-5 py-3.5 text-[12px] font-semibold text-muted transition-colors hover:text-gold"
             >
               <WhatsAppIcon className="h-3.5 w-3.5" />
               ou fale direto no WhatsApp
@@ -104,9 +104,9 @@ export function FloatingWhatsApp() {
         aria-label={open ? 'Fechar menu do WhatsApp' : 'Abrir menu do WhatsApp'}
         aria-expanded={open}
         whileTap={reduce ? undefined : { scale: 0.94 }}
-        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-grape text-white shadow-lift transition-colors duration-300 hover:bg-plum"
+        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-sun text-cocoa shadow-lift transition-colors duration-300 hover:bg-sun-deep"
       >
-        <span aria-hidden="true" className="absolute inset-0 rounded-full bg-grape opacity-50 animate-pulse-soft" />
+        <span aria-hidden="true" className="absolute inset-0 rounded-full bg-sun opacity-50 animate-pulse-soft" />
         {open ? <X className="relative h-6 w-6" aria-hidden="true" /> : <WhatsAppIcon className="relative h-6 w-6" />}
       </motion.button>
 

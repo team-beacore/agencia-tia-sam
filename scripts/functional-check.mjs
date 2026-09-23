@@ -66,7 +66,7 @@ try {
   // Verifica link do WhatsApp
   const waHref = await page.getByRole('link', { name: /Conversar com a Tia Sam/ }).getAttribute('href')
   const decoded = waHref ? decodeURIComponent(waHref) : ''
-  const expectedMsg = 'Olá, Agência Tia Sam! 💜\n\nGostaria de contratar uma profissional.\n\nServiço: Babá\nNecessidade: Meu filho\nQuando: Nesta semana\n\nObservação: Preciso de apoio nas manhãs de segunda a sexta.\n\nGostaria de conversar sobre as opções disponíveis.'
+  const expectedMsg = 'Olá, Agência Tia Sam! 🧡\n\nGostaria de contratar uma profissional.\n\nServiço: Babá\nNecessidade: Meu filho\nQuando: Nesta semana\n\nObservação: Preciso de apoio nas manhãs de segunda a sexta.\n\nGostaria de conversar sobre as opções disponíveis.'
   decoded.includes('wa.me/5592984146066') && decoded.includes(expectedMsg)
     ? ok('hire resumo: link WhatsApp correto (número + mensagem)')
     : fail('hire resumo: link WhatsApp inesperado: ' + waHref?.slice(0, 140))

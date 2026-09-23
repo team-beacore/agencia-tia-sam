@@ -162,7 +162,7 @@ export function ProcessTimeline() {
     <section
       id="processo"
       aria-labelledby="process-title"
-      className="relative overflow-hidden bg-gradient-to-b from-plum via-plum to-night py-24 sm:py-28"
+      className="relative overflow-hidden bg-gradient-to-b from-bronze via-bronze to-cocoa py-24 sm:py-28"
     >
       {/* Textura sutil */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.03]">
@@ -173,10 +173,10 @@ export function ProcessTimeline() {
         {/* Cabeçalho centralizado */}
         <div className="mx-auto max-w-3xl text-center">
           <Reveal>
-            <p className="flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-lilac">
-              <span aria-hidden="true" className="h-px w-8 bg-lilac opacity-50" />
+            <p className="flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-wheat">
+              <span aria-hidden="true" className="h-px w-8 bg-wheat opacity-50" />
               Como funciona
-              <span aria-hidden="true" className="h-px w-8 bg-lilac opacity-50" />
+              <span aria-hidden="true" className="h-px w-8 bg-wheat opacity-50" />
             </p>
           </Reveal>
           <Reveal delay={0.08}>
@@ -185,11 +185,11 @@ export function ProcessTimeline() {
               className="tracking-headline text-balance mt-5 text-[clamp(1.75rem,4.5vw,3rem)] font-extrabold leading-[1.06] text-white"
             >
               Por trás de cada indicação,{' '}
-              <span className="text-lilac">existe um processo</span>.
+              <span className="text-wheat">existe um processo</span>.
             </h2>
           </Reveal>
           <Reveal delay={0.16}>
-            <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-lavender/80">
+            <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-honey/80">
               Conheça cada etapa do nosso processo de seleção criterioso.
             </p>
           </Reveal>
@@ -212,10 +212,10 @@ export function ProcessTimeline() {
             className="relative hidden select-none lg:block"
           >
             {/* Linha conectora */}
-            <div aria-hidden="true" className="absolute inset-x-0 top-5 h-0.5 bg-lavender/15" />
+            <div aria-hidden="true" className="absolute inset-x-0 top-5 h-0.5 bg-honey/15" />
             <div
               aria-hidden="true"
-              className="absolute left-0 top-5 h-0.5 rounded-full bg-magenta/80 transition-all duration-500 ease-soft"
+              className="absolute left-0 top-5 h-0.5 rounded-full bg-sun/90 transition-all duration-500 ease-soft"
               style={{ width: `${(active / (TOTAL - 1)) * 100}%` }}
             />
 
@@ -235,17 +235,17 @@ export function ProcessTimeline() {
                         stepRefs.current[i] = el
                       }}
                       onClick={() => select(i)}
-                      className="group flex flex-col items-center gap-3 focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-plum focus-visible:outline-none"
+                      className="group flex flex-col items-center gap-3 focus-visible:ring-2 focus-visible:ring-sun focus-visible:ring-offset-2 focus-visible:ring-offset-bronze focus-visible:outline-none"
                     >
                       <span
                         aria-hidden="true"
                         className={cn(
                           'flex h-10 w-10 items-center justify-center rounded-full border-2 text-[13px] font-bold transition-all duration-400',
                           isActive
-                            ? 'border-magenta bg-magenta text-white shadow-[0_0_0_5px_rgba(194,37,92,0.22)]'
+                            ? 'border-sun bg-sun text-cocoa shadow-[0_0_0_5px_rgba(253,187,90,0.25)]'
                             : isPast
-                              ? 'border-lilac/60 bg-lilac/20 text-lilac'
-                              : 'border-lavender/25 text-lavender/50 group-hover:border-lavender/60 group-hover:text-lavender/80',
+                              ? 'border-wheat/60 bg-wheat/20 text-wheat'
+                              : 'border-honey/25 text-honey/50 group-hover:border-honey/60 group-hover:text-honey/80',
                         )}
                       >
                         {s.number}
@@ -253,7 +253,7 @@ export function ProcessTimeline() {
                       <span
                         className={cn(
                           'text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors duration-300',
-                          isActive ? 'text-white' : isPast ? 'text-lilac/80' : 'text-lavender/50',
+                          isActive ? 'text-white' : isPast ? 'text-wheat/80' : 'text-honey/50',
                         )}
                       >
                         {s.title}
@@ -288,10 +288,10 @@ export function ProcessTimeline() {
                     }}
                     onClick={() => select(i)}
                     className={cn(
-                      'flex shrink-0 snap-center items-center gap-2 rounded-full border px-4 py-2.5 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-plum focus-visible:outline-none',
+                      'flex shrink-0 snap-center items-center gap-2 rounded-full border px-4 py-2.5 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-sun focus-visible:ring-offset-2 focus-visible:ring-offset-bronze focus-visible:outline-none',
                       isActive
-                        ? 'border-magenta bg-magenta text-white'
-                        : 'border-lavender/20 bg-plum/40 text-lavender/60 active:border-lavender/50',
+                        ? 'border-sun bg-sun text-cocoa'
+                        : 'border-honey/20 bg-bronze/40 text-honey/60 active:border-honey/50',
                     )}
                   >
                     <span aria-hidden="true" className="text-[11px] font-bold">
@@ -308,11 +308,11 @@ export function ProcessTimeline() {
           {!reduce && (
             <div
               aria-hidden="true"
-              className="mt-4 h-[3px] w-full overflow-hidden rounded-full bg-lavender/10"
+              className="mt-4 h-[3px] w-full overflow-hidden rounded-full bg-honey/10"
             >
               <div
                 key={cycle}
-                className="h-full rounded-full bg-magenta"
+                className="h-full rounded-full bg-sun"
                 style={{
                   animation: `process-progress ${AUTOPLAY_MS}ms linear forwards`,
                   animationPlayState: paused || !inView ? 'paused' : 'running',
@@ -327,18 +327,18 @@ export function ProcessTimeline() {
               type="button"
               onClick={() => goTo(-1)}
               aria-label="Etapa anterior"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-lavender/25 text-lavender/80 transition-colors hover:border-lavender/60 hover:text-white focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-plum focus-visible:outline-none"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-honey/25 text-honey/80 transition-colors hover:border-honey/60 hover:text-white focus-visible:ring-2 focus-visible:ring-sun focus-visible:ring-offset-2 focus-visible:ring-offset-bronze focus-visible:outline-none"
             >
               <ChevronLeft className="h-5 w-5" aria-hidden="true" />
             </button>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-lilac">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-wheat">
               Etapa {step.number} de {String(TOTAL).padStart(2, '0')}
             </p>
             <button
               type="button"
               onClick={() => goTo(1)}
               aria-label="Próxima etapa"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-lavender/25 text-lavender/80 transition-colors hover:border-lavender/60 hover:text-white focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-plum focus-visible:outline-none"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-honey/25 text-honey/80 transition-colors hover:border-honey/60 hover:text-white focus-visible:ring-2 focus-visible:ring-sun focus-visible:ring-offset-2 focus-visible:ring-offset-bronze focus-visible:outline-none"
             >
               <ChevronRight className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -382,15 +382,15 @@ export function ProcessTimeline() {
                 >
                   <p
                     aria-hidden="true"
-                    className="tracking-headline text-[clamp(4.25rem,11vw,6.75rem)] font-extrabold leading-none text-lilac/25"
+                    className="tracking-headline text-[clamp(4.25rem,11vw,6.75rem)] font-extrabold leading-none text-wheat/25"
                   >
                     {step.number}
                   </p>
                   <h3 className="mt-3 text-[clamp(1.5rem,3vw,2rem)] font-extrabold tracking-tight text-white">
                     {step.title}
                   </h3>
-                  <div aria-hidden="true" className="mx-auto mt-5 h-px w-12 bg-magenta/70 lg:mx-0" />
-                  <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-lavender/85 sm:text-[17px] lg:mx-0">
+                  <div aria-hidden="true" className="mx-auto mt-5 h-px w-12 bg-sun/80 lg:mx-0" />
+                  <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-honey/85 sm:text-[17px] lg:mx-0">
                     {step.description}
                   </p>
                 </motion.div>

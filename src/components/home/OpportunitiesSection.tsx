@@ -36,7 +36,7 @@ export function OpportunitiesSection() {
           eyebrow="Oportunidades"
           title={
             <span id="opportunities-title">
-              Vagas e oportunidades <span className="accent-serif text-grape">disponíveis</span>.
+              Vagas e oportunidades <span className="accent-serif text-gold">disponíveis</span>.
             </span>
           }
           intro="Confira as oportunidades abertas para profissionais que desejam fazer parte da Agência Tia Sam."
@@ -56,7 +56,7 @@ export function OpportunitiesSection() {
 
                   <div className="mt-3 flex flex-wrap gap-2">
                     {o.type ? (
-                      <span className="rounded-full bg-lavender/60 px-3 py-1 text-[11px] font-bold text-grape">
+                      <span className="rounded-full bg-honey/60 px-3 py-1 text-[11px] font-bold text-gold">
                         {o.type}
                       </span>
                     ) : null}

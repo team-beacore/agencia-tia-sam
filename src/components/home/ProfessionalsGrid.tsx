@@ -25,7 +25,7 @@ export function ProfessionalsGrid() {
           eyebrow="Profissionais disponíveis"
           title={
             <span id="professionals-grid-title">
-              Conheça quem já faz parte <span className="accent-serif text-grape">da Tia Sam</span>.
+              Conheça quem já faz parte <span className="accent-serif text-gold">da Tia Sam</span>.
             </span>
           }
           intro="Profissionais selecionadas e aprovadas pelo nosso processo criterioso, prontas para novos lares."
@@ -35,7 +35,7 @@ export function ProfessionalsGrid() {
           {professionals.map((p, i) => (
             <Reveal key={p.id ?? p.name} delay={0.06 * (i % 3)}>
               <article className="group flex h-full flex-col overflow-hidden rounded-[22px] border border-line bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
-                <div className="relative aspect-[4/3] overflow-hidden bg-lavender/40">
+                <div className="relative aspect-[4/3] overflow-hidden bg-honey/40">
                   {p.photo ? (
                     <img
                       src={p.photo}
@@ -46,13 +46,13 @@ export function ProfessionalsGrid() {
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center">
-                      <span className="font-serif text-6xl italic text-grape/30">
+                      <span className="font-serif text-6xl italic text-gold/30">
                         {p.name.charAt(0)}
                       </span>
                     </div>
                   )}
                   {p.role ? (
-                    <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-[11px] font-bold text-grape shadow-soft backdrop-blur-sm">
+                    <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-[11px] font-bold text-gold shadow-soft backdrop-blur-sm">
                       {p.role}
                     </span>
                   ) : null}
@@ -65,7 +65,7 @@ export function ProfessionalsGrid() {
                     {(p.services ?? []).map((s) => (
                       <span
                         key={s}
-                        className="rounded-full border border-grape/15 bg-lavender/50 px-2.5 py-0.5 text-[11px] font-semibold text-grape"
+                        className="rounded-full border border-gold/15 bg-honey/50 px-2.5 py-0.5 text-[11px] font-semibold text-gold"
                       >
                         {s}
                       </span>
@@ -79,19 +79,19 @@ export function ProfessionalsGrid() {
                   <ul className="mt-4 space-y-1.5 border-t border-line/60 pt-4 text-[13px] text-muted">
                     {p.location ? (
                       <li className="flex items-center gap-2">
-                        <MapPin className="h-3.5 w-3.5 shrink-0 text-grape" aria-hidden="true" />
+                        <MapPin className="h-3.5 w-3.5 shrink-0 text-gold" aria-hidden="true" />
                         {p.location}
                       </li>
                     ) : null}
                     {p.availability ? (
                       <li className="flex items-center gap-2">
-                        <Clock className="h-3.5 w-3.5 shrink-0 text-grape" aria-hidden="true" />
+                        <Clock className="h-3.5 w-3.5 shrink-0 text-gold" aria-hidden="true" />
                         {p.availability}
                       </li>
                     ) : null}
                     {p.experience ? (
                       <li className="flex items-center gap-2">
-                        <Briefcase className="h-3.5 w-3.5 shrink-0 text-grape" aria-hidden="true" />
+                        <Briefcase className="h-3.5 w-3.5 shrink-0 text-gold" aria-hidden="true" />
                         {p.experience}
                       </li>
                     ) : null}

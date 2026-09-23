@@ -65,7 +65,7 @@ export function DecisionHub() {
           eyebrow="Como podemos ajudar?"
           title={
             <span id="hub-title">
-              Dois caminhos. <span className="accent-serif text-grape">O mesmo cuidado.</span>
+              Dois caminhos. <span className="accent-serif text-gold">O mesmo cuidado.</span>
             </span>
           }
           intro="Seja para a sua casa ou para a sua família — a Tia Sam começa do mesmo jeito: ouvindo você."
@@ -83,7 +83,7 @@ export function DecisionHub() {
                 onFocus={() => setActive(i)}
                 aria-label={`${path.title} — ${path.description}`}
                 className={cn(
-                  'group relative min-h-[260px] flex-1 overflow-hidden rounded-[26px] text-left transition-all duration-700 ease-soft focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 sm:min-h-[360px] lg:min-h-0',
+                  'group relative min-h-[260px] flex-1 overflow-hidden rounded-[26px] text-left transition-all duration-700 ease-soft focus-visible:ring-2 focus-visible:ring-sun focus-visible:ring-offset-2 sm:min-h-[360px] lg:min-h-0',
                   'lg:transition-[flex-grow]',
                   isActive ? 'lg:flex-[2.4]' : 'lg:flex-[1]',
                 )}
@@ -102,7 +102,7 @@ export function DecisionHub() {
                 {/* Overlay para legibilidade */}
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-night/90 via-night/35 to-night/5 transition-opacity duration-700"
+                  className="absolute inset-0 bg-gradient-to-t from-cocoa/90 via-cocoa/35 to-cocoa/5 transition-opacity duration-700"
                 />
 
                 {/* Número */}
@@ -121,7 +121,7 @@ export function DecisionHub() {
                   <span
                     className={cn(
                       'block text-[11px] font-semibold uppercase tracking-[0.24em] text-white/70',
-                      isActive && 'text-lilac',
+                      isActive && 'text-wheat',
                     )}
                   >
                     {path.id === 'hire' ? 'Para famílias' : 'Para profissionais'}
@@ -138,10 +138,10 @@ export function DecisionHub() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={reduce ? undefined : { opacity: 0, y: 8 }}
                         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                        className="mt-3 block max-w-sm text-[15px] leading-relaxed text-lavender/90"
+                        className="mt-3 block max-w-sm text-[15px] leading-relaxed text-honey/90"
                       >
                         {path.description}
-                        <span className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-[13px] font-bold text-grape shadow-soft transition-transform duration-300 group-hover:translate-x-0.5">
+                        <span className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-[13px] font-bold text-gold shadow-soft transition-transform duration-300 group-hover:translate-x-0.5">
                           Começar
                           <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                         </span>

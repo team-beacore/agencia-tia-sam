@@ -13,19 +13,19 @@ export function FinalCTA() {
   return (
     <section
       aria-labelledby="final-cta-title"
-      className="relative overflow-hidden bg-plum py-24 sm:py-32"
+      className="relative overflow-hidden bg-bronze py-24 sm:py-32"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-grape/40 blur-[110px]" />
-        <div className="absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-magenta/20 blur-[120px]" />
+        <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-gold/40 blur-[110px]" />
+        <div className="absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-sun/25 blur-[120px]" />
       </div>
 
       <Container className="relative">
         <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <div>
             <Reveal>
-              <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-lilac">
-                <span aria-hidden="true" className="h-px w-8 bg-lilac opacity-50" />
+              <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-wheat">
+                <span aria-hidden="true" className="h-px w-8 bg-wheat opacity-50" />
                 Vamos conversar
               </p>
             </Reveal>
@@ -34,11 +34,11 @@ export function FinalCTA() {
                 id="final-cta-title"
                 className="tracking-headline text-balance mt-5 text-[clamp(2.2rem,6vw,3.6rem)] font-extrabold leading-[1.02] text-white"
               >
-                Cuidado que <span className="accent-serif text-lilac">acolhe</span>.
+                Cuidado que <span className="accent-serif text-wheat">acolhe</span>.
               </h2>
             </Reveal>
             <Reveal delay={0.16}>
-              <p className="mt-5 max-w-lg text-lg leading-relaxed text-lavender/80">
+              <p className="mt-5 max-w-lg text-lg leading-relaxed text-honey/80">
                 Quando alguém precisa cuidar do que importa, a escolha merece atenção. Conte com a gente.
               </p>
             </Reveal>

@@ -85,7 +85,7 @@ export default function ContactsPage() {
         </Button>
       </header>
 
-      {error ? <p className="mb-4 rounded-xl border border-magenta/20 bg-magenta/5 px-4 py-3 text-sm font-semibold text-magenta">{error}</p> : null}
+      {error ? <p className="mb-4 rounded-xl border border-danger/20 bg-danger/5 px-4 py-3 text-sm font-semibold text-danger">{error}</p> : null}
 
       {!rows ? (
         <Spinner />
@@ -102,7 +102,7 @@ export default function ContactsPage() {
           renderRow={(c) => (
             <tr key={c.id}>
               <td className="px-4 py-3">
-                <Badge tone={c.type === 'whatsapp' ? 'green' : c.type === 'instagram' ? 'violet' : 'neutral'}>{typeLabel(c.type)}</Badge>
+                <Badge tone={c.type === 'whatsapp' ? 'green' : c.type === 'instagram' ? 'brand' : 'neutral'}>{typeLabel(c.type)}</Badge>
                 <p className="mt-1 font-semibold text-ink">{c.display || c.value}</p>
               </td>
               <td className="hidden px-4 py-3 text-sm text-muted md:table-cell">{c.value}</td>

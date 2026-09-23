@@ -21,7 +21,7 @@ export function Footer() {
               Conectamos famílias e profissionais com cuidado, confiança e um processo de
               seleção criterioso. {siteSettings.claim || site.data.settings?.site?.claim}
             </p>
-            <p className="mt-5 text-sm font-medium text-grape">{site.siteLocation}</p>
+            <p className="mt-5 text-sm font-medium text-gold">{site.siteLocation}</p>
           </div>
 
           {/* Links (apenas desktop — no mobile a navegação já está no menu principal) */}
@@ -34,7 +34,7 @@ export function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-[15px] font-medium text-ink/80 transition-colors hover:text-grape"
+                    className="text-[15px] font-medium text-ink/80 transition-colors hover:text-gold"
                   >
                     {link.label}
                   </a>
@@ -51,12 +51,12 @@ export function Footer() {
             <ul className="mt-5 space-y-3">
               <li>
                 <a
-                  href={whatsappLink('Olá, Agência Tia Sam! 💜 Gostaria de conversar.', site.whatsappNumber)}
+                  href={whatsappLink('Olá, Agência Tia Sam! 🧡 Gostaria de conversar.', site.whatsappNumber)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 text-[15px] font-medium text-ink/80 transition-colors hover:text-grape"
+                  className="inline-flex items-center gap-2.5 text-[15px] font-medium text-ink/80 transition-colors hover:text-gold"
                 >
-                  <WhatsAppIcon className="h-4 w-4 text-grape" />
+                  <WhatsAppIcon className="h-4 w-4 text-gold" />
                   {site.whatsappDisplay}
                 </a>
               </li>
@@ -65,9 +65,9 @@ export function Footer() {
                   href={site.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 text-[15px] font-medium text-ink/80 transition-colors hover:text-grape"
+                  className="inline-flex items-center gap-2.5 text-[15px] font-medium text-ink/80 transition-colors hover:text-gold"
                 >
-                  <InstagramIcon className="h-4 w-4 text-grape" />
+                  <InstagramIcon className="h-4 w-4 text-gold" />
                   {site.instagramHandle}
                 </a>
               </li>
